@@ -73,3 +73,24 @@ void lista_destruir(lista_t *l, void (*destruir_dato)(void *))
     }
     free(l);
 }
+
+
+
+//    crea un nuevo iterador que apunta al primer elemento de la lista l
+
+lista_iterador_t *lista_iterador_crear(lista_t *l);
+    
+
+void lista_iterador_destruir(lista_iterador_t *li);.
+
+void *lista_iterador_actual(const lista_iterador_t *li);, devuelve el dato actual del iterador o NULL si el iterador ya se terminó.
+
+bool lista_iterador_siguiente(lista_iterador_t *li);, incrementa el iterador. Devuelve true si la lista aún no se terminó.
+
+bool lista_iterador_termino(const lista_iterador_t *li);, retorna true si el iterador ya llegó al final de la lista.
+
+Y además:
+
+    void *lista_iterador_eliminar(lista_iterador_t *li);, elimina el nodo actual de la lista, devuelve el dato contenido en ella. El iterador automáticamente pasa a apuntar al elemento siguiente.
+
+    bool lista_iterador_insertar(lista_iterador_t *li, void *dato);, inserta un nodo nuevo después de la posición actual. El iterador permanece apuntando el dato actual.

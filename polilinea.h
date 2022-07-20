@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 typedef struct polilinea polilinea_t;
+typedef color_t;
 
 //      Creación y destrucción
 

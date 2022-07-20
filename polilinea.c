@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 
+typedef uint8_t color_t;
 
 typedef struct{
     float (*puntos)[2];

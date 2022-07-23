@@ -1,8 +1,9 @@
 #include "polilinea.h"
-#include "figuras.h" 
+#include "figuras.h"  //Tal vez remover 
 
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdlib.h>
 
 typedef uint8_t color_t;
 
@@ -11,7 +12,6 @@ typedef struct{
     color_t color;
     size_t n;
 }polilinea_t;
-
 
 static polilinea_t *polilinea_crear_vacia(size_t n)
 {

@@ -3,9 +3,12 @@
 
 #include <stdbool.h>// Booleanos
 #include <stdlib.h>
+#include <stddef.h>
+
+typedef uint8_t color_t; //Lo meti aca en vez de en el .c para poder tenerlo en el header ya que es una definicion
 
 typedef struct polilinea polilinea_t;
-typedef color_t;
+
 
 //      Creación y destrucción
 

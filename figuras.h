@@ -2,6 +2,19 @@
 #define FIGURAS_H
 
 #include <stdint.h>
+#include "polilinea.h"
+#include "lista.h"
+
+typedef enum{
+    ICONO,
+    NIVEL,
+    SPRITE,
+    PLANETA,
+    BASE,
+    COMBUSTIBLE,
+    TORRETA,
+    REACTOR,
+}figura_tipo_t; //Lo moví arriba de figura_t por que no dejaba compilar sino.
 
 typedef struct
 {
@@ -13,17 +26,6 @@ typedef struct
     size_t cantidad_polilineas;
 
 }figura_t;
-
-typedef enum{
-    ICONO,
-    NIVEL,
-    SPRITE,
-    PLANETA,
-    BASE,
-    COMBUSTIBLE,
-    TORRETA,
-    REACTOR,
-}figura_tipo_t;
 
 ////    Color       ////
 
@@ -48,5 +50,9 @@ void color_a_rgb(color_t c, uint8_t *r, uint8_t *g, uint8_t *b);
 const char* figura_tipo_a_cadena(figura_tipo_t figura);
 
 lista_t *guardar_figuras(char *archivo);
+
+void figura_destruir(figura_t *fig);
+
+void r_figura_destruir(void *dato);
 
 #endif /* FIGURAS_H */

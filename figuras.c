@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <string.h>
 
 ////    Definiciones        ////
 
@@ -122,7 +123,7 @@ static polilinea_t *leer_polilinea(FILE *f)
 //// Lectura de achivo
 
 
-static figuras_t *crear_figura_vacia(size_t cantidad_polilineas)
+static figura_t *crear_figura_vacia(size_t cantidad_polilineas)
 {
     figura_t *fig = malloc(sizeof(figura_t));
     if(fig == NULL) return NULL;
@@ -146,7 +147,7 @@ static figuras_t *crear_figura_vacia(size_t cantidad_polilineas)
     return fig;
 }
 
-static void figura_destruir(figura_t *fig)
+void figura_destruir(figura_t *fig)
 {
     free(fig->nombre);
     for (size_t i = 0; i < fig->cantidad_polilineas; i++)
@@ -156,7 +157,7 @@ static void figura_destruir(figura_t *fig)
     return;
 }
 
-static void r_figura_destruir(void *dato)
+void r_figura_destruir(void *dato)
 {
     figura_destruir(figura_t *dato);
 }
@@ -164,7 +165,7 @@ static void r_figura_destruir(void *dato)
 lista_t *guardar_figuras(char *archivo)
 {
 
-    FILE *f = fopen(*archivo, "rb");
+    FILE *f = fopen(archivo, "rb");
     if(f == NULL) return NULL;
 
     lista_t *figuras_lista = lista_crear();
@@ -192,7 +193,7 @@ lista_t *guardar_figuras(char *archivo)
             return NULL;
         }
     
-        strcpy(fig->nombre, nombre);
+        strcpy(*(fig->nombre), nombre); //LE METI UN * PARA PROBAR
         fig->infinito = infinito;
         fig->tipo = tipo;
 

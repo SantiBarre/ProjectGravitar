@@ -5,6 +5,7 @@
 #include <stddef.h> 
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 ////    Definiciones        ////
 
@@ -16,7 +17,6 @@
 #define OFF_COLOR 0
 
 #define MASK_NUM 0x3FF
-
 #define MASK_TIPO 0xE
 #define MASK_INF 0x40
 
@@ -54,32 +54,12 @@ static const char *tipo[] = {
     [REACTOR] = "Reactor",
 };
 
-static const char* figura_tipo_a_cadena(figura_tipo_t figura)
+const char* figura_tipo_a_cadena(figura_tipo_t figura)
 {
     return tipo[figura];
 }
 
-
-
 ////    Lectura     ////
-
-typedef struct
-{
-    char (*nombre)[20];
-    bool infinito;
-    figura_tipo_t tipo;
-
-    polilinea_t *polis;
-    size_t cantidad_polilineas;
-
-}figura_t;
-
-typedef struct{
-    float (*puntos)[2];
-    color_t color;
-    size_t n;
-}polilinea_t;
-
 
 static bool leer_encabezado_figura(FILE *f, char nombre[], figura_tipo_t *tipo, bool *infinito, size_t *cantidad_polilineas)
 {
@@ -133,56 +113,56 @@ static polilinea_t *leer_polilinea(FILE *f)
             polilinea_destruir(poli);
             return NULL;
         }
-       
         polilinea_setter_punto(poli, i, x, y);
     }
 
     return poli;
 }
 
-static figura_t *crear_figura(char *nombre, bool infinito, figura_tipo_t tipo, size_t cantidad_polilineas)
+//// Lectura de achivo
+
+
+static figuras_t *crear_figura_vacia(size_t cantidad_polilineas)
 {
     figura_t *fig = malloc(sizeof(figura_t));
     if(fig == NULL) return NULL;
 
-    fig->nombre = realloc(nombre, 20 * sizeof(char));
+    fig->nombre = malloc(21 * sizeof(char));
     if(fig->nombre == NULL)
     {
         free(fig);
         return NULL;
     }
 
-    fig->polis = (cantidad_polilineas * sizeof(polilinea_t *));
-    if(fig->polis = NULL)
+    fig->polis = malloc(cantidad_polilineas * sizeof(polilinea_t));
+    if(fig->polis == NULL)
     {
         free(fig->nombre);
         free(fig);
         return NULL;
     }
-
-    fig->infinito = infinito;
-    fig->tipo = tipo;
     fig->cantidad_polilineas = cantidad_polilineas;
 
-    return true;
+    return fig;
 }
 
-static void *r_figura_destruir(void *fig){
-    figura_destruir(fig);
-}
 static void figura_destruir(figura_t *fig)
 {
     free(fig->nombre);
     for (size_t i = 0; i < fig->cantidad_polilineas; i++)
-    {
-
-        free(fig->[i].polis)
-    }
-    free()
-
+        polilinea_destruir(fig->polis[i]);
+    free(fig->polis);
+    free(fig);
+    return;
 }
 
-lista_t *guardar_figuras(char *archivo){
+static void r_figura_destruir(void *dato)
+{
+    figura_destruir(figura_t *dato);
+}
+
+lista_t *guardar_figuras(char *archivo)
+{
 
     FILE *f = fopen(*archivo, "rb");
     if(f == NULL) return NULL;
@@ -205,38 +185,42 @@ lista_t *guardar_figuras(char *archivo){
 
         if(! leer_encabezado_figura(f, nombre, &tipo, &infinito, &cantidad_polilineas)) break;
         
-        figura_t *fig = crear_figura(nombre, infinito, tipo, cantidad_polilineas);
-        if(fig == NULL)
+        figura_t *fig = crear_figura_vacia(cantidad_polilineas);
+        if (fig == NULL)
         {
-            fclose(f);
+            lista_destruir(figuras_lista, r_figura_destruir);
             return NULL;
         }
+    
+        strcpy(fig->nombre, nombre);
+        fig->infinito = infinito;
+        fig->tipo = tipo;
 
         for(size_t i = 0; i < cantidad_polilineas; i++)
         {
-            polilinea_t *poli = leer_polilinea(f);
-            if(poli == NULL)
+
+            polilinea_t *pol = leer_polilinea(f);
+            if(pol == NULL)
             {
                 for (size_t j = 0; j < i; j++)
                     polilinea_destruir(fig->polis[j]);
                 
-                lista_destruir(figuras_lista, r_figura_destruir(fig));
+                lista_destruir(figuras_lista, r_figura_destruir);
                 fclose(f);
                 return NULL;
             }
-
-            
-            fig->polis[i] = poli;
+            fig->polis[i] = pol;
         }
 
-        if(! lista_agregar_al_final(figuras_lista, fig))
+        if(!lista_agregar_al_final(figuras_lista, fig))
         {                                        
-            lista_destruir(figuras_lista, r_figura_destruir(fig));
+            lista_destruir(figuras_lista, r_figura_destruir);
             fclose(f);
             return NULL;
         }
 
     }
+    
     fclose(f);
     return figuras_lista;
 }

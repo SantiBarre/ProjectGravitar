@@ -213,7 +213,7 @@ lista_t *guardar_figuras(char *archivo)
             fig->polis[i] = pol;
         }
 
-        if(!lista_agregar_al_final(figuras_lista, fig))
+        if(!lista_agregar(figuras_lista, fig))
         {                                        
             lista_destruir(figuras_lista, r_figura_destruir);
             fclose(f);

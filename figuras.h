@@ -22,7 +22,7 @@ typedef struct
     bool infinito;
     figura_tipo_t tipo;
 
-    polilinea_t *polis;
+    polilinea_t **polis;
     size_t cantidad_polilineas;
 
 }figura_t;
@@ -54,5 +54,7 @@ lista_t *guardar_figuras(char *archivo);
 void figura_destruir(figura_t *fig);
 
 void r_figura_destruir(void *dato);
+
+void dato_imprimir(figura_t *dato);
 
 #endif /* FIGURAS_H */

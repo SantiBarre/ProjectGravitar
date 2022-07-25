@@ -1,24 +1,28 @@
-#include "figuras.h" 
 #include "lista.h"
 #include <stdio.h>
 
-int main(int argc, char *argv[])
+int main()
 {
 
-    if(argc != 2)
+    int dato[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+
+    lista_t *l = lista_crear();
+    if(l == NULL)
     {
-        fprintf(stderr, "El programa se ejecuta como :  ./%s <archivo> /n", argv[0]);
+        fprintf(stderr, "Error de memoria \n");
         return 1;
     }
 
-    lista_t *figuras = guardar_figuras(argv[1]);
-    if(figuras == NULL)
+    for (size_t i = 0; i < 10; i++)
     {
-        fprintf(stderr, "Error de memoria /n");
-        return 1;
+        printf( " Dato : %d %d \n" , dato[i], lista_agregar(l, &dato[i]));
     }
 
-    
+    for( lista_iterador_t *li = lista_iterador_crear(l) ; !lista_iterador_termino(li); lista_iterador_siguiente(li) )
+    {
+        void *dato = lista_iterador_actual(li);
+        printf( " Dato : %d /n" , * dato);
+    }
 
     return 0;
 }

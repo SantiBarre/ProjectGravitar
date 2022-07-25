@@ -1,28 +1,31 @@
 #include "lista.h"
 #include <stdlib.h>
 
-typedef struct{
+
+
+struct nodo{
     void *dato;
-    nodo_t *sig;
-}nodo_t;
+    struct nodo *sig;
+};
 
 struct lista{
-    nodo_t *prim;
+    struct nodo *prim;
     size_t cant; // invariante: cant == cantidad de nodos
 };
 
 struct lista_iterador{
-    nodo_t* ant;
-	nodo_t* act;
+    struct nodo* ant;
+	struct nodo* act;
 };
 
-static nodo_t *nodo_crear(void *dato, nodo_t *sig)
+static struct nodo *nodo_crear(void *dato, struct nodo *sig)
 {
-    nodo_t *n = malloc(sizeof(nodo_t));
+    struct nodo *n = malloc(sizeof(struct nodo));
     if (n == NULL) return NULL;
     
     n->dato = dato;
-    n->sig= sig;
+    n->sig = sig;
+
     return n;
 }
 
@@ -33,41 +36,42 @@ lista_t *lista_crear(void)
 
     l->prim = NULL;
     l->cant = 0;
+
     return l;
 }
 
 bool lista_agregar(lista_t *l, void *dato)
 {
-    nodo_t *n = nodo_crear(dato, l->prim);
+    struct nodo *n = nodo_crear(dato, l->prim);
     if (n == NULL) return false;
 
     l->prim = n;
     l->cant++;
-    return true
+
+    return true;
 }
 
 bool lista_agregar_al_final(lista_t *l, void *dato)
 {
-    nodo_t *n = nodo_crear(dato, NULL);
+    struct nodo *n = nodo_crear(dato, NULL);
     if (n == NULL) return false;
     
     if (l->prim == NULL)   // lista vacia
     {        
-        l->prim = nuevo_nodo;
+        l->prim = n;
     }
     else    // lista no vacia
     {
-        nodo_t *act = l->prim;
+        struct nodo *act = l->prim;
 
         while (act->sig != NULL)
         {
             act = act->sig;
         }
-        // act->prox es NULL
-        // o sea, estamos en el ultimo nodo
         act->sig = n;
     }
     l->cant++;
+
     return true;
 }
 
@@ -78,8 +82,8 @@ size_t lista_largo(lista_t *l)
 
 void lista_destruir(lista_t *l, void (*destruir_dato)(void *))
 {
-    nodo_t *act = l->prim, *sig;
-    while(actual != NULL)
+    struct nodo *act = l->prim, *sig;
+    while(act != NULL)
     {
         destruir_dato(act->dato);
         sig = act->sig;
@@ -91,19 +95,35 @@ void lista_destruir(lista_t *l, void (*destruir_dato)(void *))
 
 lista_t *lista_filtrar(lista_t *l, bool (*f)(void *dato, void *extra), void *extra)
 {
-    lista_t laux = lista_crear;
+    lista_t *laux = lista_crear();
     if(laux == NULL) return NULL;
 
-    for( lista_iterador_t *li = lista_iterador_crear(l); !lista_iterador_termino(li) ; lista_iterador_siguiente(li)) 
-    {
-        void *dato = lista_iterador_actual(li);
-        if( f(dato, extra) )
+        lista_iterador_t *li = lista_iterador_crear(l);
+
+        while (!lista_iterador_termino(li))
         {
-            lista_agregar(laux, dato);
-            lista_iterador_eliminar(li)
+
+            if( f(li->act->dato, extra))
+            {
+
+                li->ant->sig = li->act->sig;
+
+                if(laux->prim == NULL)
+                {
+                    li->act->sig = NULL;
+                }
+                else
+                {
+                    li->act->sig = laux->prim;
+                }
+                laux->prim = li->act;
+                laux->cant++;
+
+            }
+            lista_iterador_siguiente(li);
         }
-    }
-    lista_iterador_destruir(li);
+        lista_iterador_destruir(li);
+
     return laux;
 }
 
@@ -158,7 +178,7 @@ void *lista_iterador_eliminar(lista_iterador_t *li)
 
 bool lista_iterador_insertar(lista_iterador_t *li, void *dato)
 {
-    nodo_t *n = nodo_crear(dato, li->act->sig);
+    struct nodo *n = nodo_crear(dato, li->act->sig);
     if (n == NULL) return false;
 
     n->sig = li->act->sig;

@@ -3,17 +3,11 @@
 
 #include <stdbool.h>
 #include <stddef.h>
+#include <math.h>
 #include <stdlib.h>
 
-typedef uint8_t color_t;
 
-typedef struct{
-    float (*puntos)[2];
-    color_t color;
-    size_t n;
-}polilinea_t;
-
-static polilinea_t *polilinea_crear_vacia(size_t n)
+polilinea_t *polilinea_crear_vacia(size_t n) //Elimine el static por que daba error al compilar
 {
     polilinea_t *nueva = malloc(sizeof(polilinea_t));
     if (nueva == NULL) return NULL;
@@ -99,7 +93,7 @@ bool polilinea_setter_color(polilinea_t *polilinea, color_t color)
     return false;
 }
 
-bool polilinea_getter_color(const polilinea_t *polilinea, int *r, int *g, int *b)
+bool polilinea_getter_color(const polilinea_t *polilinea, uint8_t *r, uint8_t *g, uint8_t *b)
 {
     if(polilinea != NULL)
     {
@@ -134,6 +128,11 @@ void trasladar(double polilinea[][2], size_t n, float dx, float dy)
         polilinea[i][1] += dy;
     }
 }
+static void sumaV(const double vectorA[], const double vectorB[], double BA[]) //NUEVO
+{
+    for (size_t i = 0; i < 2; i++)
+        BA[i] = vectorA[i] + vectorB[i];
+}
 
 static void restaV(const double vectorA[], const double vectorB[], double BA[])
 {
@@ -141,6 +140,11 @@ static void restaV(const double vectorA[], const double vectorB[], double BA[])
         BA[i] = vectorA[i] - vectorB[i];
 }
 
+static double moduloV(const double vectorA[],const double vectorB[])
+{
+    double aux = sqrt(pow(vectorB[0] - vectorA[0],2) + pow(vectorB[1] - vectorA[1],2));
+    return aux;
+}
 static double producto_escalar(const double vectorA[], const double vectorB[])
 {
     double result = 0;

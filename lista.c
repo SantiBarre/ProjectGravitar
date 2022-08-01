@@ -142,7 +142,7 @@ void lista_iterador_destruir(lista_iterador_t *li)
     free(li);
 }
 
-void *lista_iterador_actual(const lista_iterador_t *li)
+int *lista_iterador_actual(const lista_iterador_t *li) //CAMBIO ACA PARA PROBAR
 {
     if(li->act == NULL) return NULL;
     return li->act->dato;

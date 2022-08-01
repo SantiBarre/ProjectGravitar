@@ -2,12 +2,18 @@
 #define POLILINEA_H
 
 #include <stdbool.h>// Booleanos
+#include <stdint.h>
 #include <stdlib.h>
 #include <stddef.h>
+#include <stdint.h>
 
 typedef uint8_t color_t; //Lo meti aca en vez de en el .c para poder tenerlo en el header ya que es una definicion
 
-typedef struct polilinea polilinea_t;
+typedef struct{
+    float (*puntos)[2];
+    color_t color;
+    size_t n;
+}polilinea_t;
 
 
 //      Creación y destrucción
@@ -76,7 +82,7 @@ bool polilinea_setter_color(polilinea_t *polilinea, color_t color);
  * @return true 
  * @return false 
  */
-bool polilinea_getter_color(const polilinea_t *polilinea, int *r, int *g, int *b);
+bool polilinea_getter_color(const polilinea_t *polilinea, uint8_t *r, uint8_t *g, uint8_t *b);
 
 
 //      Memoria

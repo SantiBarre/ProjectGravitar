@@ -20,8 +20,8 @@ int main()
 
     for( lista_iterador_t *li = lista_iterador_crear(l) ; !lista_iterador_termino(li); lista_iterador_siguiente(li) )
     {
-        void *dato = lista_iterador_actual(li);
-        printf( " Dato : %d /n" , * dato);
+        int *dato = lista_iterador_actual(li);
+        printf( " Dato : %d \n" , *dato);
     }
 
     return 0;

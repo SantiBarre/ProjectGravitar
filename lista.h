@@ -24,7 +24,7 @@ lista_iterador_t *lista_iterador_crear(lista_t *l);
 
 void lista_iterador_destruir(lista_iterador_t *li);
 
-void *lista_iterador_actual(const lista_iterador_t *li);
+int *lista_iterador_actual(const lista_iterador_t *li); //CAMBIO ACA PARA PROBAR
 
 bool lista_iterador_siguiente(lista_iterador_t *li);
 

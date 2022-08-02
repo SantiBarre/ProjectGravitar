@@ -1,10 +1,11 @@
 #include <stdbool.h>
+#include <stdlib.h>
 #include "nave.h"
 
 //Definiciones de funciones de la nave, para ver documentacion ver nave.h
 nave_t* nave_crear(){
-    nave_t *nave = malloc(sizeof(struct nave_t));
-    if (nave == null) {
+    nave_t *nave = malloc(sizeof(nave_t));
+    if (nave == NULL) {
         return NULL;
     }
     nave->pos[0] = 0;
@@ -15,6 +16,8 @@ nave_t* nave_crear(){
     nave->chorro = false;
     nave->escudo = false;
     nave->disparo = false;
+
+    return nave;
 }
 void nave_cambiar_pos(nave_t *nave,float posx, float posy){
     nave->pos[0] = posx;
@@ -28,7 +31,7 @@ void nave_cambiar_dir(nave_t *nave, float dir){
     nave->dir = dir;
 }
 void nave_prender_chorro(nave_t *nave){
-    if (nave->choro){
+    if (nave->chorro){
         nave->chorro = false;
     }
     else {
@@ -58,7 +61,7 @@ void nave_destruir(nave_t *nave){
 
 //Definiciones de funciones de los disparos.
 disparo_t* disparo_crear(float posx,float posy,float dir){
-    disparo_t *disparo = malloc(sizeof(struct disparo_t));
+    disparo_t *disparo = malloc(sizeof(disparo_t));
     if (disparo==NULL){
         return NULL;
     }
@@ -66,6 +69,8 @@ disparo_t* disparo_crear(float posx,float posy,float dir){
     disparo->pos[1] = posy;
     disparo->dir = dir;
     disparo->cronometro = 10;
+
+    return disparo;
 }
 void disparo_cambiar_pos(disparo_t *disparo,float posx,float posy){
     disparo->pos[0] = posx;
@@ -83,7 +88,7 @@ void disparo_destruir(disparo_t *disparo){
 
 //Definiciones de funciones de las torretas.
 torreta_t* torreta_crear(float posx,float posy,float dir){
-    torreta_t *torreta = malloc(sizeof(struct torreta_t));
+    torreta_t *torreta = malloc(sizeof(torreta_t));
     if (torreta == NULL){
         return NULL;
     }
@@ -91,6 +96,7 @@ torreta_t* torreta_crear(float posx,float posy,float dir){
     torreta->pos[1] = posy;
     torreta->dir = dir;
     torreta->disparo = false;
+    return torreta;
 }
 void torreta_cambiar_pos(torreta_t *torreta,float posx,float posy){
     torreta->pos[0] = posx;
@@ -100,10 +106,10 @@ void torreta_cambiar_dir(torreta_t *torreta,float dir){
     torreta->dir = dir;
 }
 void torreta_disparar(torreta_t *torreta){
-      if (nave->disparo){
-        nave->disparo = false;
+      if (torreta->disparo){
+        torreta->disparo = false;
     }
     else {
-        nave->disparo = true;
+        torreta->disparo = true;
     }
 }

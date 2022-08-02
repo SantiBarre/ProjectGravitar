@@ -5,6 +5,7 @@
 #include "figuras.h"
 #include "lista.h"
 #include "polilinea.h"
+#include "nave.h"
 int main() {
     SDL_Init(SDL_INIT_VIDEO);
 
@@ -20,8 +21,8 @@ int main() {
     // BEGIN código del alumno
     
     //ESTO COMENTADO ACA ES EL GUARDADO DE FIGURAS EN EL MAIN QUE POR EL MOMENTO NO ME SALE
-    /*lista_t *figuras_lista;
-    guardar_figuras("figuras.bin",figuras_lista); //Esta funcion crea una lista "figuras_lista"*/
+    lista_t *figuras_lista;
+    guardar_figuras("figuras.bin"); //Esta funcion crea una lista "figuras_lista"
     
     // Mi nave:
     const float nave[][2] = {{8, 0}, {-1, 6}, {-4, 4}, {-4, 2}, {-2, 0}, {-4, -2}, {-4, -4}, {-1, -6}, {8, 0}};
@@ -114,7 +115,7 @@ int main() {
     
     //ESTO COMENTADO ACA ES LA LIBERACION DE LA MEMORIA DE FIGURAS EN EL MAIN QUE POR EL MOMENTO NO ME SALE
     // Aca se ponen las cosas a destruir / memoria a liberar.
-    /*lista_destruir(figuras_lista,r_figura_destruir);*/
+    lista_destruir(figuras_lista,figura_destruir);
     
     // END código del alumno
 

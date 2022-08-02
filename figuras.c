@@ -8,6 +8,21 @@
 #include <stdio.h>
 #include <string.h>
 
+struct nodo{
+    void *dato;
+    struct nodo *sig;
+};
+
+struct lista{
+    struct nodo *prim;
+    size_t cant; // invariante: cant == cantidad de nodos
+};
+
+struct lista_iterador{
+    struct nodo* ant;
+	struct nodo* act;
+};
+
 ////    Definiciones        ////
 
 #define MASK_R 0x4
@@ -220,4 +235,19 @@ lista_t *guardar_figuras(char *archivo)
     
     fclose(f);
     return figuras_lista;
+}
+
+//FUNCION PRESTADA PARA HACER MEJOR JERARQUIA DEL MAKEFILE
+
+void lista_destruir(lista_t *l, void (*destruir_dato)(figura_t *)) //CAMBIE void* por figura_t*
+{
+    struct nodo *act = l->prim, *sig;
+    while(act != NULL)
+    {
+        destruir_dato(act->dato);
+        sig = act->sig;
+        free(act);
+        act = sig;
+    }
+    free(l);
 }

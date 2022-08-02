@@ -80,18 +80,6 @@ size_t lista_largo(lista_t *l)
     return l->cant;
 }
 
-void lista_destruir(lista_t *l, void (*destruir_dato)(void *))
-{
-    struct nodo *act = l->prim, *sig;
-    while(act != NULL)
-    {
-        destruir_dato(act->dato);
-        sig = act->sig;
-        free(act);
-        act = sig;
-    }
-    free(l);
-}
 
 lista_t *lista_filtrar(lista_t *l, bool (*f)(void *dato, void *extra), void *extra)
 {

@@ -1,6 +1,5 @@
-#include "polilinea.h"
-#include "figuras.h"  //Tal vez remover 
-
+#include "polilinea.h" 
+#include "figuras.h"
 #include <stdbool.h>
 #include <stddef.h>
 #include <math.h>

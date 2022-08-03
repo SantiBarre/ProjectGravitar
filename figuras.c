@@ -157,13 +157,10 @@ static void rp_figura_destruir(figura_t *fig)
     return;
 }
 
-
 void figura_destruir(void *fig)
 {
     rp_figura_destruir((figura_t *)fig);
 }
-
-
 
 
 lista_t *guardar_figuras(char *archivo)

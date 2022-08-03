@@ -50,11 +50,20 @@ void color_a_rgb(color_t c, uint8_t *r, uint8_t *g, uint8_t *b);
  */
 const char* figura_tipo_a_cadena(figura_tipo_t figura);
 
+/**
+ * @brief 
+ * Guarda las figuras en una lista
+ * @param archivo 
+ * @return lista_t* 
+ */
 lista_t *guardar_figuras(char *archivo);
 
+/**
+ * @brief 
+ * Destrulle una figura
+ * @param fig 
+ */
 void figura_destruir(void *fig);
-
-void dato_imprimir(figura_t *dato);
 
 
 #endif /* FIGURAS_H */

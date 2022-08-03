@@ -1,22 +1,25 @@
 #include "lista.h"
 #include <stdlib.h>
 
-
-
-struct nodo{
+struct nodo
+{
     void *dato;
     struct nodo *sig;
 };
 
-struct lista{
+struct lista
+{
     struct nodo *prim;
     size_t cant; // invariante: cant == cantidad de nodos
 };
 
-struct lista_iterador{
+struct lista_iterador
+{
     struct nodo* ant;
 	struct nodo* act;
 };
+
+
 
 static struct nodo *nodo_crear(void *dato, struct nodo *sig)
 {
@@ -80,6 +83,22 @@ size_t lista_largo(lista_t *l)
     return l->cant;
 }
 
+void lista_destruir(lista_t *l, void (*destruir_dato)(void *)) //CAMBIE void* por figura_t*
+{
+    struct nodo *act = l->prim;
+    
+    while(act != NULL)
+    {
+        destruir_dato(act->dato);
+        struct nodo *sig = act->sig;
+
+        free(act);
+        
+        act = sig;
+    }
+    free(l);
+}
+
 
 lista_t *lista_filtrar(lista_t *l, bool (*f)(void *dato, void *extra), void *extra)
 {
@@ -130,9 +149,9 @@ void lista_iterador_destruir(lista_iterador_t *li)
     free(li);
 }
 
-int *lista_iterador_actual(const lista_iterador_t *li) //CAMBIO ACA PARA PROBAR
+void *lista_iterador_actual(const lista_iterador_t *li)
 {
-    if(li->act == NULL) return NULL;
+    if(lista_iterador_termino(li)) return NULL;
     return li->act->dato;
 }
 
@@ -148,18 +167,19 @@ bool lista_iterador_siguiente(lista_iterador_t *li)
 
 bool lista_iterador_termino(const lista_iterador_t *li)
 {
-    if(li->act == NULL) return true;
-    return false;
+    return li->act == NULL;
+
 }
 
 void *lista_iterador_eliminar(lista_iterador_t *li)
 {
     void *dato = li->act->dato;
 
+    li->ant->sig = li->act->sig;
+
     free(li->act);
 
-    li->ant->sig = li->act->sig;
-    li->act = li->act->sig;
+    li->act = li->ant->sig;
 
     return dato;
 }
@@ -169,9 +189,7 @@ bool lista_iterador_insertar(lista_iterador_t *li, void *dato)
     struct nodo *n = nodo_crear(dato, li->act->sig);
     if (n == NULL) return false;
 
-    n->sig = li->act->sig;
     li->act->sig = n;
     
     return true;
 }
-

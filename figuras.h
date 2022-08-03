@@ -54,12 +54,9 @@ lista_t *guardar_figuras(char *archivo);
 
 void figura_destruir(figura_t *fig);
 
-void r_figura_destruir(void *dato);
+void rp_figura_destruir(void *fig);
 
 void dato_imprimir(figura_t *dato);
 
-//FUNCION PRESTADA PARA HACER MEJOR JERARQUIA DEL MAKEFILE
-
-void lista_destruir(lista_t *l, void (*destruir_dato)(figura_t *)); //CAMBIE void* por figura_t
 
 #endif /* FIGURAS_H */

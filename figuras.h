@@ -52,9 +52,7 @@ const char* figura_tipo_a_cadena(figura_tipo_t figura);
 
 lista_t *guardar_figuras(char *archivo);
 
-void figura_destruir(figura_t *fig);
-
-void rp_figura_destruir(void *fig);
+void figura_destruir(void *fig);
 
 void dato_imprimir(figura_t *dato);
 

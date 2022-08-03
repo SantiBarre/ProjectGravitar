@@ -146,13 +146,8 @@ static figura_t *crear_figura_vacia(size_t cantidad_polilineas)
 
     return fig;
 }
-void rp_figura_destruir(void *aux)
-{
-    figura_destruir((figura_t *)aux);
-}
 
-
-void figura_destruir(figura_t *fig)
+static void rp_figura_destruir(figura_t *fig)
 {
     free(fig->nombre);
     for (size_t i = 0; i < fig->cantidad_polilineas; i++)
@@ -161,6 +156,14 @@ void figura_destruir(figura_t *fig)
     free(fig);
     return;
 }
+
+
+void figura_destruir(void *fig)
+{
+    rp_figura_destruir((figura_t *)fig);
+}
+
+
 
 
 lista_t *guardar_figuras(char *archivo)
@@ -190,7 +193,7 @@ lista_t *guardar_figuras(char *archivo)
         figura_t *fig = crear_figura_vacia(cantidad_polilineas);
         if (fig == NULL)
         {
-            lista_destruir(figuras_lista, rp_figura_destruir);
+            lista_destruir(figuras_lista, figura_destruir);
             return NULL;
         }
     
@@ -207,7 +210,7 @@ lista_t *guardar_figuras(char *archivo)
                 for (size_t j = 0; j < i; j++)
                     polilinea_destruir(fig->polis[j]);
                 
-                lista_destruir(figuras_lista, rp_figura_destruir);
+                lista_destruir(figuras_lista, figura_destruir);
                 fclose(f);
                 return NULL;
             }
@@ -216,7 +219,7 @@ lista_t *guardar_figuras(char *archivo)
 
         if(!lista_agregar(figuras_lista, fig))
         {                                        
-            lista_destruir(figuras_lista, rp_figura_destruir);
+            lista_destruir(figuras_lista, figura_destruir);
             fclose(f);
             return NULL;
         }

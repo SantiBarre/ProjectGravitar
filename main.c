@@ -24,11 +24,11 @@ int main(void) {
     //ESTO COMENTADO ACA ES EL GUARDADO DE FIGURAS EN EL MAIN QUE POR EL MOMENTO NO ME SALE
     lista_t *figuras_lista = guardar_figuras("figuras.bin"); //Esta funcion crea una lista "figuras_lista"
     // Mi nave:
-    const float nave[][2] = {{8, 0}, {-1, 6}, {-4, 4}, {-4, 2}, {-2, 0}, {-4, -2}, {-4, -4}, {-1, -6}, {8, 0}};
+    double nave[][2] = {{8, 0}, {-1, 6}, {-4, 4}, {-4, 2}, {-2, 0}, {-4, -2}, {-4, -4}, {-1, -6}, {8, 0}};
     size_t nave_tam = 9;
 
     // El chorro de la nave:
-    const float chorro[][2] = {{-4, 2}, {-8, 0}, {-4, -2}};
+    double chorro[][2] = {{-4, 2}, {-8, 0}, {-4, -2}};
     size_t chorro_tam = 3;
 
     bool chorro_prendido = false;
@@ -51,8 +51,14 @@ int main(void) {
                         chorro_prendido = true;
                         break;
                     case SDLK_DOWN:
+                        break;
                     case SDLK_RIGHT:
+                        rotar(nave,nave_tam, -PI/4);
+                        rotar(chorro,chorro_tam, -PI/4);
+                        break;
                     case SDLK_LEFT:
+                        rotar(nave,nave_tam, PI/4);
+                        rotar(chorro,chorro_tam, PI/4);
                         break;
                 }
             }

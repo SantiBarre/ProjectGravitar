@@ -14,11 +14,14 @@ APPNAME = gravitar
 all: $(APPNAME)
 
 # Builds the app
-$(APPNAME): main.o figuras.o lista.o polilinea.o nave.o
-	$(CC) $(CXXFLAGS) main.o figuras.o lista.o polilinea.o nave.o -o $(APPNAME) $(LDFLAGS)
+$(APPNAME): main.o dibujado.o figuras.o lista.o polilinea.o nave.o
+	$(CC) $(CXXFLAGS) main.o dibujado.o figuras.o lista.o polilinea.o nave.o -o $(APPNAME) $(LDFLAGS)
 
 main.o: main.c config.h figuras.h lista.h polilinea.h
 	$(CC) $(CXXFLAGS) -c main.c 
+
+dibujado.o: dibujado.c dibujado.h polilinea.h figuras.h
+	$(CC) $(CXXFLAGS) -c dibujado.c
 
 figuras.o: figuras.c figuras.h lista.h polilinea.h
 	$(CC) $(CXXFLAGS) -c figuras.c

@@ -236,7 +236,6 @@ lista_t *guardar_figuras(char *archivo)
     fclose(f);
     return figuras_lista;
 }
-
 //FUNCION PRESTADA PARA HACER MEJOR JERARQUIA DEL MAKEFILE
 
 void lista_destruir(lista_t *l, void (*destruir_dato)(figura_t *)) //CAMBIE void* por figura_t*

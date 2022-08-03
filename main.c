@@ -35,6 +35,7 @@ int main(void) {
 
     // Queremos que todo se dibuje escalado por f:
     float f = 10;
+    float dd=1;
     // END código del alumno
 
     unsigned int ticks = SDL_GetTicks();
@@ -49,8 +50,12 @@ int main(void) {
                     case SDLK_UP:
                         // Prendemos el chorro:
                         chorro_prendido = true;
+                        trasladar(nave,nave_tam,0,dd);
+                        trasladar(chorro,chorro_tam,0,dd);
                         break;
                     case SDLK_DOWN:
+                        trasladar(nave,nave_tam,0,-dd);
+                        trasladar(chorro,chorro_tam,0,-dd);
                         break;
                     case SDLK_RIGHT:
                         rotar(nave,nave_tam, -PI/4);
@@ -85,10 +90,10 @@ int main(void) {
         for(int i = 0; i < nave_tam - 1; i++)
             SDL_RenderDrawLine(
                 renderer,
-                nave[i][0] * f + VENTANA_ANCHO / 2,
-                -nave[i][1] * f + VENTANA_ALTO / 2,
-                nave[i+1][0] * f + VENTANA_ANCHO / 2,
-                -nave[i+1][1] * f + VENTANA_ALTO / 2
+                nave[i][0] * f + VENTANA_ANCHO/2,
+                -nave[i][1] * f + VENTANA_ALTO/2 ,
+                nave[i+1][0] * f +VENTANA_ANCHO/2,
+                -nave[i+1][1] * f + VENTANA_ALTO/2
             );
 
         if(chorro_prendido) {
@@ -97,12 +102,14 @@ int main(void) {
             for(int i = 0; i < chorro_tam - 1; i++)
                 SDL_RenderDrawLine(
                     renderer,
-                    chorro[i][0] * f + VENTANA_ANCHO / 2,
-                    -chorro[i][1] * f + VENTANA_ALTO / 2,
-                    chorro[i+1][0] * f + VENTANA_ANCHO / 2,
-                    -chorro[i+1][1] * f + VENTANA_ALTO / 2
+                    chorro[i][0] * f + VENTANA_ANCHO/2,
+                    -chorro[i][1] * f + VENTANA_ALTO/2,
+                    chorro[i+1][0] * f + VENTANA_ANCHO/2,
+                    -chorro[i+1][1] * f + VENTANA_ALTO/2
                 );
         }
+        
+
         // END código del alumno
 
         SDL_RenderPresent(renderer);
@@ -118,7 +125,7 @@ int main(void) {
 
     // BEGIN código del alumno
     
-    //ESTO COMENTADO ACA ES LA LIBERACION DE LA MEMORIA DE FIGURAS EN EL MAIN QUE POR EL MOMENTO NO ME SALE
+    //ESTO COMENTADO ACA ES LA LIBERACION DE LA MEMORIA DE FIGURAS EN EL MAIN QUE POR EL MOMENTO SALE PERO CON FUGAS
     // Aca se ponen las cosas a destruir / memoria a liberar.
     lista_destruir(figuras_lista,figura_destruir);
     

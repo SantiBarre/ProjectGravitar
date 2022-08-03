@@ -2,6 +2,7 @@
 #define FIGURAS_H
 
 #include <stdint.h>
+#include <stdio.h>
 #include "polilinea.h"
 #include "lista.h"
 

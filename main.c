@@ -1,12 +1,13 @@
 #include <SDL2/SDL.h>
 #include <stdbool.h>
 
+#include "nave.h"
+#include "polilinea.h"
+#include "lista.h"
 #include "config.h"
 #include "figuras.h"
-#include "lista.h"
-#include "polilinea.h"
-#include "nave.h"
-int main() {
+
+int main(void) {
     SDL_Init(SDL_INIT_VIDEO);
 
     SDL_Window *window;
@@ -21,9 +22,7 @@ int main() {
     // BEGIN código del alumno
     
     //ESTO COMENTADO ACA ES EL GUARDADO DE FIGURAS EN EL MAIN QUE POR EL MOMENTO NO ME SALE
-    lista_t *figuras_lista;
-    guardar_figuras("figuras.bin"); //Esta funcion crea una lista "figuras_lista"
-    
+    lista_t *figuras_lista = guardar_figuras("figuras.bin"); //Esta funcion crea una lista "figuras_lista"
     // Mi nave:
     const float nave[][2] = {{8, 0}, {-1, 6}, {-4, 4}, {-4, 2}, {-2, 0}, {-4, -2}, {-4, -4}, {-1, -6}, {8, 0}};
     size_t nave_tam = 9;

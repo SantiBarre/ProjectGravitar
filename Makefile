@@ -4,7 +4,7 @@
 
 CC = gcc
 CXXFLAGS = -Wall -std=c99 -pedantic -g
-LDFLAGS = -lSDL2
+LDFLAGS = -lSDL2 -lm
 APPNAME = gravitar
 
 ########################################################################
@@ -15,7 +15,7 @@ all: $(APPNAME)
 
 # Builds the app
 $(APPNAME): main.o figuras.o lista.o polilinea.o nave.o
-	$(CC) $(CXXFLAGS) main.o -o $(APPNAME) $(LDFLAGS)
+	$(CC) $(CXXFLAGS) main.o figuras.o lista.o polilinea.o nave.o -o $(APPNAME) $(LDFLAGS)
 
 main.o: main.c config.h figuras.h lista.h polilinea.h
 	$(CC) $(CXXFLAGS) -c main.c 

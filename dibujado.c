@@ -7,6 +7,93 @@
 #include "figuras.h"
 #include "nave.h"
 
+bool dibujar_figura(figura_t *fig, float escala, float posx, float posy, double angulo, SDL_Renderer *renderer )
+{
+    
+    //Imprimo todas las polilineas de una figura
+    for (size_t i = 0; i < fig->cantidad_polilineas ; i++)
+    {
+        //Creo un clon de la polilinea
+        polilinea_t *p = polilinea_clonar(fig->polis[i]);
+        if(p == NULL) return false;
+
+        //Roto la polilinea
+        rotar( p->puntos , p->n , angulo );
+
+        //Traslado la polilinea
+        trasladar( p->puntos , p->n , posx , posy );
+
+
+        //Asigno un color a la futura polilinea
+        uint8_t r, g, b;
+        if(!polilinea_getter_color(p, &r, &g, &b))
+        {
+            polilinea_destruir(p);
+            return false;
+        }
+        SDL_SetRenderDrawColor(renderer, r, g, b, 0x00);
+
+        //Imprimo punto por punto a la polilinea
+
+        size_t cant_puntos = polilinea_cantidad_puntos(p);
+
+        for (size_t pos = 1; pos < cant_puntos; i++)
+        {
+            float x_ant, y_ant, x, y;
+
+            if (pos = 1) //Primera vez, busco los dos puntos, actual y anterior
+            {  
+                //Punto anterior
+                if(!polilinea_getter_punto(p, pos - 1, &x_ant, &y_ant))
+                {
+                    polilinea_destruir(p);
+                    return false;
+                } 
+
+                //Punto actual
+                if(!polilinea_getter_punto(p, pos, &x, &y))
+                {
+                    polilinea_destruir(p);
+                    return false;
+                }
+
+            }
+            else
+            {
+                //El punto actual pasa a ser el anterior
+                x_ant = x;
+                y_ant = y;
+
+                //Punto actual
+                if(!polilinea_getter_punto(fig->polis[i], pos, &x, &y))
+                {
+                    polilinea_destruir(p);
+                    return false;
+                }
+            }
+
+            //Imprimo de punto anterior al actual
+            if ( SDL_RenderDrawLine( 
+                    renderer ,
+                    (x_ant * escala + posx) ,
+                    (-y_ant * escala + posy) , 
+                    (x * escala + posx) , 
+                    (-y * escala + posy) 
+                    )
+            != 0)
+            {
+                polilinea_destruir(p);
+                return false;
+            }
+
+        }
+
+        polilinea_destruir(p);
+
+    }
+
+    return true;
+}
 
 bool dibujar_polilinea(polilinea_t *polilinea,float escala,float posx,float posy,SDL_Renderer *renderer){
     uint8_t r;

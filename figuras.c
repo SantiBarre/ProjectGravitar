@@ -226,6 +226,8 @@ lista_t *guardar_figuras(char *archivo)
     fclose(f);
     return figuras_lista;
 }
+
+
 figura_t *obtener_figura(char nom[], lista_t *l){
     lista_iterador_t *li = lista_iterador_crear(l);
     figura_t valor_nulo;

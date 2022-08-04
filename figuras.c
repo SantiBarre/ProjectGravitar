@@ -228,21 +228,28 @@ lista_t *guardar_figuras(char *archivo)
 }
 
 
-figura_t *obtener_figura(char nom[], lista_t *l){
-    lista_iterador_t *li = lista_iterador_crear(l);
-    figura_t valor_nulo;
-    figura_t *aux = &valor_nulo;
-        while (!lista_iterador_termino(li))
-        {
-            figura_t *f_aux = li->act->dato;
-            if (f_aux->nombre == nom){
-                aux = li->act;
+figura_t *obtener_figura(char *nom, lista_t *l)
+{
+
+    lista_iterador_t *li;
+
+    for(
+        li = lista_iterador_crear(l);
+        !lista_iterador_termino(li);
+        lista_iterador_siguiente(li)
+    )
+    {
+
+        figura_t *dato = lista_iterador_actual(li);
+
+            if (strcmp(*dato->nombre, nom) == 0)
+            {
+                lista_iterador_destruir(li);
+                return dato;
             }
-            lista_iterador_siguiente(li);
-        }
-    lista_iterador_destruir(li);
-    if(aux == &valor_nulo){
-        return NULL;
     }
-    return aux;
+
+    lista_iterador_destruir(li);
+    return NULL;
 }
+

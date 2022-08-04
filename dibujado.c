@@ -37,21 +37,21 @@ bool dibujar_figura(figura_t *fig, float escala, float posx, float posy, double 
 
         size_t cant_puntos = polilinea_cantidad_puntos(p);
 
-        for (size_t pos = 1; pos < cant_puntos; i++)
+        for (size_t pos = 0; pos < (cant_puntos -1) ; i++)
         {
-            float x_ant, y_ant, x, y;
+            float x, y, x_sig, y_sig;
 
-            if (pos = 1) //Primera vez, busco los dos puntos, actual y anterior
+            if (pos == 0) //Primera vez, busco los dos puntos, actual y anterior
             {  
-                //Punto anterior
-                if(!polilinea_getter_punto(p, pos - 1, &x_ant, &y_ant))
+                //Punto actual
+                if(!polilinea_getter_punto(p, pos , &x, &y))
                 {
                     polilinea_destruir(p);
                     return false;
                 } 
 
-                //Punto actual
-                if(!polilinea_getter_punto(p, pos, &x, &y))
+                //Punto siguiente
+                if(!polilinea_getter_punto(p, pos + 1 , &x_sig, &y_sig))
                 {
                     polilinea_destruir(p);
                     return false;
@@ -60,12 +60,12 @@ bool dibujar_figura(figura_t *fig, float escala, float posx, float posy, double 
             }
             else
             {
-                //El punto actual pasa a ser el anterior
-                x_ant = x;
-                y_ant = y;
+                //El punto siguiente pasa a ser el actual
+                x = x_sig;
+                y = y_sig;
 
-                //Punto actual
-                if(!polilinea_getter_punto(fig->polis[i], pos, &x, &y))
+                //Punto siguiente
+                if(!polilinea_getter_punto(p, pos + 1 , &x_sig, &y_sig))
                 {
                     polilinea_destruir(p);
                     return false;
@@ -75,10 +75,10 @@ bool dibujar_figura(figura_t *fig, float escala, float posx, float posy, double 
             //Imprimo de punto anterior al actual
             if ( SDL_RenderDrawLine( 
                     renderer ,
-                    (x_ant * escala + posx) ,
-                    (-y_ant * escala + posy) , 
-                    (x * escala + posx) , 
-                    (-y * escala + posy) 
+                    (x * escala + posx) ,
+                    (-y * escala + posy) , 
+                    (x_sig * escala + posx) , 
+                    (-y_sig * escala + posy) 
                     )
             != 0)
             {
@@ -94,6 +94,8 @@ bool dibujar_figura(figura_t *fig, float escala, float posx, float posy, double 
 
     return true;
 }
+
+
 
 bool dibujar_polilinea(polilinea_t *polilinea,float escala,float posx,float posy,SDL_Renderer *renderer){
     uint8_t r;
@@ -115,6 +117,7 @@ bool dibujar_polilinea(polilinea_t *polilinea,float escala,float posx,float posy
     return true;
 }
 
+/*
 void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer){
     
     //########## NAVE ##########
@@ -189,3 +192,4 @@ void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer){
             break;
     }
 }
+*/

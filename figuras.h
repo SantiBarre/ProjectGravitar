@@ -65,6 +65,13 @@ lista_t *guardar_figuras(char *archivo);
  */
 void figura_destruir(void *fig);
 
+/**
+ * @brief 
+ * Devuelve la figura que se le paso por nombre
+ * @param nom 
+ * @param l 
+ * @return figura_t* 
+ */
 figura_t *obtener_figura(char nom[], lista_t *l);
 
 

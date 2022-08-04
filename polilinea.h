@@ -103,7 +103,7 @@ polilinea_t *polilinea_clonar(const polilinea_t *polilinea);
  * @param n 
  * @param rad 
  */
-void rotar(double polilinea[][2], size_t n, double rad);
+void rotar(float polilinea[][2], size_t n, double rad);
 
 /**
  * @brief 
@@ -113,7 +113,7 @@ void rotar(double polilinea[][2], size_t n, double rad);
  * @param dx 
  * @param dy 
  */
-void trasladar(double polilinea[][2], size_t n, float dx, float dy);
+void trasladar(float polilinea[][2], size_t n, float dx, float dy);
 
 /**
  * @brief 
@@ -124,7 +124,7 @@ void trasladar(double polilinea[][2], size_t n, float dx, float dy);
  * @param py 
  * @return double 
  */
-double distancia_punto_a_polilinea(double polilinea[][2], size_t n, float px, float py);
+float distancia_punto_a_polilinea(float polilinea[][2], size_t n, float px, float py);
 
 #endif /* POLILINEA_H */
 

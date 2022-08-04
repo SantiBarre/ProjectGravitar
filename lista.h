@@ -4,6 +4,10 @@
 #include <stdbool.h>
 #include <stddef.h>
 
+typedef struct lista lista_t;
+
+typedef struct lista_iterador lista_iterador_t;
+
 /**
  * @brief 
  * Crea una lista y la devuelve por el nombre

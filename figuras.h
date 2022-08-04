@@ -58,6 +58,8 @@ void r_figura_destruir(void *dato);
 
 void dato_imprimir(figura_t *dato);
 
+figura_t *obtener_figura(char nom[], lista_t *l);
+
 //FUNCION PRESTADA PARA HACER MEJOR JERARQUIA DEL MAKEFILE
 
 void lista_destruir(lista_t *l, void (*destruir_dato)(figura_t *)); //CAMBIE void* por figura_t

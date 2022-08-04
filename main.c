@@ -35,6 +35,7 @@ int main(void) {
 
     // Queremos que todo se dibuje escalado por f:
     float f = 10;
+    float prueba_switch = 10;
     float dd=1;
     // END código del alumno
 
@@ -50,6 +51,18 @@ int main(void) {
                     case SDLK_UP:
                         // Prendemos el chorro:
                         chorro_prendido = true;
+                        printf("%f \n",prueba_switch);
+                        prueba_switch = 2;
+                        SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0x00);
+                        for(int i = 0; i < nave_tam - 1; i++)
+                            SDL_RenderDrawLine(
+                                renderer,
+                                nave[i][0] * f,
+                                -nave[i][1] * f ,
+                                nave[i+1][0] * f,
+                                -nave[i+1][1] * f
+                            );
+
                         trasladar(nave,nave_tam,0,dd);
                         trasladar(chorro,chorro_tam,0,dd);
                         break;
@@ -94,6 +107,16 @@ int main(void) {
                 -nave[i][1] * f + VENTANA_ALTO/2 ,
                 nave[i+1][0] * f +VENTANA_ANCHO/2,
                 -nave[i+1][1] * f + VENTANA_ALTO/2
+            );
+
+        SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0x00);
+        for(int i = 0; i < nave_tam - 1; i++)
+            SDL_RenderDrawLine(
+                renderer,
+                nave[i][0] * f ,
+                -nave[i][1] * f ,
+                nave[i+1][0] * f ,
+                -nave[i+1][1] * f
             );
 
         if(chorro_prendido) {

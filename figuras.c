@@ -236,6 +236,25 @@ lista_t *guardar_figuras(char *archivo)
     fclose(f);
     return figuras_lista;
 }
+figura_t *obtener_figura(char nom[], lista_t *l){
+    lista_iterador_t *li = lista_iterador_crear(l);
+    figura_t valor_nulo;
+    figura_t *aux = &valor_nulo;
+        while (!lista_iterador_termino(li))
+        {
+            figura_t *f_aux = li->act->dato;
+            if (f_aux->nombre == nom){
+                aux = li->act;
+            }
+            lista_iterador_siguiente(li);
+        }
+    lista_iterador_destruir(li);
+    if(aux == &valor_nulo){
+        return NULL;
+    }
+    return aux;
+}
+
 //FUNCION PRESTADA PARA HACER MEJOR JERARQUIA DEL MAKEFILE
 
 void lista_destruir(lista_t *l, void (*destruir_dato)(figura_t *)) //CAMBIE void* por figura_t*

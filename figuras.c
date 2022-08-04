@@ -8,21 +8,6 @@
 #include <stdio.h>
 #include <string.h>
 
-struct nodo{
-    void *dato;
-    struct nodo *sig;
-};
-
-struct lista{
-    struct nodo *prim;
-    size_t cant; // invariante: cant == cantidad de nodos
-};
-
-struct lista_iterador{
-    struct nodo* ant;
-	struct nodo* act;
-};
-
 ////    Definiciones        ////
 
 #define MASK_R 0x4
@@ -162,7 +147,7 @@ static figura_t *crear_figura_vacia(size_t cantidad_polilineas)
     return fig;
 }
 
-void figura_destruir(figura_t *fig)
+static void rp_figura_destruir(figura_t *fig)
 {
     free(fig->nombre);
     for (size_t i = 0; i < fig->cantidad_polilineas; i++)
@@ -170,6 +155,11 @@ void figura_destruir(figura_t *fig)
     free(fig->polis);
     free(fig);
     return;
+}
+
+void figura_destruir(void *fig)
+{
+    rp_figura_destruir((figura_t *)fig);
 }
 
 
@@ -253,19 +243,4 @@ figura_t *obtener_figura(char nom[], lista_t *l){
         return NULL;
     }
     return aux;
-}
-
-//FUNCION PRESTADA PARA HACER MEJOR JERARQUIA DEL MAKEFILE
-
-void lista_destruir(lista_t *l, void (*destruir_dato)(figura_t *)) //CAMBIE void* por figura_t*
-{
-    struct nodo *act = l->prim, *sig;
-    while(act != NULL)
-    {
-        destruir_dato(act->dato);
-        sig = act->sig;
-        free(act);
-        act = sig;
-    }
-    free(l);
 }

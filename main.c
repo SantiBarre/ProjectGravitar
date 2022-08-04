@@ -150,7 +150,7 @@ int main(void) {
     
     //ESTO COMENTADO ACA ES LA LIBERACION DE LA MEMORIA DE FIGURAS EN EL MAIN QUE POR EL MOMENTO SALE PERO CON FUGAS
     // Aca se ponen las cosas a destruir / memoria a liberar.
-    lista_destruir(figuras_lista,figura_destruir);
+    lista_destruir(figuras_lista, figura_destruir);
     
     // END código del alumno
 

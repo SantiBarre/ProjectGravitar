@@ -50,18 +50,22 @@ void color_a_rgb(color_t c, uint8_t *r, uint8_t *g, uint8_t *b);
  */
 const char* figura_tipo_a_cadena(figura_tipo_t figura);
 
+/**
+ * @brief 
+ * Guarda las figuras en una lista
+ * @param archivo 
+ * @return lista_t* 
+ */
 lista_t *guardar_figuras(char *archivo);
 
-void figura_destruir(figura_t *fig);
-
-void r_figura_destruir(void *dato);
-
-void dato_imprimir(figura_t *dato);
+/**
+ * @brief 
+ * Destrulle una figura
+ * @param fig 
+ */
+void figura_destruir(void *fig);
 
 figura_t *obtener_figura(char nom[], lista_t *l);
 
-//FUNCION PRESTADA PARA HACER MEJOR JERARQUIA DEL MAKEFILE
-
-void lista_destruir(lista_t *l, void (*destruir_dato)(figura_t *)); //CAMBIE void* por figura_t
 
 #endif /* FIGURAS_H */

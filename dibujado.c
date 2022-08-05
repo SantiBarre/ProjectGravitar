@@ -37,7 +37,7 @@ bool dibujar_figura(figura_t *fig, float escala, float posx, float posy, double 
 
         size_t cant_puntos = polilinea_cantidad_puntos(p);
 
-        for (size_t pos = 0; pos < (cant_puntos -1) ; i++)
+        for (size_t pos = 0; pos < (cant_puntos -1) ; pos++) //CAMBIE A POS POR QUE SEGUIA ITERANDO SINO
         {
             float x, y, x_sig, y_sig;
 

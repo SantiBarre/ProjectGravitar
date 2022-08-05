@@ -28,18 +28,9 @@ typedef struct
 
 }figura_t;
 
-////    Color       ////
-
-/**
- * @brief 
- * Pasa de color 3 bit a 3 byte
- * @param c 
- * @param r retorna rojo
- * @param g retorna verde
- * @param b retorna azul
- */
-void color_a_rgb(color_t c, uint8_t *r, uint8_t *g, uint8_t *b);
-
+figura_t *crear_figura(char *nombre, figura_tipo_t tipo, bool infinito, size_t cantidad_polilineas);
+polilinea_t *leer_polilinea(FILE *f);
+bool leer_encabezado_figura(FILE *f, char nombre[], figura_tipo_t *tipo, bool *infinito, size_t *cantidad_polilineas);
 ////    Tipo de figura      ////
 
 /**
@@ -50,13 +41,6 @@ void color_a_rgb(color_t c, uint8_t *r, uint8_t *g, uint8_t *b);
  */
 const char* figura_tipo_a_cadena(figura_tipo_t figura);
 
-/**
- * @brief 
- * Guarda las figuras en una lista
- * @param archivo 
- * @return lista_t* 
- */
-lista_t *guardar_figuras(char *archivo);
 
 /**
  * @brief 
@@ -74,5 +58,12 @@ void figura_destruir(void *fig);
  */
 figura_t *obtener_figura(char nom[], lista_t *l);
 
+/**
+ * @brief 
+ * Devuelve lista de figuras
+ * @param arch 
+ * @return lista_t* 
+ */
+lista_t *guardar_figura(FILE *arch);
 
 #endif /* FIGURAS_H */

@@ -5,8 +5,22 @@
 #include <math.h>
 #include <stdlib.h>
 
+#define ON_COLOR 255
+#define OFF_COLOR 0
 
-polilinea_t *polilinea_crear_vacia(size_t n) //Elimine el static por que daba error al compilar
+#define MASK_R 0x4
+#define MASK_G 0x2
+#define MASK_B 0x1
+
+struct polilinea{
+    float (*puntos)[2];
+    color_t color;
+    size_t n;
+};
+
+
+
+polilinea_t *polilinea_crear_vacia(size_t n)
 {
     polilinea_t *nueva = malloc(sizeof(polilinea_t));
     if (nueva == NULL) return NULL;
@@ -82,6 +96,13 @@ bool polilinea_setter_punto(polilinea_t *polilinea, size_t pos, float x, float y
 
 ////    SET GET     Color       ////
 
+static void color_a_rgb(color_t c, uint8_t *r, uint8_t *g, uint8_t *b)
+{
+    *r = ((c & MASK_R) == MASK_R) ? ON_COLOR : OFF_COLOR;
+    *g = ((c & MASK_G) == MASK_G) ? ON_COLOR : OFF_COLOR;
+    *b = ((c & MASK_B) == MASK_B) ? ON_COLOR : OFF_COLOR;
+}
+
 bool polilinea_setter_color(polilinea_t *polilinea, color_t color)
 {
     if(polilinea != NULL)
@@ -105,7 +126,7 @@ bool polilinea_getter_color(const polilinea_t *polilinea, uint8_t *r, uint8_t *g
 
 ////    CALCULOS        ////
 
-void rotar(float polilinea[][2], size_t n, double rad)
+static void rotar(float polilinea[][2], size_t n, float rad)
 {
     float aux[2];
 
@@ -119,7 +140,7 @@ void rotar(float polilinea[][2], size_t n, double rad)
     }
 }
 
-void trasladar(float polilinea[][2], size_t n, float dx, float dy)
+static void trasladar(float polilinea[][2], size_t n, float dx, float dy)
 {
     for (size_t i = 0; i < n; i++)
     {
@@ -127,6 +148,7 @@ void trasladar(float polilinea[][2], size_t n, float dx, float dy)
         polilinea[i][1] += dy;
     }
 }
+
 static void sumaV(const float vectorA[], const float vectorB[], float BA[]) //NUEVO
 {
     for (size_t i = 0; i < 2; i++)
@@ -213,4 +235,20 @@ float distancia_punto_a_polilinea(float polilinea[][2], size_t n, float px, floa
             dmin = distancia[i];
 
     return dmin;
+}
+
+
+
+polilinea_t *polilinea_mov(const polilinea_t *poli, float posx, float posy, float ang)
+{
+    polilinea_t *p = polilinea_clonar(poli);
+    if (p == NULL) return NULL;
+
+    size_t cant_puntos = polilinea_cantidad_puntos(p);
+
+    rotar(p->puntos, cant_puntos, ang);
+
+    trasladar(p->puntos, cant_puntos, posx, posy);
+
+    return p;
 }

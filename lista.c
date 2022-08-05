@@ -20,7 +20,6 @@ struct lista_iterador
 };
 
 
-
 static struct nodo *nodo_crear(void *dato, struct nodo *sig)
 {
     struct nodo *n = malloc(sizeof(struct nodo));
@@ -131,6 +130,13 @@ lista_t *lista_filtrar(lista_t *l, bool (*f)(void *dato, void *extra), void *ext
         lista_iterador_destruir(li);
 
     return laux;
+}
+
+void *primer_dato(lista_t *l)
+{
+    if(l->prim != NULL)
+        return l->prim->dato;
+    return NULL;
 }
 
 lista_iterador_t *lista_iterador_crear(lista_t *l)

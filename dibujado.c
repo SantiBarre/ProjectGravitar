@@ -7,57 +7,43 @@
 #include "figuras.h"
 #include "nave.h"
 
-bool dibujar_figura(figura_t *fig, float escala, float posx, float posy, double angulo, SDL_Renderer *renderer )
+static bool cambiar_color_poli(const polilinea_t *p, SDL_Renderer *renderer)
 {
-    
-    //Imprimo todas las polilineas de una figura
-    for (size_t i = 0; i < fig->cantidad_polilineas ; i++)
-    {
-        //Creo un clon de la polilinea
-        polilinea_t *p = polilinea_clonar(fig->polis[i]);
-        if(p == NULL) return false;
+    uint8_t r, g, b;
+    if(!polilinea_getter_color(p, &r, &g, &b))
+        return false;
+    SDL_SetRenderDrawColor(renderer, r, g, b, 0x00);
+    return true;
+}
 
-        //Roto la polilinea
-        rotar( p->puntos , p->n , angulo );
+static bool dibujar_polilinea(const polilinea_t *poli, float escala, float posx, float posy, float ang, SDL_Renderer *renderer)
+{
+    //Creo un clon de la polilinea
+    polilinea_t *p = polilinea_mov(poli, posx, posy, ang);
+    if(p == NULL) return false;
 
-        //Traslado la polilinea
-        trasladar( p->puntos , p->n , posx , posy );
-
-
-        //Asigno un color a la futura polilinea
-        uint8_t r, g, b;
-        if(!polilinea_getter_color(p, &r, &g, &b))
+    //Asigno un color a la futura polilinea
+    if(!cambiar_color_poli(p, renderer))
         {
             polilinea_destruir(p);
             return false;
         }
-        SDL_SetRenderDrawColor(renderer, r, g, b, 0x00);
 
-        //Imprimo punto por punto a la polilinea
+    //Imprimo punto por punto a la polilinea
+    size_t cant_puntos = polilinea_cantidad_puntos(p);
+    float x, y, x_sig, y_sig;
 
-        size_t cant_puntos = polilinea_cantidad_puntos(p);
-
-        for (size_t pos = 0; pos < (cant_puntos -1) ; i++)
-        {
-            float x, y, x_sig, y_sig;
-
-            if (pos == 0) //Primera vez, busco los dos puntos, actual y anterior
-            {  
-                //Punto actual
-                if(!polilinea_getter_punto(p, pos , &x, &y))
-                {
-                    polilinea_destruir(p);
-                    return false;
-                } 
-
-                //Punto siguiente
-                if(!polilinea_getter_punto(p, pos + 1 , &x_sig, &y_sig))
-                {
-                    polilinea_destruir(p);
-                    return false;
-                }
-
-            }
+    for (size_t pos = 0; pos < (cant_puntos -1) ; pos++)
+    {
+        if (pos == 0) //Primera vez, busco los dos puntos, actual y anterior
+        {  
+            if( (!polilinea_getter_punto(p, pos , &x, &y))  || 
+                (!polilinea_getter_punto(p, pos + 1 , &x_sig, &y_sig))
+              )
+            {
+                polilinea_destruir(p);
+                return false;
+            } 
             else
             {
                 //El punto siguiente pasa a ser el actual
@@ -71,51 +57,43 @@ bool dibujar_figura(figura_t *fig, float escala, float posx, float posy, double 
                     return false;
                 }
             }
+        }
 
-            //Imprimo de punto anterior al actual
-            if ( SDL_RenderDrawLine( 
-                    renderer ,
-                    (x * escala + posx) ,
-                    (-y * escala + posy) , 
-                    (x_sig * escala + posx) , 
-                    (-y_sig * escala + posy) 
-                    )
+        //Imprimo de punto anterior al actual
+        if ( SDL_RenderDrawLine( 
+                renderer ,
+                (x * escala) ,
+                (-y * escala) , 
+                (x_sig * escala) , 
+                (-y_sig * escala) 
+                )
             != 0)
-            {
-                polilinea_destruir(p);
-                return false;
-            }
-
+        {
+            polilinea_destruir(p);
+            return false;
         }
 
         polilinea_destruir(p);
-
     }
 
     return true;
 }
 
-
-
-bool dibujar_polilinea(polilinea_t *polilinea,float escala,float posx,float posy,SDL_Renderer *renderer){
-    uint8_t r;
-    uint8_t g;
-    uint8_t b;
-    color_a_rgb(polilinea->color,&r,&g,&b);
-    SDL_SetRenderDrawColor(renderer, r, g, b, 0x00);
-    for(int i = 0; i < polilinea->n - 1; i++){ 
-        if (SDL_RenderDrawLine(
-        renderer,
-        polilinea->puntos[i][0] * escala + posx,
-        -polilinea->puntos[i][1] * escala + posy,
-        polilinea->puntos[i+1][0] * escala + posx,
-        -polilinea->puntos[i+1][1] * escala + posy
-                ) != 0){
+bool dibujar_figura(figura_t *fig, float escala, float posx, float posy, float ang, SDL_Renderer *renderer)
+{
+    //Imprimo todas las polilineas de una figura
+    for (size_t i = 0; i < fig->cantidad_polilineas ; i++)
+    {
+        if(!dibujar_polilinea(fig->polis[i], escala, posx, posy, ang, renderer))
             return false;
-        }
     }
+
     return true;
 }
+
+
+
+
 
 /*
 void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer){

@@ -61,7 +61,7 @@ void lista_destruir(lista_t *l, void (*destruir_dato)(void *));
  */
 lista_t *lista_filtrar(lista_t *l, bool (*f)(void *dato, void *extra), void *extra);
 
-
+void *primer_dato(lista_t *l);
 ////////////////////////////////////////
 //      Iteradores con lista          //
 ////////////////////////////////////////

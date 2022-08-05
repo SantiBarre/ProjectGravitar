@@ -14,9 +14,6 @@
 #define MASK_G 0x2
 #define MASK_B 0x1
 
-#define ON_COLOR 255
-#define OFF_COLOR 0
-
 #define MASK_NUM 0x3FF
 #define MASK_TIPO 0xE
 #define MASK_INF 0x40
@@ -32,13 +29,6 @@ static color_t color_crear(bool r, bool g, bool b)
     color = (b) ? (color | MASK_B) : color;
     
     return color;
-}
-
-void color_a_rgb(color_t c, uint8_t *r, uint8_t *g, uint8_t *b)
-{
-    *r = ((c & MASK_R) == MASK_R) ? ON_COLOR : OFF_COLOR;
-    *g = ((c & MASK_G) == MASK_G) ? ON_COLOR : OFF_COLOR;
-    *b = ((c & MASK_B) == MASK_B) ? ON_COLOR : OFF_COLOR;
 }
 
 
@@ -62,7 +52,7 @@ const char* figura_tipo_a_cadena(figura_tipo_t figura)
 
 ////    Lectura     ////
 
-static bool leer_encabezado_figura(FILE *f, char nombre[], figura_tipo_t *tipo, bool *infinito, size_t *cantidad_polilineas)
+bool leer_encabezado_figura(FILE *f, char nombre[], figura_tipo_t *tipo, bool *infinito, size_t *cantidad_polilineas)
 {
     //Leo el nombre
     if(!(fread(nombre, sizeof(char), 20, f) == 20)) return false;
@@ -84,7 +74,7 @@ static bool leer_encabezado_figura(FILE *f, char nombre[], figura_tipo_t *tipo, 
     return true;
 }
 
-static polilinea_t *leer_polilinea(FILE *f)
+polilinea_t *leer_polilinea(FILE *f)
 {   
     //Leo encabesado (2 bytes)
     uint16_t enca;
@@ -122,12 +112,13 @@ static polilinea_t *leer_polilinea(FILE *f)
 
 //// Lectura de achivo
 
-
-static figura_t *crear_figura_vacia(size_t cantidad_polilineas)
+figura_t *crear_figura(char *nombre, figura_tipo_t tipo, bool infinito, size_t cantidad_polilineas)
 {
+    //Creo una figura
     figura_t *fig = malloc(sizeof(figura_t));
     if(fig == NULL) return NULL;
 
+    //Creo espacio para el nombre
     fig->nombre = calloc(21, sizeof(char));
     if(fig->nombre == NULL)
     {
@@ -135,6 +126,7 @@ static figura_t *crear_figura_vacia(size_t cantidad_polilineas)
         return NULL;
     }
 
+    //Creo espacio para cada una de las polilineas
     fig->polis = calloc(cantidad_polilineas, sizeof(polilinea_t *));
     if(fig->polis == NULL)
     {
@@ -142,8 +134,13 @@ static figura_t *crear_figura_vacia(size_t cantidad_polilineas)
         free(fig);
         return NULL;
     }
-    fig->cantidad_polilineas = cantidad_polilineas;
 
+    //Copio la infomacion 
+    strcpy(*fig->nombre, nombre);
+    fig->cantidad_polilineas = cantidad_polilineas;
+    fig->infinito = infinito;
+    fig->tipo = tipo;
+    
     return fig;
 }
 
@@ -162,20 +159,13 @@ void figura_destruir(void *fig)
     rp_figura_destruir((figura_t *)fig);
 }
 
-
-lista_t *guardar_figuras(char *archivo)
+lista_t *guardar_figura(FILE *arch)
 {
+    //Creo una lista para guardar las figuras
+    lista_t *l_fig = lista_crear();
+    if(l_fig == NULL) return NULL;
 
-    FILE *f = fopen(archivo, "rb");
-    if(f == NULL) return NULL;
-
-    lista_t *figuras_lista = lista_crear();
-    if(figuras_lista == NULL)
-    {
-        fclose(f);
-        return NULL;
-    }
-
+    //Variables pasa guardar las cosas
     char nombre[20];
     bool infinito;
     figura_tipo_t tipo;
@@ -183,51 +173,55 @@ lista_t *guardar_figuras(char *archivo)
 
     while (1)
     {
-        //Creo figura y guardo en una lista
-
-        if(! leer_encabezado_figura(f, nombre, &tipo, &infinito, &cantidad_polilineas)) break;
-        
-        figura_t *fig = crear_figura_vacia(cantidad_polilineas);
-        if (fig == NULL)
+        //Intento leer el encabezado
+        if(leer_encabezado_figura(arch, nombre, &tipo, &infinito, &cantidad_polilineas))
         {
-            lista_destruir(figuras_lista, figura_destruir);
-            return NULL;
-        }
-    
-        strcpy(*(fig->nombre), nombre); //LE METI UN * PARA PROBAR
-        fig->infinito = infinito;
-        fig->tipo = tipo;
-
-        for(size_t i = 0; i < cantidad_polilineas; i++)
-        {
-  
-            polilinea_t *pol = leer_polilinea(f);
-            if(pol == NULL)
+            //Creo una figura
+            figura_t *fig = crear_figura(nombre, tipo, infinito, cantidad_polilineas);
+            if(fig == NULL)
             {
-                for (size_t j = 0; j < i; j++)
-                    polilinea_destruir(fig->polis[j]);
-                
-                lista_destruir(figuras_lista, figura_destruir);
-                fclose(f);
+                lista_destruir(l_fig, figura_destruir);
                 return NULL;
             }
-            fig->polis[i] = pol;
-        }
+            
+            //Guardo cada una de las polilineas en la figura
+            for(size_t i = 0; i < cantidad_polilineas; i++)
+            {
+                polilinea_t *p = leer_polilinea(arch);
+                if(p == NULL)
+                {
+                    for (size_t j = 0; j < i; j++)
+                    {
+                        polilinea_destruir(fig->polis[j]);
+                    }
 
-        if(!lista_agregar(figuras_lista, fig))
-        {                                        
-            lista_destruir(figuras_lista, figura_destruir);
-            fclose(f);
-            return NULL;
+                    figura_destruir(fig);
+                    lista_destruir(l_fig, figura_destruir);
+
+                    return NULL;
+                }
+                //La signo a la figura
+                fig->polis[i] = p;
+            }
+
+            if(!lista_agregar(l_fig, fig))
+            {                                        
+                lista_destruir(l_fig, figura_destruir);
+                return NULL;
+            }
+
         }
+        //Sino salgo del bucle
+        else  
+            break;
 
     }
-    
-    fclose(f);
-    return figuras_lista;
+
+    return l_fig;
 }
 
 
+/*
 figura_t *obtener_figura(char *nom, lista_t *l)
 {
 
@@ -253,3 +247,4 @@ figura_t *obtener_figura(char *nom, lista_t *l)
     return NULL;
 }
 
+*/

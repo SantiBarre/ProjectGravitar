@@ -9,19 +9,10 @@
 
 typedef uint8_t color_t; //Lo meti aca en vez de en el .c para poder tenerlo en el header ya que es una definicion
 
-typedef struct{
-    float (*puntos)[2];
-    color_t color;
-    size_t n;
-}polilinea_t;
-
+typedef struct polilinea polilinea_t;
 
 //      Creación y destrucción
 
-/*
- *Cree una nueva polilínea con n puntos pero sin inicializar sus coordenadas. 
- *Post: devolver la polilínea creada o NULL en caso de falla.
- */
 polilinea_t *polilinea_crear_vacia(size_t n);
 
 /*
@@ -96,24 +87,6 @@ polilinea_t *polilinea_clonar(const polilinea_t *polilinea);
 
 ////    Calculo
 
-/**
- * @brief 
- * Rota un angulo rad la polilinea
- * @param polilinea 
- * @param n 
- * @param rad 
- */
-void rotar(float polilinea[][2], size_t n, double rad);
-
-/**
- * @brief 
- * Traslada todo a un punto
- * @param polilinea 
- * @param n 
- * @param dx 
- * @param dy 
- */
-void trasladar(float polilinea[][2], size_t n, float dx, float dy);
 
 /**
  * @brief 
@@ -125,6 +98,18 @@ void trasladar(float polilinea[][2], size_t n, float dx, float dy);
  * @return double 
  */
 float distancia_punto_a_polilinea(float polilinea[][2], size_t n, float px, float py);
+
+/**
+ * @brief 
+ * Devuelve una polilinea nueva con otro angulo y en otra ubicacion
+ * @param poli 
+ * @param posx 
+ * @param posy 
+ * @param ang 
+ * @return polilinea_t* 
+ */
+polilinea_t * polilinea_mov(const polilinea_t *poli, float posx, float posy, float ang);
+
 
 #endif /* POLILINEA_H */
 

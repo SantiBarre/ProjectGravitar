@@ -17,7 +17,7 @@ all: $(APPNAME)
 $(APPNAME): main.o dibujado.o figuras.o lista.o polilinea.o nave.o
 	$(CC) $(CXXFLAGS) main.o dibujado.o figuras.o lista.o polilinea.o nave.o -o $(APPNAME) $(LDFLAGS)
 
-main.o: main.c config.h figuras.h lista.h polilinea.h
+main.o: main.c dibujado.h figuras.h config.h lista.h polilinea.h nave.h
 	$(CC) $(CXXFLAGS) -c main.c 
 
 dibujado.o: dibujado.c dibujado.h polilinea.h figuras.h nave.h
@@ -29,7 +29,7 @@ figuras.o: figuras.c figuras.h lista.h polilinea.h
 lista.o: lista.c lista.h 
 	$(CC) $(CXXFLAGS) -c lista.c
 
-polilinea.o: polilinea.c polilinea.h 
+polilinea.o: polilinea.c polilinea.h
 	$(CC) $(CXXFLAGS) -c polilinea.c -lm
 
 nave.o: nave.c nave.h 

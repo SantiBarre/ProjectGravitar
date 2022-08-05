@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <SDL2/SDL.h>
 
+#include "dibujado.h"
 #include "polilinea.h"
 #include "figuras.h"
 #include "nave.h"
@@ -15,7 +16,10 @@ bool dibujar_figura(figura_t *fig, float escala, float posx, float posy, double 
     {
         //Creo un clon de la polilinea
         polilinea_t *p = polilinea_clonar(fig->polis[i]);
-        if(p == NULL) return false;
+        if(p == NULL) {
+            perror("No se pudo clonar una polilinea!");
+            return false;
+        }
 
         //Roto la polilinea
         rotar( p->puntos , p->n , angulo );
@@ -28,6 +32,7 @@ bool dibujar_figura(figura_t *fig, float escala, float posx, float posy, double 
         uint8_t r, g, b;
         if(!polilinea_getter_color(p, &r, &g, &b))
         {
+            perror("No se pudo obtener un color!");
             polilinea_destruir(p);
             return false;
         }
@@ -46,6 +51,7 @@ bool dibujar_figura(figura_t *fig, float escala, float posx, float posy, double 
                 //Punto actual
                 if(!polilinea_getter_punto(p, pos , &x, &y))
                 {
+                    perror("No se pudo obtener un punto!");
                     polilinea_destruir(p);
                     return false;
                 } 
@@ -53,6 +59,7 @@ bool dibujar_figura(figura_t *fig, float escala, float posx, float posy, double 
                 //Punto siguiente
                 if(!polilinea_getter_punto(p, pos + 1 , &x_sig, &y_sig))
                 {
+                    perror("No se pudo obtener otro punto!");
                     polilinea_destruir(p);
                     return false;
                 }
@@ -67,6 +74,7 @@ bool dibujar_figura(figura_t *fig, float escala, float posx, float posy, double 
                 //Punto siguiente
                 if(!polilinea_getter_punto(p, pos + 1 , &x_sig, &y_sig))
                 {
+                    perror("No se pudo obtener otro punto mas!");
                     polilinea_destruir(p);
                     return false;
                 }
@@ -82,6 +90,7 @@ bool dibujar_figura(figura_t *fig, float escala, float posx, float posy, double 
                     )
             != 0)
             {
+                perror("No se pudo dibujar!");
                 polilinea_destruir(p);
                 return false;
             }
@@ -111,6 +120,7 @@ bool dibujar_polilinea(polilinea_t *polilinea,float escala,float posx,float posy
         polilinea->puntos[i+1][0] * escala + posx,
         -polilinea->puntos[i+1][1] * escala + posy
                 ) != 0){
+            perror("No se pudo dibujar_polilinea!");
             return false;
         }
     }

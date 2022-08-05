@@ -167,11 +167,15 @@ lista_t *guardar_figuras(char *archivo)
 {
 
     FILE *f = fopen(archivo, "rb");
-    if(f == NULL) return NULL;
-
+    if(f == NULL) {
+        perror("No se pudo abrir el archivo!");
+        return NULL;
+    }
+    
     lista_t *figuras_lista = lista_crear();
     if(figuras_lista == NULL)
     {
+        perror("No se pudo crear una lista!");
         fclose(f);
         return NULL;
     }
@@ -190,6 +194,7 @@ lista_t *guardar_figuras(char *archivo)
         figura_t *fig = crear_figura_vacia(cantidad_polilineas);
         if (fig == NULL)
         {
+            perror("No se pudo crear una figura!");
             lista_destruir(figuras_lista, figura_destruir);
             fclose(f);
             return NULL;
@@ -205,6 +210,7 @@ lista_t *guardar_figuras(char *archivo)
             polilinea_t *pol = leer_polilinea(f);
             if(pol == NULL)
             {
+                perror("No se pudo crear una polilinea!");
                 for (size_t j = 0; j < i; j++)
                     polilinea_destruir(fig->polis[j]);
                 
@@ -217,6 +223,7 @@ lista_t *guardar_figuras(char *archivo)
 
         if(!lista_agregar(figuras_lista, fig))
         {                                        
+            perror("No se pudo agregar algo a una lista!");
             lista_destruir(figuras_lista, figura_destruir);
             fclose(f);
             return NULL;

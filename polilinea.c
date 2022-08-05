@@ -1,10 +1,14 @@
 #include "polilinea.h" 
-#include "figuras.h"
 #include <stdbool.h>
 #include <stddef.h>
 #include <math.h>
 #include <stdlib.h>
 
+static void color_a_rgb(color_t c, uint8_t *r, uint8_t *g, uint8_t *b)
+{
+    *r = ((c&4)/4)*255;
+    *g = ((c&2)/2)*255;
+}
 
 polilinea_t *polilinea_crear_vacia(size_t n) //Elimine el static por que daba error al compilar
 {

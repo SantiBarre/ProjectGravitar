@@ -24,6 +24,10 @@ int main(void) {
     
     //ESTO COMENTADO ACA ES EL GUARDADO DE FIGURAS EN EL MAIN QUE POR EL MOMENTO NO ME SALE
     lista_t *figuras_lista = guardar_figuras("figuras.bin"); //Esta funcion crea una lista "figuras_lista"
+    if (figuras_lista == NULL){
+        perror("No se pudo guardar las figuras!");
+        return 1;
+    }
     // Mi nave:
     float nave[][2] = {{8, 0}, {-1, 6}, {-4, 4}, {-4, 2}, {-2, 0}, {-4, -2}, {-4, -4}, {-1, -6}, {8, 0}};
     size_t nave_tam = 9;
@@ -105,8 +109,12 @@ int main(void) {
         // BEGIN código del alumno
         // Dibujamos la nave escalada por f en el centro de la pantalla:
         
-        dibujar_figura(estrella, f, VENTANA_ANCHO/2, VENTANA_ALTO/2, 0, renderer);
+        //dibujar_figura(estrella, f, VENTANA_ANCHO/2, VENTANA_ALTO/2, 0, renderer);
+        /*for (size_t i=0; i < estrella->cantidad_polilineas; i++){
+            dibujar_polilinea(estrella->polis[i],f,VENTANA_ANCHO/2,VENTANA_ALTO/2,renderer);
+        }*/
 
+        dibujado_de_nivel(figuras_lista,renderer);
 
         SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0x00);
         for(int i = 0; i < nave_tam - 1; i++)

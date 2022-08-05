@@ -20,7 +20,7 @@ $(APPNAME): main.o dibujado.o figuras.o lista.o polilinea.o nave.o
 main.o: main.c dibujado.h figuras.h config.h lista.h polilinea.h nave.h
 	$(CC) $(CXXFLAGS) -c main.c 
 
-dibujado.o: dibujado.c dibujado.h polilinea.h figuras.h nave.h
+dibujado.o: dibujado.c dibujado.h polilinea.h figuras.h nave.h config.h
 	$(CC) $(CXXFLAGS) -c dibujado.c
 
 figuras.o: figuras.c figuras.h lista.h polilinea.h

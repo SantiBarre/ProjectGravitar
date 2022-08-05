@@ -23,9 +23,12 @@ typedef enum{
 //donde dice renderer poner "renderer" sin comillas al usarla en el main.
 //Para poder trasladarla a una posicion 
 
+bool dibujar_polilinea_m(polilinea_t *polilinea,float escala,float posx,float posy,SDL_Renderer *renderer);
+
 bool dibujar_polilinea(polilinea_t *polilinea,float escala,float posx,float posy,SDL_Renderer *renderer);
 
-bool dibujar_figura(figura_t *fig, float escala, float posx, float posy, double angulo, SDL_Renderer *renderer );
+bool dibujar_figura(figura_t *fig, float escala, float posx, float posy, SDL_Renderer *renderer );
 
+void dibujado_de_nivel(lista_t *lista_f,SDL_Renderer *renderer);
 
 #endif

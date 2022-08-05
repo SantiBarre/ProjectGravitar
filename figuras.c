@@ -36,9 +36,9 @@ static color_t color_crear(bool r, bool g, bool b)
 
 void color_a_rgb(color_t c, uint8_t *r, uint8_t *g, uint8_t *b)
 {
-    *r = ((c & MASK_R) == MASK_R) ? ON_COLOR : OFF_COLOR;
-    *g = ((c & MASK_G) == MASK_G) ? ON_COLOR : OFF_COLOR;
-    *b = ((c & MASK_B) == MASK_B) ? ON_COLOR : OFF_COLOR;
+    *r = ((c&4)/4)*255;
+    *g = ((c&2)/2)*255;
+    *b = (c&1)*255;
 }
 
 

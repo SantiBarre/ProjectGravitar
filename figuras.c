@@ -191,6 +191,7 @@ lista_t *guardar_figuras(char *archivo)
         if (fig == NULL)
         {
             lista_destruir(figuras_lista, figura_destruir);
+            fclose(f);
             return NULL;
         }
     

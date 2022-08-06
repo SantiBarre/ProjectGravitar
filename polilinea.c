@@ -4,6 +4,8 @@
 #include <math.h>
 #include <stdlib.h>
 
+#define MARGEN_DE_COLISION 10
+
 static void color_a_rgb(color_t c, uint8_t *r, uint8_t *g, uint8_t *b)
 {
     *r = ((c&4)/4)*255;
@@ -217,4 +219,15 @@ float distancia_punto_a_polilinea(float polilinea[][2], size_t n, float px, floa
             dmin = distancia[i];
 
     return dmin;
+}
+
+bool colision_polilineas (float polilineaA[][2],size_t nA,float polilineaB[][2],size_t nB ){
+    float aux;
+    for (size_t i; i < nB; i++){
+        aux = distancia_punto_a_polilinea(polilineaA,nA,polilineaB[i][0],polilineaB[i][1]);
+        if (aux <= MARGEN_DE_COLISION){
+            return true;
+        }
+    }
+    return false;
 }

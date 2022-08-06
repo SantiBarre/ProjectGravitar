@@ -126,6 +126,9 @@ void trasladar(float polilinea[][2], size_t n, float dx, float dy);
  */
 float distancia_punto_a_polilinea(float polilinea[][2], size_t n, float px, float py);
 
+//Devuelve TRUE si la distancia entre dos polilineas es menor a MARGEN_DE_COLISION
+bool colision_polilineas (float polilineaA[][2],size_t nA,float polilineaB[][2],size_t nB );
+
 #endif /* POLILINEA_H */
 
 

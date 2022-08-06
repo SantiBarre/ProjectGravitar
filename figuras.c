@@ -235,6 +235,14 @@ lista_t *guardar_figuras(char *archivo)
     return figuras_lista;
 }
 
+/*figura_t *figura_rotar(figura_t *fig,double radianes){
+    for (size_t i = 0; i <= fig->cantidad_polilineas; i++){
+        rotar(fig->polis[i]->puntos,fig->polis[i]->n,radianes);
+    }
+    return fig;
+
+}*/
+
 
 figura_t *obtener_figura(char *nom, lista_t *l)
 {

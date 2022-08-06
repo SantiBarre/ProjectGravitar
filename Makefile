@@ -15,7 +15,7 @@ all: $(APPNAME)
 
 # Builds the app
 $(APPNAME): main.o dibujado.o logica.o figuras.o lista.o polilinea.o nave.o
-	$(CC) $(CXXFLAGS) main.o dibujado.o figuras.o lista.o polilinea.o nave.o -o $(APPNAME) $(LDFLAGS)
+	$(CC) $(CXXFLAGS) main.o dibujado.o logica.o figuras.o lista.o polilinea.o nave.o -o $(APPNAME) $(LDFLAGS)
 
 main.o: main.c dibujado.h figuras.h config.h lista.h polilinea.h nave.h
 	$(CC) $(CXXFLAGS) -c main.c 

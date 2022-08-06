@@ -7,6 +7,7 @@
 #include "config.h"
 #include "figuras.h"
 #include "dibujado.h"
+#include "logica.h"
 
 int main(void) {
     SDL_Init(SDL_INIT_VIDEO);
@@ -29,13 +30,15 @@ int main(void) {
         return 1;
     }
     nivel_t elegir_nivel; //ACA PARA EL SWITCH CASE
-    elegir_nivel = 1;
+    elegir_nivel = INICIO;
     // Mi nave:
-    
-    nave_t *nave = nave_crear();
-    
-    
 
+    nave_t *nave = nave_crear();
+    nave->pos[0] = 388;
+    nave->pos[1] = 218;
+    // Logica Niveles:
+    
+    
 
 
     // Queremos que todo se dibuje escalado por f:
@@ -44,7 +47,7 @@ int main(void) {
     unsigned int ticks = SDL_GetTicks();
     while(1) {
         if(SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT)
+            if (event.type == SDL_QUIT) 
                 break;
             // BEGIN código del alumno
             if (event.type == SDL_KEYDOWN) {
@@ -53,16 +56,18 @@ int main(void) {
                     case SDLK_UP:
                         // Prendemos el chorro:
                         nave->chorro = true;
-                        
+                        propulsion_chorro(nave);
+                        nave->pos[0] = 663;
+                        nave->pos[1] = 473;
                         break;
                     case SDLK_DOWN:
 
                         break;
                     case SDLK_RIGHT:
-                        
+                        nave->dir += NAVE_ROTACION_PASO;
                         break;
                     case SDLK_LEFT:
-                        
+                        nave->dir -= NAVE_ROTACION_PASO;
                         break;
                 }
             }
@@ -86,13 +91,13 @@ int main(void) {
         // BEGIN código del alumno
         // Dibujamos la nave escalada por f en el centro de la pantalla:
         
-        //dibujar_figura(estrella, f, VENTANA_ANCHO/2, VENTANA_ALTO/2, 0, renderer);
-        /*for (size_t i=0; i < estrella->cantidad_polilineas; i++){
-            dibujar_polilinea(estrella->polis[i],f,VENTANA_ANCHO/2,VENTANA_ALTO/2,renderer);
-        }*/
-
-        dibujado_de_nivel(figuras_lista,nave,elegir_nivel,renderer);
         
+        logica_niveles(nave,elegir_nivel);
+        logica_nave(nave);
+
+        dibujado_de_nave(figuras_lista,nave,renderer);
+        dibujado_de_nivel(figuras_lista,elegir_nivel,renderer);
+        printf ("%f, %f", nave->pos[0],nave->pos[1]);
 
         // END código del alumno
 

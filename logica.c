@@ -23,25 +23,23 @@ void logica_niveles(nave_t *nave, nivel_t elegir_nivel){
             float pos_planeta5[2] = {111, 307};
 
             //Interaccion con los planetas
-            if(moduloV(nave->pos,pos_planeta1) < MARGEN_COLISION){
+            if(moduloV(nave->pos,pos_planeta1) <= MARGEN_COLISION){
                 elegir_nivel = NIVEL1;
             }
-            if(moduloV(nave->pos,pos_planeta2) < MARGEN_COLISION){
+            if(moduloV(nave->pos,pos_planeta2) <= MARGEN_COLISION){
                 elegir_nivel = NIVEL2;
             }
-            if(moduloV(nave->pos,pos_planeta3) < MARGEN_COLISION){
+            if(moduloV(nave->pos,pos_planeta3) <= MARGEN_COLISION){
                 elegir_nivel = NIVEL3;
             }
-            if(moduloV(nave->pos,pos_planeta4) < MARGEN_COLISION){
+            if(moduloV(nave->pos,pos_planeta4) <= MARGEN_COLISION){
                 elegir_nivel = NIVEL4;
             }
-            if(moduloV(nave->pos,pos_planeta5) < MARGEN_COLISION){
+            if(moduloV(nave->pos,pos_planeta5) <= MARGEN_COLISION){
                 elegir_nivel = NIVEL5;
             }
 
             //Aparicion de la nave
-            nave->pos[0] = 388;
-            nave->pos[1] = 218;
             break;
         case NIVEL1 : ;
             //Asi se sale del nivel 
@@ -79,4 +77,13 @@ void logica_niveles(nave_t *nave, nivel_t elegir_nivel){
 
             break;
     }
+}
+
+void logica_nave(nave_t *nave){
+
+    propulsion_chorro (nave);
+
+    nave_velocidad (nave);
+
+    aceleracion_nave(nave);
 }

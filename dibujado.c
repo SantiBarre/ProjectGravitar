@@ -20,6 +20,7 @@ bool dibujar_figura(figura_t *fig, float escala, float posx,float posy, SDL_Rend
     return true;
 }
 
+
 bool dibujar_polilinea(polilinea_t *polilinea,float escala,float posx,float posy,SDL_Renderer *renderer){
     uint8_t r;
     uint8_t g;
@@ -42,17 +43,7 @@ bool dibujar_polilinea(polilinea_t *polilinea,float escala,float posx,float posy
 }
 
 
-void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Renderer *renderer){
-    
-    //########## NAVE ##########
-    
-    figura_t *nave_fig = obtener_figura ("NAVE",lista_f);
-    if (nave->chorro){
-        nave_fig = obtener_figura("NAVE+CHORRO",lista_f);
-    }
-    dibujar_figura(nave_fig,1,nave->pos[0],nave->pos[1],renderer);
-
-    //dibujar_polilinea (nave_fig->polis,f,nave->pos[0],nave->pos[1]);
+void dibujado_de_nivel(lista_t *lista_f,nivel_t elegir_nivel,SDL_Renderer *renderer){
 
 
     //########## OBJETOS ##########
@@ -129,4 +120,15 @@ void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Re
             dibujar_figura (reactor,escala,815,309,renderer);
             break;
     }
+}
+
+
+void dibujado_de_nave(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer){
+
+    figura_t *nave_fig = obtener_figura ("NAVE",lista_f);
+        if (nave->chorro){
+            nave_fig = obtener_figura("NAVE+CHORRO",lista_f);
+        }
+    dibujar_figura(nave_fig,1,nave->pos[0],nave->pos[1],renderer);
+    
 }

@@ -9,4 +9,6 @@
 
 void logica_niveles(nave_t *nave, nivel_t elegir_nivel);
 
+void logica_nave(nave_t *nave);
+
 #endif // LOGICA_H

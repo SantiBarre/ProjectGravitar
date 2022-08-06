@@ -4,6 +4,7 @@
 typedef struct{ //STRUCT NAVE.
     float pos[2]; //Posicion del centro, para el dibujado.
     float vel[2]; //Vector de la velocidad de la nave descompuesto en X e Y.
+    float ace[2];
     float dir; //Vector de la direccion de la nave en RADIANES.
     bool chorro; //Si chorro == 1, aumentar la velocidad con respecto a la direccion y dibujar la nave con el chorro.
     bool escudo; //Si escudo == 1, activar el escudo y dibujarlo, ademas activar todas las interacciones con respecto al escudo (como perder combustible por ejemplo).
@@ -21,9 +22,9 @@ void nave_disparar(nave_t *nave);
 
 
 //ACA LAS NUEVAS
-void propulsion_chorro (nave_t *nave,float *acex,float *acey);
-void nave_velocidad (nave_t *nave,float acex,float acey);
-void aceleracion_nave (nave_t *nave,float acex,float acey);
+void propulsion_chorro (nave_t *nave);
+void nave_velocidad (nave_t *nave);
+void aceleracion_nave (nave_t *nave);
 
 
 

@@ -13,8 +13,8 @@
 
 #define JUEGO_FPS 100
 #define JUEGO_COMBUSTIBLE_INICIAL 10000
-#define JUEGO_COMBUSTIBLE_POT_X_SEG 250
-#define JUEGO_COMBUSTIBLE_ESC_X_SEG 500
+#define JUEGO_COMBUSTIBLE_POT_X_SEG 250 //Combustible usado por el chorro en 1 segundo
+#define JUEGO_COMBUSTIBLE_ESC_X_SEG 500 //Combustible usado por el escudo en 1 segundo
 
 #define G 10
 

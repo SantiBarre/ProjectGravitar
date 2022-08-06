@@ -7,6 +7,7 @@
 #include "config.h"
 #include "figuras.h"
 #include "dibujado.h"
+#include "logica.h"
 
 int main(void) {
     SDL_Init(SDL_INIT_VIDEO);
@@ -29,7 +30,8 @@ int main(void) {
         return 1;
     }
     // Mi nave:
-    float nave[][2] = {{8, 0}, {-1, 6}, {-4, 4}, {-4, 2}, {-2, 0}, {-4, -2}, {-4, -4}, {-1, -6}, {8, 0}};
+    nave_t *nave = nave_crear();
+    float nave_a[][2] = {{8, 0}, {-1, 6}, {-4, 4}, {-4, 2}, {-2, 0}, {-4, -2}, {-4, -4}, {-1, -6}, {8, 0}};
     size_t nave_tam = 9;
 
     figura_t *estrella = obtener_figura("ESTRELLA", figuras_lista);
@@ -66,25 +68,25 @@ int main(void) {
                         for(int i = 0; i < nave_tam - 1; i++)
                             SDL_RenderDrawLine(
                                 renderer,
-                                nave[i][0] * f,
-                                -nave[i][1] * f ,
-                                nave[i+1][0] * f,
-                                -nave[i+1][1] * f
+                                nave_a[i][0] * f,
+                                -nave_a[i][1] * f ,
+                                nave_a[i+1][0] * f,
+                                -nave_a[i+1][1] * f
                             );
 
-                        trasladar(nave,nave_tam,0,dd);
+                        trasladar(nave_a,nave_tam,0,dd);
                         trasladar(chorro,chorro_tam,0,dd);
                         break;
                     case SDLK_DOWN:
-                        trasladar(nave,nave_tam,0,-dd);
+                        trasladar(nave_a,nave_tam,0,-dd);
                         trasladar(chorro,chorro_tam,0,-dd);
                         break;
                     case SDLK_RIGHT:
-                        rotar(nave,nave_tam, -PI/4);
+                        rotar(nave_a,nave_tam, -PI/4);
                         rotar(chorro,chorro_tam, -PI/4);
                         break;
                     case SDLK_LEFT:
-                        rotar(nave,nave_tam, PI/4);
+                        rotar(nave_a,nave_tam, PI/4);
                         rotar(chorro,chorro_tam, PI/4);
                         break;
                 }
@@ -114,27 +116,18 @@ int main(void) {
             dibujar_polilinea(estrella->polis[i],f,VENTANA_ANCHO/2,VENTANA_ALTO/2,renderer);
         }*/
 
-        dibujado_de_nivel(figuras_lista,renderer);
+        dibujado_de_nivel(figuras_lista,nave,renderer);
 
         SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0x00);
         for(int i = 0; i < nave_tam - 1; i++)
             SDL_RenderDrawLine(
                 renderer,
-                nave[i][0] * f + VENTANA_ANCHO/2,
-                -nave[i][1] * f + VENTANA_ALTO/2 ,
-                nave[i+1][0] * f +VENTANA_ANCHO/2,
-                -nave[i+1][1] * f + VENTANA_ALTO/2
+                nave_a[i][0] * f + VENTANA_ANCHO/2,
+                -nave_a[i][1] * f + VENTANA_ALTO/2 ,
+                nave_a[i+1][0] * f +VENTANA_ANCHO/2,
+                -nave_a[i+1][1] * f + VENTANA_ALTO/2
             );
 
-        SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0x00);
-        for(int i = 0; i < nave_tam - 1; i++)
-            SDL_RenderDrawLine(
-                renderer,
-                nave[i][0] * f ,
-                -nave[i][1] * f ,
-                nave[i+1][0] * f ,
-                -nave[i+1][1] * f
-            );
 
         if(chorro_prendido) {
             // Dibujamos el chorro escalado por f en el centro de la pantalla:

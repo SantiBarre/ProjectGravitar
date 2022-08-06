@@ -8,6 +8,7 @@
 #include "figuras.h"
 #include "nave.h"
 #include "config.h"
+#include "logica.h"
 
 bool dibujar_figura_m(figura_t *fig, float escala, float posx, float posy, double angulo, SDL_Renderer *renderer )
 {
@@ -137,12 +138,16 @@ bool dibujar_polilinea(polilinea_t *polilinea,float escala,float posx,float posy
 }
 
 
-void dibujado_de_nivel(lista_t *lista_f,SDL_Renderer *renderer){
+void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer){
     
     //########## NAVE ##########
     nivel_t elegir_nivel = INICIO;
-    /*nave_t *nave = nave_crear();
-    figura_t *nave_fig = obtener_figura ("FIGURA");*/
+    
+    figura_t *nave_fig = obtener_figura ("NAVE",lista_f);
+    if (nave->chorro){
+        nave_fig = obtener_figura("NAVE+CHORRO",lista_f);
+    }
+    
 
     //dibujar_polilinea (nave_fig->polis,f,nave->pos[0],nave->pos[1]);
 
@@ -167,35 +172,35 @@ void dibujado_de_nivel(lista_t *lista_f,SDL_Renderer *renderer){
             //Si colisiona aca la nave muere y se pierde una vida
 
             figura_t *planeta1 = obtener_figura("PLANETA1",lista_f);
-            dibujar_figura (planeta1,escala,663,473,renderer);
+            dibujar_figura (planeta1,1,663,473,renderer);
             if (colision_figuras (nave_fig,planeta1)){
                 elegir_nivel = NIVEL1;
             }
 
 
             figura_t *planeta2 = obtener_figura("PLANETA2",lista_f);
-            dibujar_figura (planeta2,escala,671,145,renderer);
+            dibujar_figura (planeta2,1,671,145,renderer);
             if (colision_figuras (nave_fig,planeta2)){
                 elegir_nivel = NIVEL2;
             }
 
 
             figura_t *planeta3 = obtener_figura("PLANETA3",lista_f);
-            dibujar_figura (planeta3,escala,110,79,renderer);
+            dibujar_figura (planeta3,1,110,79,renderer);
             if (colision_figuras (nave_fig,planeta3)){
                 elegir_nivel = NIVEL3;
             }
 
 
             figura_t *planeta4 = obtener_figura("PLANETA4",lista_f);
-            dibujar_figura (planeta4,escala,204,455,renderer);
+            dibujar_figura (planeta4,1,204,455,renderer);
             if (colision_figuras (nave_fig,planeta4)){
                 elegir_nivel = NIVEL4;
             }
             
 
             figura_t *planeta5 = obtener_figura("PLANETA5",lista_f);
-            dibujar_figura (planeta5,escala,111,307,renderer);
+            dibujar_figura (planeta5,1,111,307,renderer);
             if (colision_figuras (nave_fig,planeta5)){
                 elegir_nivel = NIVEL5;
             }
@@ -208,7 +213,7 @@ void dibujado_de_nivel(lista_t *lista_f,SDL_Renderer *renderer){
         case NIVEL1: ;
             escala =1;
             figura_t *nivel1ne = obtener_figura("NIVEL1NE",lista_f);
-            dibujar_figura (nivel1ne,escala,VENTANA_ANCHO/2,VENTANA_ALTO/2,renderer);
+            dibujar_figura (nivel1ne,escala,0,0,renderer);
             //dos objetos no pueden usar la misma polilinea si esa se debe de rotar, asi que hay que cambiarlo
             dibujar_figura (combustible,escala,1064,13,renderer);
             dibujar_figura (combustible,escala,1685,113,renderer);
@@ -218,25 +223,25 @@ void dibujado_de_nivel(lista_t *lista_f,SDL_Renderer *renderer){
         case NIVEL2: ;
             escala =1;
             figura_t *nivel1se = obtener_figura("NIVEL1SE",lista_f);
-            dibujar_figura (nivel1se,escala,VENTANA_ANCHO/2,VENTANA_ALTO/2,renderer);
+            dibujar_figura (nivel1se,escala,0,0,renderer);
             //2 combustibles y 4 torretas
             break;
         case NIVEL3: ;
             escala =1;
             figura_t *nivel1sw = obtener_figura("NIVEL1SW",lista_f);
-            dibujar_figura (nivel1sw,escala,VENTANA_ANCHO/2,VENTANA_ALTO/2,renderer);
+            dibujar_figura (nivel1sw,escala,0,0,renderer);
             //3 combustibles y 6 torretas
             break;
         case NIVEL4: ;
             escala =1;
             figura_t *nivel1nw = obtener_figura("NIVEL1NW",lista_f);
-            dibujar_figura (nivel1nw,escala,VENTANA_ANCHO/2,VENTANA_ALTO/2,renderer);
+            dibujar_figura (nivel1nw,escala,0,0,renderer);
             //4 combustibles Y 8 torretas
             break;
         case NIVEL5: ;
             escala =1;
             figura_t *nivel1r = obtener_figura("NIVEL1R",lista_f);
-            dibujar_figura (nivel1r,escala,VENTANA_ANCHO/2,VENTANA_ALTO/2,renderer);
+            dibujar_figura (nivel1r,escala,0,0,renderer);
             figura_t *reactor = obtener_figura("REACTOR",lista_f);
             dibujar_figura (reactor,escala,815,309,renderer);
             break;

@@ -145,7 +145,7 @@ static void restaV(const float vectorA[], const float vectorB[], float BA[])
         BA[i] = vectorA[i] - vectorB[i];
 }
 
-static float moduloV(const float vectorA[],const float vectorB[])
+float moduloV(const float vectorA[],const float vectorB[])
 {
     return (float)sqrt(pow(vectorB[0] - vectorA[0],2) + pow(vectorB[1] - vectorA[1],2));
 }
@@ -221,7 +221,21 @@ float distancia_punto_a_polilinea(float polilinea[][2], size_t n, float px, floa
     return dmin;
 }
 
-bool colision_polilineas (float polilineaA[][2],size_t nA,float polilineaB[][2],size_t nB ){
+polilinea_t *polilinea_mov(const polilinea_t *poli, float posx, float posy, float ang)
+{
+    polilinea_t *p = polilinea_clonar(poli);
+    if(p == NULL) return NULL;
+
+    size_t cant_puntos = polilinea_cantidad_puntos(p);
+
+    rotar(p->puntos, cant_puntos, ang);
+
+    trasladar(p->puntos, cant_puntos, posx, posy);
+
+    return p;
+}
+
+/*bool colision_polilineas (float polilineaA[][2],size_t nA,float polilineaB[][2],size_t nB ){
     float aux;
     for (size_t i=0; i < nB; i++){
         aux = distancia_punto_a_polilinea(polilineaA,nA,polilineaB[i][0],polilineaB[i][1]);
@@ -230,4 +244,4 @@ bool colision_polilineas (float polilineaA[][2],size_t nA,float polilineaB[][2],
         }
     }
     return false;
-}
+}*/

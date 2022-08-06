@@ -75,6 +75,6 @@ void figura_destruir(void *fig);
 figura_t *obtener_figura(char nom[], lista_t *l);
 
 //Da TRUE si cualquiera de las polilineas de A colisionan con B
-bool colision_figuras (figura_t *figuraA,figura_t *figuraB);
+//bool colision_figuras (figura_t *figuraA,figura_t *figuraB);
 
 #endif /* FIGURAS_H */

@@ -23,5 +23,14 @@
 
 #define NAVE_ANGULO_INICIAL (PI/2)
 
+typedef enum{
+    INICIO = 1,
+    NIVEL1 = 2,
+    NIVEL2 = 3,
+    NIVEL3 = 4,
+    NIVEL4 = 5,
+    NIVEL5 = 6,
+}nivel_t;
+
 #endif // _CONFIG_H_
 

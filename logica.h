@@ -5,11 +5,8 @@
 #include "figuras.h"
 #include "nave.h"
 #include "config.h"
+#include "math.h"
 
-void propulsion_chorro (nave_t *nave,float *acex,float *acey);
-
-void nave_velocidad (nave_t *nave,float acex,float acey);
-
-void aceleracion_nave (nave_t *nave,float acex,float acey);
+void logica_niveles(nave_t *nave, nivel_t elegir_nivel);
 
 #endif // LOGICA_H

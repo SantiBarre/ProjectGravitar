@@ -18,6 +18,15 @@ void nave_cambiar_dir(nave_t *nave, float dir);
 void nave_prender_chorro(nave_t *nave);
 void nave_prender_escudo(nave_t *nave);
 void nave_disparar(nave_t *nave);
+
+
+//ACA LAS NUEVAS
+void propulsion_chorro (nave_t *nave,float *acex,float *acey);
+void nave_velocidad (nave_t *nave,float acex,float acey);
+void aceleracion_nave (nave_t *nave,float acex,float acey);
+
+
+
 //Destruye la nave (esto solo se usara cuando se cierre el programa o al perder, todavia no se si al perder destruimos la nave y la creamos devuelta o tan solo la movemos al centro de la pantalla en el nivel de seleccion de planeta).
 void nave_destruir(nave_t *nave);
 

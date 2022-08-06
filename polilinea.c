@@ -242,7 +242,7 @@ float distancia_punto_a_polilinea(float polilinea[][2], size_t n, float px, floa
 polilinea_t *polilinea_mov(const polilinea_t *poli, float posx, float posy, float ang)
 {
     polilinea_t *p = polilinea_clonar(poli);
-    if (p == NULL) return NULL;
+    if(p == NULL) return NULL;
 
     size_t cant_puntos = polilinea_cantidad_puntos(p);
 

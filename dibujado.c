@@ -3,62 +3,53 @@
 #include <stdint.h>
 #include <SDL2/SDL.h>
 
+
 #include "polilinea.h"
 #include "figuras.h"
 #include "nave.h"
 
-static bool cambiar_color_poli(const polilinea_t *p, SDL_Renderer *renderer)
-{
-    uint8_t r, g, b;
-    if(!polilinea_getter_color(p, &r, &g, &b))
-        return false;
-    SDL_SetRenderDrawColor(renderer, r, g, b, 0x00);
-    return true;
-}
 
-static bool dibujar_polilinea(const polilinea_t *poli, float escala, float posx, float posy, float ang, SDL_Renderer *renderer)
+bool dibujar_polilinea(const polilinea_t *poli, float escala, float posx, float posy, float ang, SDL_Renderer *renderer)
 {
+    printf("Entro a dibujar");
     //Creo un clon de la polilinea
     polilinea_t *p = polilinea_mov(poli, posx, posy, ang);
     if(p == NULL) return false;
+    printf("Clono bien");
 
     //Asigno un color a la futura polilinea
-    if(!cambiar_color_poli(p, renderer))
-        {
-            polilinea_destruir(p);
-            return false;
-        }
+    uint8_t r, g, b;
+    polilinea_getter_color(p, &r, &g, &b);
+    SDL_SetRenderDrawColor(renderer, r, g, b, 0x00);
 
     //Imprimo punto por punto a la polilinea
     size_t cant_puntos = polilinea_cantidad_puntos(p);
     float x, y, x_sig, y_sig;
 
-    for (size_t pos = 0; pos < (cant_puntos -1) ; pos++)
+
+
+
+    if(!polilinea_getter_punto(p, 0, &x_sig, &y_sig))
     {
-        if (pos == 0) //Primera vez, busco los dos puntos, actual y anterior
-        {  
-            if( (!polilinea_getter_punto(p, pos , &x, &y))  || 
-                (!polilinea_getter_punto(p, pos + 1 , &x_sig, &y_sig))
-              )
-            {
-                polilinea_destruir(p);
-                return false;
-            } 
-            else
-            {
-                //El punto siguiente pasa a ser el actual
-                x = x_sig;
-                y = y_sig;
+        polilinea_destruir(p);
+        return false;
+    }
 
-                //Punto siguiente
-                if(!polilinea_getter_punto(p, pos + 1 , &x_sig, &y_sig))
-                {
-                    polilinea_destruir(p);
-                    return false;
-                }
-            }
+
+    for (size_t i = 0; i < cant_puntos ; i++)
+    {
+
+        //El punto siguiente pasa a ser el actual
+        x = x_sig;
+        y = y_sig;
+
+        //Punto siguiente
+        if(!polilinea_getter_punto(p, i + 1 , &x_sig, &y_sig))
+        {
+            polilinea_destruir(p);
+            return false;
         }
-
+        
         //Imprimo de punto anterior al actual
         if ( SDL_RenderDrawLine( 
                 renderer ,
@@ -78,6 +69,7 @@ static bool dibujar_polilinea(const polilinea_t *poli, float escala, float posx,
 
     return true;
 }
+
 
 bool dibujar_figura(figura_t *fig, float escala, float posx, float posy, float ang, SDL_Renderer *renderer)
 {

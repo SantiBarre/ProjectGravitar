@@ -223,7 +223,7 @@ float distancia_punto_a_polilinea(float polilinea[][2], size_t n, float px, floa
 
 bool colision_polilineas (float polilineaA[][2],size_t nA,float polilineaB[][2],size_t nB ){
     float aux;
-    for (size_t i; i < nB; i++){
+    for (size_t i=0; i < nB; i++){
         aux = distancia_punto_a_polilinea(polilineaA,nA,polilineaB[i][0],polilineaB[i][1]);
         if (aux <= MARGEN_DE_COLISION){
             return true;

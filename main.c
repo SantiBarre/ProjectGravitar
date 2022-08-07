@@ -97,7 +97,6 @@ int main(void) {
 
         dibujado_de_nave(figuras_lista,nave,renderer);
         dibujado_de_nivel(figuras_lista,elegir_nivel,renderer);
-        printf ("%f, %f", nave->pos[0],nave->pos[1]);
 
         // END código del alumno
 

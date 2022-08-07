@@ -42,6 +42,26 @@ bool dibujar_polilinea(polilinea_t *polilinea,float escala,float posx,float posy
     return true;
 }
 
+bool dibujar_palabra(int ***palabra,size_t tamanio_palabra,float escala,float posx,float posy,SDL_Renderer *renderer){ 
+    SDL_SetRenderDrawColor(renderer, 0, 0xFF, 0xFF, 0x00);
+    for (int j = 0; j <= tamanio_palabra; j++){
+        int tamanio_letra = sizeof(*palabra) / (sizeof(int) * 2); 
+        for(int i = 0; i < tamanio_letra - 1; i++){ 
+            if (SDL_RenderDrawLine(
+            renderer,
+            palabra[j][i][0] * escala + posx,
+            -palabra[j][i][1] * escala + (VENTANA_ALTO - posy),
+            palabra[j][i+1][0] * escala + posx,
+            -palabra[j][i+1][1] * escala + (VENTANA_ALTO - posy)
+                    ) != 0){
+                perror("No se pudo dibujar_polilinea!");
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 
 void dibujado_de_nivel(lista_t *lista_f,nivel_t elegir_nivel,SDL_Renderer *renderer){
 
@@ -49,76 +69,82 @@ void dibujado_de_nivel(lista_t *lista_f,nivel_t elegir_nivel,SDL_Renderer *rende
     //########## OBJETOS ##########
     float escala=1;
     
-    switch (elegir_nivel){
-        case INICIO: ;
-            
-            //########## DIBUJADO DE INICIO ##########
-            /*nave->pos[0] = 388;
-            nave->pos[1] = 218; */
-            escala =1;
+    if (elegir_nivel == INICIO) { 
+        
+        //########## DIBUJADO DE INICIO ##########
+        /*nave->pos[0] = 388;
+        nave->pos[1] = 218; */
+        escala =1;
 
-            figura_t *base = obtener_figura("BASE",lista_f);
-            dibujar_figura (base,1,388,218,renderer);
-            figura_t *estrella = obtener_figura("ESTRELLA",lista_f);
-            dibujar_figura (estrella,1,457,364,renderer);
-            //Si colisiona aca la nave muere y se pierde una vida
+        figura_t *base = obtener_figura("BASE",lista_f);
+        dibujar_figura (base,1,388,218,renderer);
+        figura_t *estrella = obtener_figura("ESTRELLA",lista_f);
+        dibujar_figura (estrella,1,457,364,renderer);
+        //Si colisiona aca la nave muere y se pierde una vida
 
-            figura_t *planeta1 = obtener_figura("PLANETA1",lista_f);
-            dibujar_figura (planeta1,1,663,473,renderer);
-
-
-            figura_t *planeta2 = obtener_figura("PLANETA2",lista_f);
-            dibujar_figura (planeta2,1,671,145,renderer);
+        figura_t *planeta1 = obtener_figura("PLANETA1",lista_f);
+        dibujar_figura (planeta1,1,663,473,renderer);
 
 
-            figura_t *planeta3 = obtener_figura("PLANETA3",lista_f);
-            dibujar_figura (planeta3,1,110,79,renderer);
+        figura_t *planeta2 = obtener_figura("PLANETA2",lista_f);
+        dibujar_figura (planeta2,1,671,145,renderer);
 
 
-            figura_t *planeta4 = obtener_figura("PLANETA4",lista_f);
-            dibujar_figura (planeta4,1,204,455,renderer);
-            
+        figura_t *planeta3 = obtener_figura("PLANETA3",lista_f);
+        dibujar_figura (planeta3,1,110,79,renderer);
 
-            figura_t *planeta5 = obtener_figura("PLANETA5",lista_f);
-            dibujar_figura (planeta5,1,111,307,renderer);
 
-            //########## INTERACCIONES DE INICIO ##########
+        figura_t *planeta4 = obtener_figura("PLANETA4",lista_f);
+        dibujar_figura (planeta4,1,204,455,renderer);
+        
 
-            
-            break;
+        figura_t *planeta5 = obtener_figura("PLANETA5",lista_f);
+        dibujar_figura (planeta5,1,111,307,renderer);
 
-        case NIVEL1: ;
-            escala =1;
-            figura_t *nivel1ne = obtener_figura("NIVEL1NE",lista_f);
-            dibujar_figura (nivel1ne,escala,0,0,renderer);
-            //dos objetos no pueden usar la misma polilinea si esa se debe de rotar, asi que hay que cambiarlo
-            //2 combustibles y 2 torretas
-            break;
-        case NIVEL2: ;
-            escala =1;
-            figura_t *nivel1se = obtener_figura("NIVEL1SE",lista_f);
-            dibujar_figura (nivel1se,escala,0,0,renderer);
-            //2 combustibles y 4 torretas
-            break;
-        case NIVEL3: ;
-            escala =1;
-            figura_t *nivel1sw = obtener_figura("NIVEL1SW",lista_f);
-            dibujar_figura (nivel1sw,escala,0,0,renderer);
-            //3 combustibles y 6 torretas
-            break;
-        case NIVEL4: ;
-            escala =1;
-            figura_t *nivel1nw = obtener_figura("NIVEL1NW",lista_f);
-            dibujar_figura (nivel1nw,escala,0,0,renderer);
-            //4 combustibles Y 8 torretas
-            break;
-        case NIVEL5: ;
-            escala =1;
-            figura_t *nivel1r = obtener_figura("NIVEL1R",lista_f);
-            dibujar_figura (nivel1r,escala,0,0,renderer);
-            figura_t *reactor = obtener_figura("REACTOR",lista_f);
-            dibujar_figura (reactor,escala,815,309,renderer);
-            break;
+        //########## INTERACCIONES DE INICIO ##########
+
+        
+    }
+
+    if (elegir_nivel == NIVEL1) {
+        escala =1;
+        figura_t *nivel1ne = obtener_figura("NIVEL1NE",lista_f);
+        //Es infinito
+        dibujar_figura (nivel1ne,escala,0,0,renderer);
+        //dos objetos no pueden usar la misma polilinea si esa se debe de rotar, asi que hay que cambiarlo
+        //2 combustibles y 2 torretas
+    }
+
+    if (elegir_nivel == NIVEL2) {
+        escala =1;
+        figura_t *nivel1se = obtener_figura("NIVEL1SE",lista_f);
+        //Es infinito
+        dibujar_figura (nivel1se,escala,0,0,renderer);
+        //2 combustibles y 4 torretas
+    }
+
+    if (elegir_nivel == NIVEL3) {
+        escala =1;
+        figura_t *nivel1sw = obtener_figura("NIVEL1SW",lista_f);
+        //Es infinito
+        dibujar_figura (nivel1sw,escala,0,0,renderer);
+        //3 combustibles y 6 torretas
+    }
+
+    if (elegir_nivel == NIVEL4) {
+        escala =1;
+        figura_t *nivel1nw = obtener_figura("NIVEL1NW",lista_f);
+        dibujar_figura (nivel1nw,escala,0,0,renderer);
+        //4 combustibles Y 8 torretas
+    }
+
+    if (elegir_nivel == NIVEL5) {
+        escala =1;
+        figura_t *nivel1r = obtener_figura("NIVEL1R",lista_f);
+        dibujar_figura (nivel1r,escala,0,0,renderer);
+        figura_t *reactor = obtener_figura("REACTOR",lista_f);
+        dibujar_figura (reactor,escala,815,309,renderer);
+        
     }
 }
 

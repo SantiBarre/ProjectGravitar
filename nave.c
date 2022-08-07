@@ -11,12 +11,25 @@ nave_t* nave_crear(void)
     if (n == NULL) return NULL;
 
     n->dir = NAVE_ANGULO_INICIAL;
+
+    //Variables logicas
     n->chorro = false;
     n->escudo = false;
     n->disparo = false;
+
+    //contador de tiempo de disparos en 0
     n->disparo = 0;
+
+    //Cantidad de vidas de la nave
+    n->vidas = 3;
+
+    //Combustible de la nave
     n->combustible = JUEGO_COMBUSTIBLE_INICIAL;
+
+    //Velocidad inicial de la nave
     n->vel[2] = {0, 0};
+
+    //
     n->pos[2] = {0, 0};
 
     return n;
@@ -74,32 +87,11 @@ void nave_destruir(nave_t *nave)
 
 
 //Definiciones de funciones de los disparos.
-disparo_t* disparo_crear_n(nave_t *n)
-{
-    disparo_t *d = malloc(sizeof(disparo_t));
-    if (d == NULL ) return NULL;
 
-    for (size_t i = 0; i < count; i++)
-        d->pos[i] = n->pos[i];
-
-    d->dir = n->dir;
-    d->cronometro = 0;
-
-    return d;
-}
 
 disparo_t* disparo_crear_t(torreta_t *t, nave_t *n)
 {
-    disparo_t *d = malloc(sizeof(disparo_t));
-    if (d == NULL ) return NULL;
 
-    for (size_t i = 0; i < count; i++)
-        d->pos[i] = t->pos[i];
-        
-    d->dir = pendiente(n->pos, t->pos)
-    d->cronometro = 0;
-
-    return d;
 }
 
 void disparo_cronometro(disparo_t *d)
@@ -132,26 +124,5 @@ void torreta_disparar(torreta_t *torreta){
     else {
         torreta->disparo = true;
     }
-}
-
-void propulsion_chorro (nave_t *nave){
-    if (nave->chorro){
-        nave->ace[0] = NAVE_ACELERACION * (cos(nave->dir));
-        nave->ace[1] = NAVE_ACELERACION * (sin(nave->dir));
-    }
-    else {
-        nave->ace[0] = 0;
-        nave->ace[1] = 0;
-    }
-}
-
-void nave_velocidad (nave_t *nave){
-    nave->vel[0] = nave->vel[0] + nave->ace[0] * (1/JUEGO_FPS);
-    nave->vel[1] = nave->vel[1] + nave->ace[1] * (1/JUEGO_FPS);
-}
-
-void aceleracion_nave (nave_t *nave){
-    nave->pos[0] = nave->pos[0] + (nave->vel [0] * 1/JUEGO_FPS) + ((nave->ace[0])/2 * pow((1/JUEGO_FPS),2));
-    nave->pos[1] = nave->pos[1] + (nave->vel [1] * 1/JUEGO_FPS) + ((nave->ace[1])/2 * pow((1/JUEGO_FPS),2));
 }
 

@@ -15,7 +15,8 @@ double comp_vel(double vi, double a, double dt);
 
 double comp_pos(double pi, double vi, double dt);
 
-void calc_aceleracion(float *a_x, float *a_y, float ang);
+void mov_nave(nave_t *n, bool inicio);
+
 
 
 

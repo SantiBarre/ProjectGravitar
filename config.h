@@ -32,5 +32,8 @@ typedef enum{
     NIVEL5 = 6,
 }nivel_t;
 
+#define VELOCIDAD_DISPARO (20 * G)
+
+
 #endif // _CONFIG_H_
 

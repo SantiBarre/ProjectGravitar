@@ -21,6 +21,7 @@ void logica_niveles(nave_t *nave, nivel_t elegir_nivel){
             float pos_planeta3[2] = {110, 79};
             float pos_planeta4[2] = {204, 455};
             float pos_planeta5[2] = {111, 307};
+            printf("el inicio corre!\n");
 
             //Interaccion con los planetas
             if(moduloV(nave->pos,pos_planeta1) <= MARGEN_COLISION){
@@ -46,6 +47,7 @@ void logica_niveles(nave_t *nave, nivel_t elegir_nivel){
             if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
                 elegir_nivel = INICIO;
             }
+            printf("el nivel 1 corre!\n");
             
             break;
         case NIVEL2 : ;
@@ -82,8 +84,9 @@ void logica_niveles(nave_t *nave, nivel_t elegir_nivel){
 void logica_nave(nave_t *nave){
 
     propulsion_chorro (nave);
-
+    printf("se propulso!");
     nave_velocidad (nave);
-
+    printf("velocidad!");
     aceleracion_nave(nave);
+    printf("aceleracion!");
 }

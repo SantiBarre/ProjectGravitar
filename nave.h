@@ -1,23 +1,35 @@
 #ifndef NAVE_H
 #define NAVE_H
 
-typedef struct{ //STRUCT NAVE.
+typedef struct{
+
     float pos[2]; //Posicion del centro, para el dibujado.
     float vel[2]; //Vector de la velocidad de la nave descompuesto en X e Y.
-    float ace[2];
+
     float dir; //Vector de la direccion de la nave en RADIANES.
+
     bool chorro; //Si chorro == 1, aumentar la velocidad con respecto a la direccion y dibujar la nave con el chorro.
     bool escudo; //Si escudo == 1, activar el escudo y dibujarlo, ademas activar todas las interacciones con respecto al escudo (como perder combustible por ejemplo).
     bool disparo; //Si disparo ==1, disparar un proyectil.
+
+    float combustible;
+
+    size_t tiempo_disparo;
 }nave_t;
+
 //Crea una nave_t con todos sus floats = 0, y todos sus bool = 0.
 nave_t* nave_crear();
+
+//Destruye la nave (esto solo se usara cuando se cierre el programa o al perder, todavia no se si al perder destruimos la nave y la creamos devuelta o tan solo la movemos al centro de la pantalla en el nivel de seleccion de planeta).
+void nave_destruir(nave_t *nave);
+
 //Estas funciones cambian un valor adentro del nave_t por uno dado.
 void nave_cambiar_vel(nave_t *nave, float velx, float vely);
 void nave_cambiar_dir(nave_t *nave, float dir);
+
 //Estas funciones apagan o prenden el booleano del nave_t dependiendo si el mismo esta prendido o apagado.
-void nave_prender_chorro(nave_t *nave);
-void nave_prender_escudo(nave_t *nave);
+void nave_chorro(nave_t *nave);
+void nave_escudo(nave_t *nave);
 void nave_disparar(nave_t *nave);
 
 
@@ -28,10 +40,10 @@ void aceleracion_nave (nave_t *nave);
 
 
 
-//Destruye la nave (esto solo se usara cuando se cierre el programa o al perder, todavia no se si al perder destruimos la nave y la creamos devuelta o tan solo la movemos al centro de la pantalla en el nivel de seleccion de planeta).
-void nave_destruir(nave_t *nave);
+
 
 typedef struct{ //STRUCT DISPARO.
+    float pos[2];
     float dir; //En rad.
     float cronometro; //marca el tiempo el cual le queda al disparo antes de ser destruido.
                       // 10 segs por default.

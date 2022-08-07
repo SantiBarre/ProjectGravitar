@@ -3,8 +3,6 @@
 #include "fisica.h"
 #include "nave.h"
 
-#define DIM 2
-
 static double comp_vel(double vi, double a, double dt)
 {
     return vi + dt * a;
@@ -15,25 +13,47 @@ static double comp_pos(double pi, double vi, double dt)
     return pi + dt * vi;
 }
 
-void mov_nave(nave_t *obj, int gravX, int gravY)
+float pendiente(const float vectorA[], const float vectorB[])
 {
-    int acelera[DIM];
+    return atan2f(vectorA[0] - vectorB[0], vectorA[1] - vectorB[1]);
+}
 
-    if(obj->chorro)
+
+void mov_nave(nave_t *n, bool inicio, float estrella[])
+{
+    float dir_g[2];
+    if (inicio)
     {
-    acelera[X] = (NAVE_ACELERACION * cos(obj->dir)) - gravX;
-    acelera[Y] = (NAVE_ACELERACION * sin(obj->dir)) - gravY;
+        //Calculo la direcion de la gravedad
+        float pen = pendiente(estrella, n->pos);
+
+        dir_g[0] = cos(pen) * G;
+        dir_g[1] = sin(pen) * G;
+        
     }
     else
     {
-        acelera[X] = -gravX;
-        acelera[Y] = -gravY;
+        dir_g[0] = 0;
+        dir_g[1] = -G;
     }
     
-    obj->vel[X] = comp_vel(obj->vel[X], acelera[X], (float) 1 / JUEGO_FPS );
-    obj->vel[Y] = comp_vel(obj->vel[Y], acelera[X], (float) 1 / JUEGO_FPS );
+    float ace[2];
 
-    obj->pos[X] = comp_pos( obj->pos[X], obj->vel[X], (float) 1 / JUEGO_FPS );
-    obj->pos[Y] = comp_pos( obj->pos[Y], obj->vel[Y], (float) 1 / JUEGO_FPS );
+    if(n->chorro)
+    {
+        ace[0] = (NAVE_ACELERACION * cos(n->dir)) + dir_g[0];
+        ace[1] = (NAVE_ACELERACION * sin(n->dir)) + dir_g[1];
+    }
+    else
+    {
+        ace[0] = dir_g[0];
+        ace[1] = dir_g[1];
+    }
+
+    for (size_t i = 0; i < 2; i++)
+        n->vel[i] = comp_vel(n->vel[i], ace[i], 1 / JUEGO_FPS);
+
+    for (size_t i = 0; i < 2; i++)
+        n->pos[i] = comp_pos(n->pos[i], n->vel[i], 1 / JUEGO_FPS);
+    
 }
-

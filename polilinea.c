@@ -145,6 +145,8 @@ static void restaV(const float vectorA[], const float vectorB[], float BA[])
         BA[i] = vectorA[i] - vectorB[i];
 }
 
+
+
 float moduloV(const float vectorA[],const float vectorB[])
 {
     return (float)sqrt(pow(vectorB[0] - vectorA[0],2) + pow(vectorB[1] - vectorA[1],2));

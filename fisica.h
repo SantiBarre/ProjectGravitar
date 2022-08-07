@@ -15,15 +15,8 @@ double comp_vel(double vi, double a, double dt);
 
 double comp_pos(double pi, double vi, double dt);
 
-/**
- * @brief 
- * Funcion para trasladar objetos
- * @param obj 
- * @param gravX 
- * @param gravY 
- * @param chorro 
- */
-void mov_nave(nave_t *obj, int gravX, int gravY);
+void calc_aceleracion(float *a_x, float *a_y, float ang);
+
 
 
 #endif /* FISICA_H */

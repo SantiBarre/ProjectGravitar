@@ -25,6 +25,19 @@ float pendiente(const float vectorA[], const float vectorB[])
     return atan2f(vectorA[0] - vectorB[0], vectorA[1] - vectorB[1]);
 }
 
+bool colision_mundo_punto(figura_t *f, float posx, float posy)
+{
+    size_t cant;
+    float distrancia_nave;
+    for (size_t i = 0 ; i < f->cantidad_polilineas ; i++)
+    {
+        cant = polilinea_cantidad_puntos(f->polis[i]);
+        distrancia_nave = distancia_punto_a_polilinea(f->polis[i]->puntos, cant , posx, posy);
+        if(distrancia_nave < 5)
+            return true;
+    }
+    return false;
+}
 
 void mov_nave(nave_t *n, nivel_t planeta, lista_t *p)
 {
@@ -87,14 +100,36 @@ void mov_nave(nave_t *n, nivel_t planeta, lista_t *p)
             nivel = obtener_figura("NIVEL1R",p);
         }
 
-        
+        //Si el nivel es infinito
+        if(nivel->infinito)
+        {
+            if(NIVEL1)
+            {
+                if (n->pos[0] >= 2000)
+                    n->pos[0] = 0;
+                    
+                if (n->pos[0] < 0)
+                    n->pos[0] = 2000;
+            }
+            if(NIVEL2)
+            {
+                if (n->pos[0] >= 2087)
+                    n->pos[0] = 0;
+                
+                if (n->pos[0] < 0)
+                    n->pos[0] = 2087;    
+            }
+            if(NIVEL3)
+            {
+                if (n->pos[0] >= 1790)
+                    n->pos[0] = 0;
+                
+                if (n->pos[0] < 0)
+                    n->pos[0] = 1790;
+            }
+        }
 
-        size_t cant = polilinea_cantidad_puntos(nivel->polis[0]);
-
-        //Es infinito
-        float distrancia_nave = distancia_punto_a_polilinea(nivel->polis[0]->puntos, cant , n->pos[0], n->pos[1]);
-
-        if(distrancia_nave < 5)
+        if(colision_mundo_punto(nivel, n->pos[0], n->pos[1]))
         {
             n->vidas -= 1;
 

@@ -301,13 +301,3 @@ figura_t *figura_mov(const figura_t *figura, float posx, float posy, float ang){
  
     return p;
 }
-/*bool colision_figuras (figura_t *figuraA,figura_t *figuraB){
-    for (size_t i=0;i <= figuraA->cantidad_polilineas; i++){
-        for (size_t j=0; j<= figuraB->cantidad_polilineas; j++){
-            if (colision_polilineas(figuraA->polis[i]->puntos,figuraA->polis[i]->n,figuraB->polis[j]->puntos,figuraB->polis[j]->n )){
-                return true;
-            }
-        }
-    }
-    return false;
-}*/

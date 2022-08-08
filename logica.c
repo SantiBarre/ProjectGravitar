@@ -12,7 +12,7 @@
 
 void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
 
-    float punto_escudo = (nave->pos[0], nave->pos[1] - 30);
+    //float punto_escudo = (nave->pos[0], nave->pos[1] - 30);
 
     if (*elegir_nivel == INICIO) {
 
@@ -66,6 +66,8 @@ void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
         if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
             nave->pos[0] = 388;
             nave->pos[1] = 218;
+            nave->vel[0] = 0;
+            nave->vel[1] = 0;
             *elegir_nivel = INICIO;
         }
         
@@ -75,6 +77,8 @@ void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
         if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
             nave->pos[0] = 388;
             nave->pos[1] = 218;
+            nave->vel[0] = 0;
+            nave->vel[1] = 0;
             *elegir_nivel = INICIO;
         }
     }
@@ -84,6 +88,8 @@ void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
         if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
             nave->pos[0] = 388;
             nave->pos[1] = 218;
+            nave->vel[0] = 0;
+            nave->vel[1] = 0;
             *elegir_nivel = INICIO;
         }
     }
@@ -93,6 +99,8 @@ void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
         if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
             nave->pos[0] = 388;
             nave->pos[1] = 218;
+            nave->vel[0] = 0;
+            nave->vel[1] = 0;
             *elegir_nivel = INICIO;
         }
 
@@ -103,6 +111,8 @@ void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
         if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
             nave->pos[0] = 388;
             nave->pos[1] = 218;
+            nave->vel[0] = 0;
+            nave->vel[1] = 0;
             *elegir_nivel = INICIO;
         }
         

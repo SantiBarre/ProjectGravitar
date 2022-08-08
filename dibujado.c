@@ -68,7 +68,7 @@ void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Re
 
     //########## ESCALA ##########
     float escala = 1;
-    float centro = VENTANA_ANCHO/2;
+    float centro = 1000;
         if(nave->pos[1] > VENTANA_ALTO * MARGEN_ALTURA)
             escala = VENTANA_ALTO * MARGEN_ALTURA / nave->pos[1];
         if(escala < ESCALA_MINIMA)
@@ -120,9 +120,9 @@ void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Re
     if (elegir_nivel == NIVEL1) {
         figura_t *nivel1ne = obtener_figura("NIVEL1NE",lista_f);
         //Es infinito
-        dibujar_figura (nivel1ne,escala,centro + VENTANA_ANCHO / 2 / escala,0,renderer);
-        dibujar_figura (nivel1ne,escala,centro + VENTANA_ANCHO / 2 / escala + 2000,0,renderer);
-        dibujar_figura (nivel1ne,escala,centro + VENTANA_ANCHO / 2 / escala - 2000,0,renderer);
+        dibujar_figura (nivel1ne,escala,centro - VENTANA_ANCHO / 2 / escala,0,renderer);
+        dibujar_figura (nivel1ne,escala,centro - VENTANA_ANCHO / 2 / escala + 2000,0,renderer);
+        dibujar_figura (nivel1ne,escala,centro - VENTANA_ANCHO / 2 / escala - 2000,0,renderer);
         //dos objetos no pueden usar la misma polilinea si esa se debe de rotar, asi que hay que cambiarlo
         //2 combustibles y 2 torretas
     }
@@ -175,9 +175,9 @@ void dibujado_de_nave(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Ren
 
     figura_t *nave_fig;
     figura_t *nave_escudo;
-    float tras = 0;
+   /* float tras = 0;
     float escala = 1;
-    float centro = VENTANA_ANCHO/2;
+    float centro = 1000;
    if(nave->pos[1] > VENTANA_ALTO * MARGEN_ALTURA)
             escala = VENTANA_ALTO * MARGEN_ALTURA / nave->pos[1];
         if(escala < ESCALA_MINIMA)
@@ -192,7 +192,7 @@ void dibujado_de_nave(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Ren
     {
         tras = centro + VENTANA_ANCHO / 2 / escala;
     }
-    
+    */
 
 
     if (nave->chorro)
@@ -210,7 +210,7 @@ void dibujado_de_nave(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Ren
 
 
     figura_t *aux = figura_mov(nave_fig,0,0,nave->dir);  
-    dibujar_figura(aux,1,nave->pos[0] + tras,nave->pos[1],renderer);
+    dibujar_figura(aux,1,nave->pos[0],nave->pos[1],renderer);
     figura_destruir(aux);
 }
 

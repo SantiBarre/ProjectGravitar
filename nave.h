@@ -5,6 +5,7 @@ typedef struct{
 
     float pos[2]; //Posicion del centro, para el dibujado.
     float vel[2]; //Vector de la velocidad de la nave descompuesto en X e Y.
+    float ace[2];
 
     float dir; //Vector de la direccion de la nave en RADIANES.
 
@@ -28,9 +29,9 @@ void nave_cambiar_vel(nave_t *nave, float velx, float vely);
 void nave_cambiar_dir(nave_t *nave, float dir);
 
 //Estas funciones apagan o prenden el booleano del nave_t dependiendo si el mismo esta prendido o apagado.
-void nave_chorro(nave_t *nave);
-void nave_escudo(nave_t *nave);
-void nave_disparar(nave_t *nave);
+void nave_chorro(nave_t *n, bool on_off);
+void nave_escudo(nave_t *n, bool on_off);
+void nave_disparar(nave_t *n, bool on_off);
 
 
 //ACA LAS NUEVAS
@@ -50,7 +51,9 @@ typedef struct{ //STRUCT DISPARO.
 }disparo_t;
 
 //Crea un disparo y le aplica direccion dada, ademas pone su cronometro en 10 segs.
-disparo_t* disparo_crear(float dir);
+//####### MOVIDA A fisica.c #######
+
+
 //Estas funciones cambian los datos de disparo_t
 void disparo_cambiar_dir(disparo_t *disparo,float dir);
 void disparo_cambiar_pos(disparo_t *disparo,float posx,float posy);
@@ -58,12 +61,13 @@ void disparo_cambiar_pos(disparo_t *disparo,float posx,float posy);
 //eliminara ese disparo de la memoria (CABE A ACLARAR QUE CUANDO SE IMPLEMENTEN LAS LISTAS ENLAZADAS DEBEREMOS ACTUALIZAR
 //ESTA FUNCION PARA QUE EL NODO QUE TUVIESE A ESTE DISPARO NO SE QUEDE APUNTANDO A LA NADA).
 //Disminucion al ser ejecutado en cada FPS deberia ser igual a "1/FPS"
-void disparo_cronometro(disparo_t *disparo,float disminucion);
+void disparo_cronometro(disparo_t *d);
 //Destruye el disparo, esto solo se deberia usar al terminar el cronometro del disparo y cuando el disparo colisiona con algo
 //sea nuestra nave o terreno.
 void disparo_destruir(disparo_t *disparo);
 
 typedef struct {//STRUCT TORRETA.
+    float pos[2];
     float dir;//dir en este caso representa a donde apunta la torreta
     bool disparo;//en rad.
 }torreta_t;

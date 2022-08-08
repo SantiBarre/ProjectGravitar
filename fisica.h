@@ -17,6 +17,8 @@ double comp_pos(double pi, double vi, double dt);
 
 void calc_aceleracion(float *a_x, float *a_y, float ang);
 
+disparo_t* disparo_crear_t(torreta_t *t, nave_t *n,size_t count);
+
 
 
 #endif /* FISICA_H */

@@ -8,6 +8,7 @@
 #include "figuras.h"
 #include "dibujado.h"
 #include "logica.h"
+#include "escritura.h"
 
 int main(void) {
     SDL_Init(SDL_INIT_VIDEO);
@@ -64,10 +65,10 @@ int main(void) {
 
                         break;
                     case SDLK_RIGHT:
-                        nave->dir += NAVE_ROTACION_PASO;
+                        nave->dir -= NAVE_ROTACION_PASO;
                         break;
                     case SDLK_LEFT:
-                        nave->dir -= NAVE_ROTACION_PASO;
+                        nave->dir += NAVE_ROTACION_PASO;
                         break;
                 }
             }
@@ -92,9 +93,10 @@ int main(void) {
         // Dibujamos la nave escalada por f en el centro de la pantalla:
         
         
-        logica_niveles(nave,elegir_nivel);
+        logica_niveles(nave,&elegir_nivel);
         logica_nave(nave);
 
+        //dibujar_palabra(devolver_palabra("puntaje"),strlen("puntaje"),5,VENTANA_ANCHO/2,VENTANA_ALTO/2,renderer);
         dibujado_de_nave(figuras_lista,nave,renderer);
         dibujado_de_nivel(figuras_lista,elegir_nivel,renderer);
 
@@ -115,7 +117,7 @@ int main(void) {
     //ESTO COMENTADO ACA ES LA LIBERACION DE LA MEMORIA DE FIGURAS EN EL MAIN QUE POR EL MOMENTO SALE PERO CON FUGAS
     // Aca se ponen las cosas a destruir / memoria a liberar.
     lista_destruir(figuras_lista, figura_destruir);
-    
+    nave_destruir(nave);
     // END código del alumno
 
     SDL_DestroyRenderer(renderer);

@@ -128,7 +128,7 @@ float distancia_punto_a_polilinea(float polilinea[][2], size_t n, float px, floa
 
 float moduloV(const float vectorA[],const float vectorB[]);
 
-
+polilinea_t *polilinea_mov(const polilinea_t *poli, float posx, float posy, float ang);
 
 
 //Devuelve TRUE si la distancia entre dos polilineas es menor a MARGEN_DE_COLISION

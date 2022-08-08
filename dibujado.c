@@ -153,8 +153,28 @@ void dibujado_de_nave(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer){
 
     figura_t *nave_fig = obtener_figura ("NAVE",lista_f);
         if (nave->chorro){
+            
             nave_fig = obtener_figura("NAVE+CHORRO",lista_f);
         }
-    dibujar_figura(nave_fig,1,nave->pos[0],nave->pos[1],renderer);
-    
+    figura_t *aux = figura_mov(nave_fig,0,0,nave->dir);  
+    dibujar_figura(aux,1,nave->pos[0],nave->pos[1],renderer);
+    figura_destruir(aux);
 }
+
+/*void dibujado_de_nave(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer){
+
+    figura_t *nave_fig = obtener_figura ("NAVE",lista_f);
+    figura_t *nave_fig2 = obtener_figura("NAVE+CHORRO",lista_f);
+        if (nave->chorro){
+            figura_t *aux = figura_mov(nave_fig,nave->pos[0],nave->pos[1],nave->dir);  
+            dibujar_figura(aux,1,nave->pos[0],nave->pos[1],renderer);  
+            figura_destruir(aux);
+        }
+        else {
+            figura_t *aux = figura_mov(nave_fig2,nave->pos[0],nave->pos[1],nave->dir);  
+            dibujar_figura(aux,1,nave->pos[0],nave->pos[1],renderer);
+            figura_destruir(aux);
+        }
+    free(nave_fig);
+    free(nave_fig2);
+}*/

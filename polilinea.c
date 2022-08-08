@@ -1,4 +1,5 @@
 #include "polilinea.h" 
+#include <stdio.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <math.h>
@@ -18,7 +19,6 @@ polilinea_t *polilinea_crear_vacia(size_t n) //Elimine el static por que daba er
     if (nueva == NULL) return NULL;
 
     nueva->n = n; 
-
     nueva->puntos = malloc(2 * n * sizeof(float));
     if(nueva->puntos == NULL)
     {
@@ -57,6 +57,7 @@ polilinea_t *polilinea_clonar(const polilinea_t *polilinea)
 {
     polilinea_t *clon = polilinea_crear((const float (*)[2])polilinea->puntos, polilinea->n);
     if(clon == NULL) return NULL;
+    clon->color = polilinea->color;
     return clon;
 }
 
@@ -226,7 +227,10 @@ float distancia_punto_a_polilinea(float polilinea[][2], size_t n, float px, floa
 polilinea_t *polilinea_mov(const polilinea_t *poli, float posx, float posy, float ang)
 {
     polilinea_t *p = polilinea_clonar(poli);
-    if(p == NULL) return NULL;
+    if(p == NULL) {
+        perror("No se pudo clonar una polilinea!");
+        return NULL;
+    }
 
     size_t cant_puntos = polilinea_cantidad_puntos(p);
 

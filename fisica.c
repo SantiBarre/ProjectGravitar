@@ -36,8 +36,10 @@ void mov_nave(nave_t *n, bool inicio)
         if(distrancia_nave < 10)
         {
             n->vidas -= 1;
-            n->pos = {388, 218};
-            n->vel = {0, 0};
+            n->pos[0] = 388;
+            n->pos[1] = 218;
+            n->vel[0] = n->vel[1] = 0;
+
             n->dir = NAVE_ANGULO_INICIAL;
         }
 
@@ -46,7 +48,7 @@ void mov_nave(nave_t *n, bool inicio)
             n->vel[0] = -n->vel[0];
         
         if((n->pos[1] > VENTANA_ALTO) || (n->pos[1] < 0))
-            n->vel[1] = -n->vel;
+            n->vel[1] = -n->vel[1];
 
         
         //Calculo la direcion de la gravedad
@@ -96,18 +98,4 @@ void mov_disparo(disparo_t *d)
 }
 
 
-//La pongo aca para mantener la jerarquia del makefile
-disparo_t* disparo_crear_t(torreta_t *t, nave_t *n,size_t count)
-{
-    disparo_t *d = malloc(sizeof(disparo_t));
-    if (d == NULL ) return NULL;
-
-    for (size_t i = 0; i < count; i++)
-        d->pos[i] = t->pos[i];
-        
-    d->dir = pendiente(n->pos, t->pos);
-    d->cronometro = 0;
-
-    return d;
-}
 

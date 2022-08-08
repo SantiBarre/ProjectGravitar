@@ -14,8 +14,8 @@ APPNAME = gravitar
 all: $(APPNAME)
 
 # Builds the app
-$(APPNAME): main.o dibujado.o logica.o figuras.o lista.o polilinea.o nave.o escritura.o caracteres.o disparo.o
-	$(CC) $(CXXFLAGS) main.o dibujado.o logica.o figuras.o lista.o polilinea.o nave.o escritura.o caracteres.o disparo.o -o $(APPNAME) $(LDFLAGS)
+$(APPNAME): main.o dibujado.o logica.o figuras.o lista.o polilinea.o nave.o escritura.o caracteres.o disparo.o fisica.o
+	$(CC) $(CXXFLAGS) main.o dibujado.o logica.o figuras.o lista.o polilinea.o nave.o escritura.o caracteres.o fisica.o disparo.o -o $(APPNAME) $(LDFLAGS)
 
 main.o: main.c dibujado.h figuras.h config.h lista.h polilinea.h nave.h
 	$(CC) $(CXXFLAGS) -c main.c 
@@ -46,6 +46,9 @@ caracteres.o: caracteres.c caracteres.h
 
 disparo.o: disparo.c disparo.h
 	$(CC) $(CXXFLAGS) -c disparo.c -lm
+
+fisica.o: fisica.c fisica.h
+	$(CC) $(CXXFLAGS) -c fisica.c -lm
 
 ################### Cleaning rules ####################################
 

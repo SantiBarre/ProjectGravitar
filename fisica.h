@@ -7,11 +7,6 @@
 #include "nave.h"
 #include "disparo.h"
 
-
-double comp_vel(double vi, double a, double dt);
-
-double comp_pos(double pi, double vi, double dt);
-
 void mov_nave(nave_t *n, bool inicio);
 
 float pendiente(const float vectorA[], const float vectorB[]);

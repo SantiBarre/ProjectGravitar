@@ -21,7 +21,7 @@ bool dibujar_figura(figura_t *fig, float escala, float posx, float posy, SDL_Ren
 
 bool dibujar_palabra(int ***palabra,size_t tamanio_palabra,float escala,float posx,float posy,SDL_Renderer *renderer);
 
-void dibujado_de_nivel(lista_t *lista_f,nivel_t elegir_nivel,SDL_Renderer *renderer);
+void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Renderer *renderer);
 
 void dibujado_de_nave(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer);
 

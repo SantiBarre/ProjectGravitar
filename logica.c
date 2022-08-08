@@ -58,7 +58,6 @@ void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
         //Asi se sale del nivel 
         if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA)
             *elegir_nivel = INICIO;
-        
     }
     
     if (*elegir_nivel == NIVEL4) {

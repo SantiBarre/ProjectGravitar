@@ -109,9 +109,11 @@ int main(void) {
         
         
         logica_niveles(nave,&elegir_nivel);
-
+        printf("\n x: %f y: %f",nave->pos[0],nave->pos[1]);
+        printf("velx: %f vely: %f \n",nave->vel[0],nave->vel[1]);
         mov_nave(nave, elegir_nivel == INICIO );
-
+        printf("x: %f y: %f",nave->pos[0],nave->pos[1]);
+        printf("velx: %f vely: %f \n",nave->vel[0],nave->vel[1]);
 
         //dibujar_palabra(devolver_palabra("puntaje"),strlen("puntaje"),5,VENTANA_ANCHO/2,VENTANA_ALTO/2,renderer);
         dibujado_de_nave(figuras_lista,nave,renderer);

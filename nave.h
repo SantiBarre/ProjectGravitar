@@ -5,6 +5,7 @@ typedef struct{
 
     float pos[2]; //Posicion del centro, para el dibujado.
     float vel[2]; //Vector de la velocidad de la nave descompuesto en X e Y.
+    float ace[2];
 
     float dir; //Vector de la direccion de la nave en RADIANES.
 
@@ -46,11 +47,8 @@ void aceleracion_nave (nave_t *nave);
 
 
 
-
-
-
-
 typedef struct {//STRUCT TORRETA.
+    float pos[2];
     float dir;//dir en este caso representa a donde apunta la torreta
     bool disparo;//en rad.
 }torreta_t;

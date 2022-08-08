@@ -83,6 +83,7 @@ void mov_nave(nave_t *n, bool inicio)
     
 }
 
+
 void mov_disparo(disparo_t *d)
 {
     for (size_t i = 0; i < 2; i++)
@@ -93,3 +94,20 @@ void mov_disparo(disparo_t *d)
     if (d->tiempo_vida > 10 * JUEGO_FPS)
         d->vivo = false;
 }
+
+
+//La pongo aca para mantener la jerarquia del makefile
+disparo_t* disparo_crear_t(torreta_t *t, nave_t *n,size_t count)
+{
+    disparo_t *d = malloc(sizeof(disparo_t));
+    if (d == NULL ) return NULL;
+
+    for (size_t i = 0; i < count; i++)
+        d->pos[i] = t->pos[i];
+        
+    d->dir = pendiente(n->pos, t->pos);
+    d->cronometro = 0;
+
+    return d;
+}
+

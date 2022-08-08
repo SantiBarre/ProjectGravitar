@@ -3,6 +3,8 @@
 #include "nave.h"
 #include "config.h"
 #include "math.h"
+
+#define DISPAROS_X_SEG 1
 //Definiciones de funciones de la nave, para ver documentacion ver nave.h
 
 nave_t* nave_crear(void)
@@ -26,11 +28,12 @@ nave_t* nave_crear(void)
     //Combustible de la nave
     n->combustible = JUEGO_COMBUSTIBLE_INICIAL;
 
-    //Velocidad inicial de la nave
-    n->vel[2] = {0, 0};
+    n->vel[0] = 0;
+    n->vel[1] = 0;
 
-    //
-    n->pos[2] = {0, 0};
+    n->pos[0] = 0;
+    n->pos[1] = 0;
+
 
     return n;
 }
@@ -88,12 +91,6 @@ void nave_destruir(nave_t *nave)
 
 //Definiciones de funciones de los disparos.
 
-
-disparo_t* disparo_crear_t(torreta_t *t, nave_t *n)
-{
-
-}
-
 void disparo_cronometro(disparo_t *d)
 {
     d->cronometro += 1;
@@ -107,8 +104,8 @@ void disparo_destruir(disparo_t *d)
 //Definiciones de funciones de las torretas.
 torreta_t* torreta_crear(float dir)
 {
-    torreta_t *t = malloc(sizeof(torreta_t));
-    if(t == NULL) return NULL;
+    torreta_t *torreta = malloc(sizeof(torreta_t));
+    if(torreta == NULL) return NULL;
 
     torreta->dir = dir;
     torreta->disparo = false;

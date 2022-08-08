@@ -45,7 +45,6 @@ void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
         if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
             *elegir_nivel = INICIO;
         }
-        printf ("nivel 1 anda!");
         
     }
     if (*elegir_nivel == NIVEL2) {
@@ -53,7 +52,6 @@ void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
         if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
             *elegir_nivel = INICIO;
         }
-        printf ("nivel 2 anda!");
     }
 
     if (*elegir_nivel == NIVEL2) {

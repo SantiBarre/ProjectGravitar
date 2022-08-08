@@ -1,12 +1,12 @@
 #include <stddef.h>
 #include <time.h>
 #include <stdlib.h>
+#include <math.h>
+#include <stdbool.h>
 
 #include "config.h"
-#include "fisica.h"
 #include "nave.h"
 #include "disparo.h"
-
 
 
 //Crea un disparo y le aplica direccion dada, ademas pone su cronometro en 10 segs.
@@ -25,7 +25,9 @@ disparo_t* disparo_crear_t(torreta_t *t, nave_t *n)
 
     float random = rand() * (b - a) + a;
 
-    float direcion = pendiente(n->pos, t->pos) + random;
+    float pendiente = atan2f(n->pos[0] - t->pos[0], n->pos[1] - t->pos[1]);
+
+    float direcion = pendiente + random;
 
     d->vel[0] = cos(direcion) * VELOCIDAD_DISPARO;
     d->vel[1] = sin(direcion) * VELOCIDAD_DISPARO;
@@ -41,13 +43,8 @@ disparo_t* disparo_crear_n(nave_t *n)
     disparo_t *d = malloc(sizeof(disparo_t));
     if (d == NULL ) return NULL;
 
-    for (size_t i = 0; i < count; i++)
+    for (size_t i = 0; i < 2; i++)
         d->pos[i] = n->pos[i];
-
-    for (size_t i = 0; i < count; i++)
-    {
-        /* code */
-    }
 
     d->vel[0] = cos(n->dir) * VELOCIDAD_DISPARO;
     d->vel[1] = sin(n->dir) * VELOCIDAD_DISPARO;
@@ -63,8 +60,3 @@ void disparo_destruir(disparo_t *d)
     free(d);
 }
 
-void disparo_colicion_torreta(torreta_t *t, disparo_t *d)
-{
-
-
-}

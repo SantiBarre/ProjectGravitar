@@ -9,6 +9,7 @@
 #include "dibujado.h"
 #include "logica.h"
 #include "escritura.h"
+#include "fisica.h"
 
 int main(void) {
     SDL_Init(SDL_INIT_VIDEO);
@@ -35,8 +36,15 @@ int main(void) {
     // Mi nave:
 
     nave_t *nave = nave_crear();
-    nave->pos[0] = 388;
-    nave->pos[1] = 218;
+    if(nave == NULL)
+    {
+        lista_destruir(figuras_lista, figura_destruir);
+        SDL_DestroyRenderer(renderer);
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return 1;
+    }
+
     // Logica Niveles:
     
     
@@ -53,22 +61,24 @@ int main(void) {
             // BEGIN código del alumno
             if (event.type == SDL_KEYDOWN) {
                 // Se apretó una tecla
-                switch(event.key.keysym.sym) {
+                switch(event.key.keysym.sym)
+                {
                     case SDLK_UP:
                         // Prendemos el chorro:
-                        nave->chorro = true;
-                        propulsion_chorro(nave);
-                        nave->pos[0] = 663;
-                        nave->pos[1] = 473;
-                        break;
-                    case SDLK_DOWN:
+                        nave_chorro(nave, true);
 
                         break;
-                    case SDLK_RIGHT:
-                        nave->dir -= NAVE_ROTACION_PASO;
+                    case SDLK_DOWN:
+                        // Prendemos el escudo
+                        nave_escudo(nave, true);
                         break;
+                    case SDLK_RIGHT:
+
+                        nave_derecha(nave);
+                        break;
+
                     case SDLK_LEFT:
-                        nave->dir += NAVE_ROTACION_PASO;
+                        nave_izquieda(nave);
                         break;
                 }
             }
@@ -77,7 +87,12 @@ int main(void) {
                 switch(event.key.keysym.sym) {
                     case SDLK_UP:
                         // Apagamos el chorro:
-                        nave->chorro = false;
+                        nave_chorro(nave, false);
+                        break;
+                    
+                        case SDLK_DOWN:
+                        // Escudo el chorro:
+                        nave_escudo(nave, false);
                         break;
                 }
             }
@@ -94,7 +109,8 @@ int main(void) {
         
         
         logica_niveles(nave,&elegir_nivel);
-        logica_nave(nave);
+
+        mov_nave(nave, elegir_nivel == INICIO );
 
         //dibujar_palabra(devolver_palabra("puntaje"),strlen("puntaje"),5,VENTANA_ANCHO/2,VENTANA_ALTO/2,renderer);
         dibujado_de_nave(figuras_lista,nave,renderer);

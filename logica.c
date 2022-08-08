@@ -76,7 +76,7 @@ void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
     }
     
 }
-
+/*
 void logica_nave(nave_t *nave){
 
     propulsion_chorro (nave);
@@ -86,3 +86,4 @@ void logica_nave(nave_t *nave){
     aceleracion_nave(nave);
     
 }
+*/

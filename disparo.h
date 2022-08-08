@@ -1,6 +1,9 @@
 #ifndef DISPARO_H
 #define DISPARO_H
 
+#include <stdbool.h>
+
+
 //STRUCT DISPARO
 typedef struct{
     

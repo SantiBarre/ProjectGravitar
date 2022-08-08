@@ -31,8 +31,8 @@ nave_t* nave_crear(void)
     n->vel[0] = 0;
     n->vel[1] = 0;
 
-    n->pos[0] = 0;
-    n->pos[1] = 0;
+    n->pos[0] = 388;
+    n->pos[1] = 218;
 
 
     return n;
@@ -89,18 +89,6 @@ void nave_destruir(nave_t *nave)
 }
 
 
-//Definiciones de funciones de los disparos.
-
-void disparo_cronometro(disparo_t *d)
-{
-    d->cronometro += 1;
-}
-
-void disparo_destruir(disparo_t *d)
-{
-    free(d);
-}
-
 //Definiciones de funciones de las torretas.
 torreta_t* torreta_crear(float dir)
 {
@@ -111,9 +99,11 @@ torreta_t* torreta_crear(float dir)
     torreta->disparo = false;
     return torreta;
 }
+
 void torreta_cambiar_dir(torreta_t *torreta,float dir){
     torreta->dir = dir;
 }
+
 void torreta_disparar(torreta_t *torreta){
       if (torreta->disparo){
         torreta->disparo = false;

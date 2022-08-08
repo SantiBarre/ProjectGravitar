@@ -1,6 +1,9 @@
 #ifndef NAVE_H
 #define NAVE_H
 
+#include <stdbool.h>
+
+
 typedef struct{
 
     float pos[2]; //Posicion del centro, para el dibujado.

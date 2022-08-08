@@ -105,10 +105,10 @@ int main(void)
         // BEGIN código del alumno
         // Dibujamos la nave escalada por f en el centro de la pantalla:
         
-        dibujado_de_nave(figuras_lista,nave,renderer);
+        dibujado_de_nave(figuras_lista,nave,elegir_nivel,renderer);
         dibujado_de_nivel(figuras_lista,nave,elegir_nivel,renderer);
         dibujar_vidas(figuras_lista,nave,renderer);
-        
+
         logica_niveles(nave,&elegir_nivel);
 
         mov_nave(nave, elegir_nivel, figuras_lista );

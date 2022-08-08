@@ -40,13 +40,6 @@ void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
             *elegir_nivel = NIVEL5;
         }
 
-        //Interaccion con el borde de la ventana
-        if(nave->pos[0] < 0 || nave->pos[0] > VENTANA_ANCHO){
-            nave->vel[0] = (nave->vel[0] * -1);
-        }
-        if(nave->pos[1] < 0 || nave->pos[1] > VENTANA_ALTO){
-            nave->vel[1] = (nave->vel[1] * -1);
-        }
 
     }
     if (*elegir_nivel == NIVEL1) { 

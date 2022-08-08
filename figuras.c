@@ -272,12 +272,14 @@ figura_t *obtener_figura(char *nom, lista_t *l)
 figura_t *figura_clonar(const figura_t *figura)
 {
     figura_t *clon = crear_figura_vacia(figura->cantidad_polilineas);
+    if (clon == NULL) return NULL;
+    
     strcpy(*(clon->nombre),*(figura->nombre));
     clon->infinito=figura->infinito;
     clon->tipo=figura->tipo;
-    for (size_t i = 0; i < figura->cantidad_polilineas; i++){
+    
+    for (size_t i = 0; i < figura->cantidad_polilineas; i++)
         clon->polis[0] = polilinea_clonar(figura->polis[0]);
-    }
        
     clon->cantidad_polilineas=figura->cantidad_polilineas;
     if(clon == NULL) {
@@ -288,17 +290,20 @@ figura_t *figura_clonar(const figura_t *figura)
     return clon;
 }
 
-figura_t *figura_mov(const figura_t *figura, float posx, float posy, float ang){
+figura_t *figura_mov(const figura_t *figura, float posx, float posy, float ang)
+{
     figura_t *p = figura_clonar(figura);
     if(p == NULL) {
         perror("No se pudo clonar la nave!\n");
         return NULL;
     }
     printf("figura_mov anduvo! ");
+
     printf("x:%f y:%f \n",p->polis[0]->puntos[0][0],p->polis[0]->puntos[0][1]);
-    for (size_t i=0; i <= figura->cantidad_polilineas - 1; i++){
+
+    for (size_t i=0; i <= figura->cantidad_polilineas - 1; i++)
         p->polis[i] = polilinea_mov(figura->polis[i],posx,posy,ang);
-    }
+
     printf("x:%f y:%f \n",p->polis[0]->puntos[0][0],p->polis[0]->puntos[0][1]);
     return p;
 }

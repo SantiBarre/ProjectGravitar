@@ -151,11 +151,18 @@ void dibujado_de_nivel(lista_t *lista_f,nivel_t elegir_nivel,SDL_Renderer *rende
 
 void dibujado_de_nave(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer){
 
-    figura_t *nave_fig = obtener_figura ("NAVE",lista_f);
-        if (nave->chorro){
-            
-            nave_fig = obtener_figura("NAVE+CHORRO",lista_f);
-        }
+    figura_t *nave_fig;
+
+    if (nave->chorro)
+    {
+        nave_fig = obtener_figura("NAVE+CHORRO",lista_f);
+    }
+    else
+    {
+        nave_fig = obtener_figura ("NAVE",lista_f);
+    }
+
+
     figura_t *aux = figura_mov(nave_fig,0,0,nave->dir);  
     dibujar_figura(aux,1,nave->pos[0],nave->pos[1],renderer);
     figura_destruir(aux);

@@ -33,7 +33,7 @@ void mov_nave(nave_t *n, bool inicio)
 
         float distrancia_nave = moduloV(estrella, n->pos);
 
-        if(distrancia_nave < 10)
+        if(distrancia_nave < 50)
         {
             n->vidas -= 1;
             n->pos[0] = 388;
@@ -54,9 +54,9 @@ void mov_nave(nave_t *n, bool inicio)
         //Calculo la direcion de la gravedad
         float pen = pendiente(estrella, n->pos);
 
-        dir_g[0] = cos(pen) * G;
-        dir_g[1] = sin(pen) * G;
-        
+        dir_g[0] = sin(pen) * G;
+        dir_g[1] = cos(pen) * G;
+
     }
     else
     {
@@ -78,10 +78,10 @@ void mov_nave(nave_t *n, bool inicio)
     }
 
     for (size_t i = 0; i < 2; i++)
-        n->vel[i] = comp_vel(n->vel[i], ace[i], 1 / JUEGO_FPS);
+        n->vel[i] = comp_vel(n->vel[i], ace[i], (float) 1 / JUEGO_FPS);
 
     for (size_t i = 0; i < 2; i++)
-        n->pos[i] = comp_pos(n->pos[i], n->vel[i], 1 / JUEGO_FPS);
+        n->pos[i] = comp_pos(n->pos[i], n->vel[i], (float) 1 / JUEGO_FPS);
     
 }
 

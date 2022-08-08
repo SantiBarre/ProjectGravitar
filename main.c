@@ -112,6 +112,7 @@ int main(void) {
 
         mov_nave(nave, elegir_nivel == INICIO );
 
+
         //dibujar_palabra(devolver_palabra("puntaje"),strlen("puntaje"),5,VENTANA_ANCHO/2,VENTANA_ALTO/2,renderer);
         dibujado_de_nave(figuras_lista,nave,renderer);
         dibujado_de_nivel(figuras_lista,elegir_nivel,renderer);

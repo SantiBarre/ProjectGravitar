@@ -67,17 +67,9 @@ void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Re
 
 
     //########## ESCALA ##########
-    float escala = 1;
-    float centro = 1000;
-        if(nave->pos[1] > VENTANA_ALTO * MARGEN_ALTURA)
-            escala = VENTANA_ALTO * MARGEN_ALTURA / nave->pos[1];
-        if(escala < ESCALA_MINIMA)
-            escala = ESCALA_MINIMA;
-
-        if((nave->pos[0] - centro) * escala > VENTANA_ANCHO / 2 * MARGEN_ANCHO)
-            centro = nave->pos[0] - VENTANA_ANCHO / 2 * MARGEN_ANCHO / escala;
-        else if((centro - nave->pos[0]) * escala > VENTANA_ANCHO / 2 * MARGEN_ANCHO)
-            centro = nave->pos[0] + VENTANA_ANCHO / 2 * MARGEN_ANCHO / escala;
+    float escala;
+    float centro;
+    
         printf("x:%f y:%f \n",nave->pos[0],nave->pos[1]);
         printf("escala:%f",escala);
         
@@ -120,23 +112,30 @@ void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Re
     if (elegir_nivel == NIVEL1) {
         figura_t *nivel1ne = obtener_figura("NIVEL1NE",lista_f);
         //Es infinito
-        dibujar_figura (nivel1ne,escala,centro - VENTANA_ANCHO / 2 / escala,0,renderer);
-        dibujar_figura (nivel1ne,escala,centro - VENTANA_ANCHO / 2 / escala + 2000,0,renderer);
-        dibujar_figura (nivel1ne,escala,centro - VENTANA_ANCHO / 2 / escala - 2000,0,renderer);
+        centro = 1000;
+        calculo_escala(&escala,&centro,nave);
+        
+        dibujar_figura (nivel1ne,escala,centro + VENTANA_ANCHO / 2 / escala,0,renderer);
+        dibujar_figura (nivel1ne,escala,centro + VENTANA_ANCHO / 2 / escala + 2000,0,renderer);
+        dibujar_figura (nivel1ne,escala,centro + VENTANA_ANCHO / 2 / escala - 2000,0,renderer);
         //dos objetos no pueden usar la misma polilinea si esa se debe de rotar, asi que hay que cambiarlo
         //2 combustibles y 2 torretas
     }
 
     if (elegir_nivel == NIVEL2) {
+        centro = 2087 /2 ;
+        calculo_escala(&escala,&centro,nave);
         figura_t *nivel1se = obtener_figura("NIVEL1SE",lista_f);
         //Es infinito
-        dibujar_figura (nivel1se,escala,0,0,renderer);
-        dibujar_figura (nivel1se,escala,2087,0,renderer);
-        dibujar_figura (nivel1se,escala,-2087,0,renderer);
+        dibujar_figura (nivel1se,escala,centro + VENTANA_ANCHO / 2 / escala,0,renderer);
+        dibujar_figura (nivel1se,escala,centro + VENTANA_ANCHO / 2 / escala + 2087,0,renderer);
+        dibujar_figura (nivel1se,escala,centro + VENTANA_ANCHO / 2 / escala - 2087,0,renderer);
         //2 combustibles y 4 torretas
     }
 
     if (elegir_nivel == NIVEL3) {
+        centro = 1790 /2 ;
+        calculo_escala(&escala,&centro,nave);
         figura_t *nivel1sw = obtener_figura("NIVEL1SW",lista_f);
         //Es infinito
         dibujar_figura (nivel1sw,escala,0,0,renderer);
@@ -170,6 +169,17 @@ void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Re
     }
 }
 
+void calculo_escala(float *escala,float *centro,nave_t *nave){
+    if(nave->pos[1] > VENTANA_ALTO * MARGEN_ALTURA)
+            *escala = VENTANA_ALTO * MARGEN_ALTURA / nave->pos[1];
+        if(*escala < ESCALA_MINIMA)
+            *escala = ESCALA_MINIMA;
+
+        if((nave->pos[0] - *centro) * *escala > VENTANA_ANCHO / 2 * MARGEN_ANCHO)
+            *centro = nave->pos[0] - VENTANA_ANCHO / 2 * MARGEN_ANCHO / *escala;
+        else if((*centro - nave->pos[0]) * *escala > VENTANA_ANCHO / 2 * MARGEN_ANCHO)
+            *centro = nave->pos[0] + VENTANA_ANCHO / 2 * MARGEN_ANCHO / *escala;
+}
 
 void dibujado_de_nave(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Renderer *renderer){
 

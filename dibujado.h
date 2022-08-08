@@ -25,6 +25,8 @@ void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Re
 
 void dibujado_de_nave(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Renderer *renderer);
 
+void calculo_escala(float *escala,float *centro,nave_t *nave);
+
 void dibujar_vidas(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer);
 
 #endif

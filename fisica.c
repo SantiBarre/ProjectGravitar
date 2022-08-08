@@ -105,7 +105,7 @@ void mov_nave(nave_t *n, nivel_t planeta, lista_t *p)
         {
             if(NIVEL1)
             {
-                if (n->pos[0] >= 2000)
+                if (n->pos[0] > 2000)
                     n->pos[0] = 0;
                     
                 if (n->pos[0] < 0)
@@ -113,7 +113,7 @@ void mov_nave(nave_t *n, nivel_t planeta, lista_t *p)
             }
             if(NIVEL2)
             {
-                if (n->pos[0] >= 2087)
+                if (n->pos[0] > 2087)
                     n->pos[0] = 0;
                 
                 if (n->pos[0] < 0)
@@ -121,7 +121,7 @@ void mov_nave(nave_t *n, nivel_t planeta, lista_t *p)
             }
             if(NIVEL3)
             {
-                if (n->pos[0] >= 1790)
+                if (n->pos[0] > 1790)
                     n->pos[0] = 0;
                 
                 if (n->pos[0] < 0)

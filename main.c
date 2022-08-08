@@ -107,6 +107,7 @@ int main(void)
         
         dibujado_de_nave(figuras_lista,nave,renderer);
         dibujado_de_nivel(figuras_lista,nave,elegir_nivel,renderer);
+        dibujar_vidas(figuras_lista,nave,renderer);
         
         logica_niveles(nave,&elegir_nivel);
 

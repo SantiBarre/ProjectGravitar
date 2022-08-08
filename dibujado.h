@@ -25,4 +25,6 @@ void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Re
 
 void dibujado_de_nave(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer);
 
+void dibujar_vidas(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer);
+
 #endif

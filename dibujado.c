@@ -180,6 +180,37 @@ void dibujado_de_nave(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer){
     figura_destruir(aux);
 }
 
+void dibujar_vidas(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer){
+    float posx = 40;
+    float posy = 500;
+    float espacio = 30;
+
+    float tamanio = 3;
+
+    figura_t *nave_fig = obtener_figura("NAVE",lista_f);
+    
+    if (nave->vidas >= 1){
+        dibujar_figura(nave_fig,tamanio,posx,posy,renderer);
+        printf("UNO ");
+    }
+    if (nave->vidas >= 2){
+        dibujar_figura(nave_fig,tamanio,posx + espacio,posy,renderer);
+        printf("DOS ");
+    }
+    if (nave->vidas >= 3){
+        dibujar_figura(nave_fig,tamanio,posx + (espacio * 2),posy,renderer);
+        printf("TRES ");
+    }
+    if (nave->vidas >= 4){
+        dibujar_figura(nave_fig,tamanio,posx + (espacio * 3),posy,renderer);
+        printf("CUATRO ");
+    }
+    if (nave->vidas >= 5){
+        dibujar_figura(nave_fig,tamanio,posx + (espacio * 4),posy,renderer);
+        printf("CINCO ");
+    }
+
+}
 /*void dibujado_de_nave(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer){
 
     figura_t *nave_fig = obtener_figura ("NAVE",lista_f);

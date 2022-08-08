@@ -39,11 +39,27 @@ void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
         if(moduloV(nave->pos,pos_planeta5) <= MARGEN_COLISION){
             *elegir_nivel = NIVEL5;
         }
+
+        //Interaccion con el borde de la ventana
+        if(nave->pos[0] < 0 || nave->pos[0] > VENTANA_ANCHO){
+            nave->vel[0] = (nave->vel[0] * -1);
+        }
+        if(nave->pos[1] < 0 || nave->pos[1] > VENTANA_ALTO){
+            nave->vel[1] = (nave->vel[1] * -1);
+        }
+
     }
     if (*elegir_nivel == NIVEL1) { 
         //Asi se sale del nivel 
         if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
             *elegir_nivel = INICIO;
+        }
+        //Interaccion con el borde de la ventana (INFINITO)
+        if (nave->pos[0] <= 2000){
+            nave->pos[0] = 0;
+        }
+        if (nave->pos[0] < 0){
+            nave->pos[0] = 2000;
         }
         
     }
@@ -52,27 +68,43 @@ void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
         if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
             *elegir_nivel = INICIO;
         }
+        //Interaccion con el borde de la ventana (INFINITO)
+        if (nave->pos[0] <= 2000){
+            nave->pos[0] = 0;
+        }
+        if (nave->pos[0] < 0){
+            nave->pos[0] = 2000;
+        }
     }
 
-    if (*elegir_nivel == NIVEL2) {
+    if (*elegir_nivel == NIVEL3) {
         //Asi se sale del nivel 
         if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
             *elegir_nivel = INICIO;
+        }
+        //Interaccion con el borde de la ventana (INFINITO)
+        if (nave->pos[0] <= 2000){
+            nave->pos[0] = 0;
+        }
+        if (nave->pos[0] < 0){
+            nave->pos[0] = 2000;
         }
     }
     
-    if (*elegir_nivel == NIVEL2) {
+    if (*elegir_nivel == NIVEL4) {
         //Asi se sale del nivel 
         if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
             *elegir_nivel = INICIO;
         }
+
     }
     
-    if (*elegir_nivel == NIVEL2) {
+    if (*elegir_nivel == NIVEL5) {
         //Asi se sale del nivel 
         if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
             *elegir_nivel = INICIO;
         }
+        
     }
     
 }

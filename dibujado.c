@@ -111,6 +111,8 @@ void dibujado_de_nivel(lista_t *lista_f,nivel_t elegir_nivel,SDL_Renderer *rende
         figura_t *nivel1ne = obtener_figura("NIVEL1NE",lista_f);
         //Es infinito
         dibujar_figura (nivel1ne,escala,0,0,renderer);
+        dibujar_figura (nivel1ne,escala,2000,0,renderer);
+        dibujar_figura (nivel1ne,escala,-2000,0,renderer);
         //dos objetos no pueden usar la misma polilinea si esa se debe de rotar, asi que hay que cambiarlo
         //2 combustibles y 2 torretas
     }
@@ -120,6 +122,8 @@ void dibujado_de_nivel(lista_t *lista_f,nivel_t elegir_nivel,SDL_Renderer *rende
         figura_t *nivel1se = obtener_figura("NIVEL1SE",lista_f);
         //Es infinito
         dibujar_figura (nivel1se,escala,0,0,renderer);
+        dibujar_figura (nivel1se,escala,2087,0,renderer);
+        dibujar_figura (nivel1se,escala,-2087,0,renderer);
         //2 combustibles y 4 torretas
     }
 
@@ -128,6 +132,8 @@ void dibujado_de_nivel(lista_t *lista_f,nivel_t elegir_nivel,SDL_Renderer *rende
         figura_t *nivel1sw = obtener_figura("NIVEL1SW",lista_f);
         //Es infinito
         dibujar_figura (nivel1sw,escala,0,0,renderer);
+        dibujar_figura (nivel1sw,escala,1790,0,renderer);
+        dibujar_figura (nivel1sw,escala,-1790,0,renderer);
         //3 combustibles y 6 torretas
     }
 

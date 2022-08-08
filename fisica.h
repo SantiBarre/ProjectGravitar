@@ -4,10 +4,11 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include "config.h"
+#include "lista.h"
 #include "nave.h"
 #include "disparo.h"
 
-void mov_nave(nave_t *n, bool inicio);
+void mov_nave(nave_t *n, nivel_t planeta, lista_t *p);
 
 float pendiente(const float vectorA[], const float vectorB[]);
 

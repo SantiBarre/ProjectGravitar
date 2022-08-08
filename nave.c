@@ -77,6 +77,13 @@ void nave_disparar(nave_t *n, bool on_off)
     n->tiempo_disparo++;
 }
 
+bool nave_muerta(nave_t *n)
+{
+    if(n->vidas <= 0)
+        return true;
+    return false;
+}
+
 void nave_destruir(nave_t *nave)
 {
     free (nave);

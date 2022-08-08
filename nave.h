@@ -42,6 +42,7 @@ void nave_chorro(nave_t *n, bool on_off);
 void nave_escudo(nave_t *n, bool on_off);
 void nave_disparar(nave_t *n, bool on_off);
 
+bool nave_muerta(nave_t *n);
 
 //ACA LAS NUEVAS
 void propulsion_chorro (nave_t *nave);

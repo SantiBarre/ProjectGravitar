@@ -11,7 +11,8 @@
 #include "escritura.h"
 #include "fisica.h"
 
-int main(void) {
+int main(void) 
+{
     SDL_Init(SDL_INIT_VIDEO);
 
     SDL_Window *window;
@@ -38,10 +39,7 @@ int main(void) {
     nave_t *nave = nave_crear();
     if(nave == NULL)
     {
-        lista_destruir(figuras_lista, figura_destruir);
-        SDL_DestroyRenderer(renderer);
-        SDL_DestroyWindow(window);
-        SDL_Quit();
+                perror("No se pudo guardar las figuras!");
         return 1;
     }
 
@@ -110,7 +108,10 @@ int main(void) {
         
         logica_niveles(nave,&elegir_nivel);
 
-        mov_nave(nave, elegir_nivel == INICIO );
+        mov_nave(nave, elegir_nivel, figuras_lista );
+
+        if(nave_muerta(nave))
+            break;
 
 
         //dibujar_palabra(devolver_palabra("puntaje"),strlen("puntaje"),5,VENTANA_ANCHO/2,VENTANA_ALTO/2,renderer);

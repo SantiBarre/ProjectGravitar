@@ -7,6 +7,8 @@
 #include "nave.h"
 #include "polilinea.h"
 #include "disparo.h"
+#include "lista.h"
+#include "logica.h"
 
 static double comp_vel(double vi, double a, double dt)
 {
@@ -24,14 +26,16 @@ float pendiente(const float vectorA[], const float vectorB[])
 }
 
 
-void mov_nave(nave_t *n, bool inicio)
+void mov_nave(nave_t *n, nivel_t planeta, lista_t *p)
 {
     float dir_g[2];
-    if (inicio)
+    float distrancia_nave;
+
+    if (planeta == INICIO)
     {
         float estrella[2] = {457, 364};
 
-        float distrancia_nave = moduloV(estrella, n->pos);
+        distrancia_nave = moduloV(estrella, n->pos);
 
         if(distrancia_nave < 50)
         {
@@ -60,6 +64,49 @@ void mov_nave(nave_t *n, bool inicio)
     }
     else
     {
+        figura_t *nivel;
+        if (NIVEL1)
+        {
+            nivel = obtener_figura("NIVEL1NE", p);
+
+        }
+        else if (NIVEL2)
+        {
+            nivel = obtener_figura("NIVEL1SE", p);
+        }
+        else if (NIVEL3)
+        {
+            nivel = obtener_figura("NIVEL1SW", p);
+        }
+        else if (NIVEL4)
+        {
+            nivel = obtener_figura("NIVEL1NW",p);
+        }
+        else
+        {
+            nivel = obtener_figura("NIVEL1R",p);
+        }
+
+        
+
+        size_t cant = polilinea_cantidad_puntos(nivel->polis[0]);
+
+        //Es infinito
+        float distrancia_nave = distancia_punto_a_polilinea(nivel->polis[0]->puntos, cant , n->pos[0], n->pos[1]);
+
+        if(distrancia_nave < 5)
+        {
+            n->vidas -= 1;
+
+            n->pos[0] = VENTANA_ANCHO/2;
+            n->pos[1] = VENTANA_ALTO/2;
+
+            n->vel[0] = n->vel[1] = 0;
+
+            n->dir = NAVE_ANGULO_INICIAL;
+        }
+
+
         dir_g[0] = 0;
         dir_g[1] = -G;
     }

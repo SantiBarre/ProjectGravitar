@@ -41,18 +41,12 @@ nave_t* nave_crear(void)
 
 void nave_derecha(nave_t *n)
 {
-    if(n->dir < 0)
-        n->dir = PI - NAVE_ROTACION_PASO;
-    else
-        n->dir = n->dir - NAVE_ROTACION_PASO;
+    n->dir = n->dir - NAVE_ROTACION_PASO;
 }
 
 void nave_izquieda(nave_t *n)
 {
-    if(n->dir > PI)
-        n->dir = NAVE_ROTACION_PASO;
-    else
-        n->dir = n->dir + NAVE_ROTACION_PASO;
+    n->dir = n->dir + NAVE_ROTACION_PASO;
 }
 
 void nave_chorro(nave_t *n, bool on_off)

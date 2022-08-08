@@ -68,7 +68,7 @@ void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Re
 
     //########## ESCALA ##########
     float escala;
-    float centro = VENTANA_ANCHO/2;
+    float centro = 200;
         if(nave->pos[1] > VENTANA_ALTO * MARGEN_ALTURA)
             escala = VENTANA_ALTO * MARGEN_ALTURA / nave->pos[1];
         if(escala < ESCALA_MINIMA)
@@ -146,12 +146,22 @@ void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Re
     }
 
     if (elegir_nivel == NIVEL4) {
+        escala = VENTANA_ALTO * 1.0 / 746;
+        if(VENTANA_ANCHO * 1.0 / (1139 + 150) < escala)
+            escala = VENTANA_ANCHO * 1.0 / (1139 + 150);
+        centro = (1139 + 150) / 2;
+
         figura_t *nivel1nw = obtener_figura("NIVEL1NW",lista_f);
         dibujar_figura (nivel1nw,escala,0,0,renderer);
         //4 combustibles Y 8 torretas
     }
 
     if (elegir_nivel == NIVEL5) {
+        escala = VENTANA_ALTO * 1.0 / 726;
+        if(VENTANA_ANCHO * 1.0 / (1146 + 0) < escala)
+            escala = VENTANA_ANCHO * 1.0 / (1146 + 0);
+        centro = (1146 + 0) / 2;
+        
         figura_t *nivel1r = obtener_figura("NIVEL1R",lista_f);
         dibujar_figura (nivel1r,escala,0,0,renderer);
         figura_t *reactor = obtener_figura("REACTOR",lista_f);
@@ -164,6 +174,7 @@ void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Re
 void dibujado_de_nave(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer){
 
     figura_t *nave_fig;
+    figura_t *nave_escudo;
 
     if (nave->chorro)
     {
@@ -173,6 +184,10 @@ void dibujado_de_nave(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer){
     {
         nave_fig = obtener_figura ("NAVE",lista_f);
     }
+    if (nave->escudo){
+        nave_escudo = obtener_figura("ESCUDO2",lista_f);
+        dibujar_figura(nave_escudo,1,nave->pos[0],nave->pos[1] -10,renderer);
+    }
 
 
     figura_t *aux = figura_mov(nave_fig,0,0,nave->dir);  
@@ -181,8 +196,9 @@ void dibujado_de_nave(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer){
 }
 
 void dibujar_vidas(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer){
+
     float posx = 40;
-    float posy = 500;
+    float posy = 560;
     float espacio = 30;
 
     float tamanio = 3;

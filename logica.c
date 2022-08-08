@@ -12,6 +12,7 @@
 
 void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
 
+    float punto_escudo = (nave->pos[0], nave->pos[1] - 30);
 
     if (*elegir_nivel == INICIO) {
 
@@ -25,18 +26,38 @@ void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
 
         //Interaccion con los planetas
         if(moduloV(nave->pos,pos_planeta1) <= MARGEN_COLISION){
+            nave->pos[0] = VENTANA_ANCHO /2;
+            nave->pos[1] = 500;
+            nave->vel[0] = 0;
+            nave->vel[1] = 0;
             *elegir_nivel = NIVEL1;
         }
         if(moduloV(nave->pos,pos_planeta2) <= MARGEN_COLISION){
+            nave->pos[0] = VENTANA_ANCHO /2;
+            nave->pos[1] = 500;
+            nave->vel[0] = 0;
+            nave->vel[1] = 0;
             *elegir_nivel = NIVEL2;
         }
         if(moduloV(nave->pos,pos_planeta3) <= MARGEN_COLISION){
+            nave->pos[0] = VENTANA_ANCHO /2;
+            nave->pos[1] = 500;
+            nave->vel[0] = 0;
+            nave->vel[1] = 0;
             *elegir_nivel = NIVEL3;
         }
         if(moduloV(nave->pos,pos_planeta4) <= MARGEN_COLISION){
+            nave->pos[0] = VENTANA_ANCHO /2;
+            nave->pos[1] = 500;
+            nave->vel[0] = 0;
+            nave->vel[1] = 0;
             *elegir_nivel = NIVEL4;
         }
         if(moduloV(nave->pos,pos_planeta5) <= MARGEN_COLISION){
+            nave->pos[0] = VENTANA_ANCHO /2;
+            nave->pos[1] = 550;
+            nave->vel[0] = 0;
+            nave->vel[1] = 0;
             *elegir_nivel = NIVEL5;
         }
     }

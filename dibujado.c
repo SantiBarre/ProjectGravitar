@@ -63,18 +63,29 @@ bool dibujar_palabra(int ***palabra,size_t tamanio_palabra,float escala,float po
 }
 
 
-void dibujado_de_nivel(lista_t *lista_f,nivel_t elegir_nivel,SDL_Renderer *renderer){
+void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Renderer *renderer){
 
 
-    //########## OBJETOS ##########
-    float escala=1;
-    
+    //########## ESCALA ##########
+    float escala;
+    float centro = VENTANA_ANCHO/2;
+        if(nave->pos[1] > VENTANA_ALTO * MARGEN_ALTURA)
+            escala = VENTANA_ALTO * MARGEN_ALTURA / nave->pos[1];
+        if(escala < ESCALA_MINIMA)
+            escala = ESCALA_MINIMA;
+
+        if((nave->pos[0] - centro) * escala > VENTANA_ANCHO / 2 * MARGEN_ANCHO)
+            centro = nave->pos[0] - VENTANA_ANCHO / 2 * MARGEN_ANCHO / escala;
+        else if((centro - nave->pos[0]) * escala > VENTANA_ANCHO / 2 * MARGEN_ANCHO)
+            centro = nave->pos[0] + VENTANA_ANCHO / 2 * MARGEN_ANCHO / escala;
+        printf("x:%f y:%f \n",nave->pos[0],nave->pos[1]);
+        printf("escala:%f",escala);
+        
     if (elegir_nivel == INICIO) { 
         
         //########## DIBUJADO DE INICIO ##########
         /*nave->pos[0] = 388;
         nave->pos[1] = 218; */
-        escala =1;
 
         figura_t *base = obtener_figura("BASE",lista_f);
         dibujar_figura (base,1,388,218,renderer);
@@ -107,7 +118,6 @@ void dibujado_de_nivel(lista_t *lista_f,nivel_t elegir_nivel,SDL_Renderer *rende
     }
 
     if (elegir_nivel == NIVEL1) {
-        escala =1;
         figura_t *nivel1ne = obtener_figura("NIVEL1NE",lista_f);
         //Es infinito
         dibujar_figura (nivel1ne,escala,0,0,renderer);
@@ -118,7 +128,6 @@ void dibujado_de_nivel(lista_t *lista_f,nivel_t elegir_nivel,SDL_Renderer *rende
     }
 
     if (elegir_nivel == NIVEL2) {
-        escala =1;
         figura_t *nivel1se = obtener_figura("NIVEL1SE",lista_f);
         //Es infinito
         dibujar_figura (nivel1se,escala,0,0,renderer);
@@ -128,7 +137,6 @@ void dibujado_de_nivel(lista_t *lista_f,nivel_t elegir_nivel,SDL_Renderer *rende
     }
 
     if (elegir_nivel == NIVEL3) {
-        escala =1;
         figura_t *nivel1sw = obtener_figura("NIVEL1SW",lista_f);
         //Es infinito
         dibujar_figura (nivel1sw,escala,0,0,renderer);
@@ -138,14 +146,12 @@ void dibujado_de_nivel(lista_t *lista_f,nivel_t elegir_nivel,SDL_Renderer *rende
     }
 
     if (elegir_nivel == NIVEL4) {
-        escala =1;
         figura_t *nivel1nw = obtener_figura("NIVEL1NW",lista_f);
         dibujar_figura (nivel1nw,escala,0,0,renderer);
         //4 combustibles Y 8 torretas
     }
 
     if (elegir_nivel == NIVEL5) {
-        escala =1;
         figura_t *nivel1r = obtener_figura("NIVEL1R",lista_f);
         dibujar_figura (nivel1r,escala,0,0,renderer);
         figura_t *reactor = obtener_figura("REACTOR",lista_f);

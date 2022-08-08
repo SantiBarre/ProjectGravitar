@@ -47,13 +47,6 @@ void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
         if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
             *elegir_nivel = INICIO;
         }
-        //Interaccion con el borde de la ventana (INFINITO)
-        if (nave->pos[0] <= 2000){
-            nave->pos[0] = 0;
-        }
-        if (nave->pos[0] < 0){
-            nave->pos[0] = 2000;
-        }
         
     }
     if (*elegir_nivel == NIVEL2) {
@@ -61,26 +54,12 @@ void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
         if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
             *elegir_nivel = INICIO;
         }
-        //Interaccion con el borde de la ventana (INFINITO)
-        if (nave->pos[0] <= 2000){
-            nave->pos[0] = 0;
-        }
-        if (nave->pos[0] < 0){
-            nave->pos[0] = 2000;
-        }
     }
 
     if (*elegir_nivel == NIVEL3) {
         //Asi se sale del nivel 
         if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
             *elegir_nivel = INICIO;
-        }
-        //Interaccion con el borde de la ventana (INFINITO)
-        if (nave->pos[0] <= 2000){
-            nave->pos[0] = 0;
-        }
-        if (nave->pos[0] < 0){
-            nave->pos[0] = 2000;
         }
     }
     

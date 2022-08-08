@@ -105,6 +105,8 @@ int main(void)
         // BEGIN código del alumno
         // Dibujamos la nave escalada por f en el centro de la pantalla:
         
+        dibujado_de_nave(figuras_lista,nave,renderer);
+        dibujado_de_nivel(figuras_lista,nave,elegir_nivel,renderer);
         
         logica_niveles(nave,&elegir_nivel);
 
@@ -115,8 +117,7 @@ int main(void)
 
 
         //dibujar_palabra(devolver_palabra("puntaje"),strlen("puntaje"),5,VENTANA_ANCHO/2,VENTANA_ALTO/2,renderer);
-        dibujado_de_nave(figuras_lista,nave,renderer);
-        dibujado_de_nivel(figuras_lista,elegir_nivel,renderer);
+        
 
         // END código del alumno
 

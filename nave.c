@@ -114,3 +114,19 @@ void torreta_disparar(torreta_t *torreta){
     }
 }
 
+combustible_t* combustible_crear(float posx,float posy,float dir){
+    combustible_t* aux = malloc (sizeof(combustible_t));
+    if(aux == NULL) return NULL;
+
+    aux->pos[0] = posx;
+    aux->pos[1] = posy;
+    aux->dir = dir;
+
+    aux->uso = false;
+    return aux;
+}
+
+void combustible_usar(combustible_t* combus){
+    combus->uso = true;
+}
+

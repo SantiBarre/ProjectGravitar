@@ -184,7 +184,7 @@ void dibujado_de_nave(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Ren
 
     figura_t *nave_fig;
     figura_t *nave_escudo;
-    //float tras = 0;
+
     float escala = 1;
     float centro = VENTANA_ANCHO /2;
    if(nave->pos[1] > VENTANA_ALTO * MARGEN_ALTURA)
@@ -197,10 +197,7 @@ void dibujado_de_nave(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Ren
         else if((centro - nave->pos[0]) * escala > VENTANA_ANCHO / 2 * MARGEN_ANCHO)
             centro = nave->pos[0] + VENTANA_ANCHO / 2 * MARGEN_ANCHO / escala;
 
-    if (elegir_nivel == NIVEL1)
-    {
-       // tras = centro + (float) VENTANA_ANCHO / 2 / escala; que es esto?
-    }
+    
     
 
 

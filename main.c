@@ -32,6 +32,9 @@ int main(void)
         perror("No se pudo guardar las figuras!");
         return 1;
     }
+    lista_t *torretas;
+    lista_t *combustibles;
+    inicializar_objetos(torretas,combustibles);
     nivel_t elegir_nivel; //ACA PARA EL SWITCH CASE
     elegir_nivel = INICIO;
     // Mi nave:

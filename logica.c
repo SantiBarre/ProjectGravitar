@@ -23,6 +23,7 @@ void volver_inicio(nave_t *n, nivel_t *elegir_nivel)
 
 void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
 
+    //float punto_escudo = (nave->pos[0], nave->pos[1] - 30);
 
     if (*elegir_nivel == INICIO) {
 
@@ -36,40 +37,57 @@ void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
 
         //Interaccion con los planetas
         if(moduloV(nave->pos,pos_planeta1) <= MARGEN_COLISION){
+            nave->pos[0] = VENTANA_ANCHO /2;
+            nave->pos[1] = 500;
+            nave->vel[0] = 0;
+            nave->vel[1] = 0;
             *elegir_nivel = NIVEL1;
         }
         if(moduloV(nave->pos,pos_planeta2) <= MARGEN_COLISION){
+            nave->pos[0] = VENTANA_ANCHO /2;
+            nave->pos[1] = 500;
+            nave->vel[0] = 0;
+            nave->vel[1] = 0;
             *elegir_nivel = NIVEL2;
         }
         if(moduloV(nave->pos,pos_planeta3) <= MARGEN_COLISION){
+            nave->pos[0] = VENTANA_ANCHO /2;
+            nave->pos[1] = 500;
+            nave->vel[0] = 0;
+            nave->vel[1] = 0;
             *elegir_nivel = NIVEL3;
         }
         if(moduloV(nave->pos,pos_planeta4) <= MARGEN_COLISION){
+            nave->pos[0] = VENTANA_ANCHO /2;
+            nave->pos[1] = 500;
+            nave->vel[0] = 0;
+            nave->vel[1] = 0;
             *elegir_nivel = NIVEL4;
         }
         if(moduloV(nave->pos,pos_planeta5) <= MARGEN_COLISION){
+            nave->pos[0] = VENTANA_ANCHO /2;
+            nave->pos[1] = 550;
+            nave->vel[0] = 0;
+            nave->vel[1] = 0;
             *elegir_nivel = NIVEL5;
         }
     }
     if (*elegir_nivel == NIVEL1) { 
         //Asi se sale del nivel 
-        if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
+        if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA)
             volver_inicio(nave, elegir_nivel);
-        }
         
     }
     if (*elegir_nivel == NIVEL2) {
         //Asi se sale del nivel 
-        if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
+        if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA)
             volver_inicio(nave, elegir_nivel);
-        }
     }
 
     if (*elegir_nivel == NIVEL3) {
         //Asi se sale del nivel 
-        if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
+        if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA)
             volver_inicio(nave, elegir_nivel);
-        }
     }
     
     if (*elegir_nivel == NIVEL4) {

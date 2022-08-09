@@ -106,9 +106,11 @@ int main(void)
         // Dibujamos la nave escalada por f en el centro de la pantalla:
         textos(nave, renderer);
         punto_del_mundo(100,renderer);
-        dibujado_de_nave(figuras_lista,nave,renderer);
-        dibujado_de_nivel(figuras_lista,nave,elegir_nivel,renderer);
         
+        dibujado_de_nave(figuras_lista,nave,elegir_nivel,renderer);
+        dibujado_de_nivel(figuras_lista,nave,elegir_nivel,renderer);
+        dibujar_vidas(figuras_lista,nave,renderer);
+
         logica_niveles(nave,&elegir_nivel);
 
         mov_nave(nave, elegir_nivel, figuras_lista );

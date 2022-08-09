@@ -1,10 +1,16 @@
 #ifndef ESCRITURA_H
 #define ESCRITURA_H
 
-extern int **letras[];
+#include <stdbool.h>
+#include <SDL2/SDL.h>
+#include "nave.h"
 
-/*int **devolver_letra(char c);
+bool dibujar_texto(char *texto, bool color, float escala, float posx, float posy, SDL_Renderer *renderer);
 
-int ***devolver_palabra(char* pal);*/
+bool textos(nave_t *n,  SDL_Renderer *renderer);
+
+bool punto_mundo(SDL_Renderer *renderer);
+
+bool punto_del_mundo(int puntos, SDL_Renderer *renderer);
 
 #endif

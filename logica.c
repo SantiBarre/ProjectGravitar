@@ -10,6 +10,17 @@
 
 #define MARGEN_COLISION 20
 
+void volver_inicio(nave_t *n, nivel_t *elegir_nivel)
+{
+    n->pos[0] = 388;
+    n->pos[1] = 218;
+
+    n->vel[0] = 0;
+    n->vel[1] = 0;
+            
+    *elegir_nivel = INICIO;
+}
+
 void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
 
 
@@ -43,47 +54,36 @@ void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
     if (*elegir_nivel == NIVEL1) { 
         //Asi se sale del nivel 
         if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
-            nave->pos[0] = 388;
-            nave->pos[1] = 218;
-            *elegir_nivel = INICIO;
+            volver_inicio(nave, elegir_nivel);
         }
         
     }
     if (*elegir_nivel == NIVEL2) {
         //Asi se sale del nivel 
         if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
-            nave->pos[0] = 388;
-            nave->pos[1] = 218;
-            *elegir_nivel = INICIO;
+            volver_inicio(nave, elegir_nivel);
         }
     }
 
     if (*elegir_nivel == NIVEL3) {
         //Asi se sale del nivel 
         if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
-            nave->pos[0] = 388;
-            nave->pos[1] = 218;
-            *elegir_nivel = INICIO;
+            volver_inicio(nave, elegir_nivel);
         }
     }
     
     if (*elegir_nivel == NIVEL4) {
         //Asi se sale del nivel 
-        if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
-            nave->pos[0] = 388;
-            nave->pos[1] = 218;
-            *elegir_nivel = INICIO;
-        }
+        if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA)
+            volver_inicio(nave, elegir_nivel);
+
 
     }
     
     if (*elegir_nivel == NIVEL5) {
         //Asi se sale del nivel 
-        if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA){
-            nave->pos[0] = 388;
-            nave->pos[1] = 218;
-            *elegir_nivel = INICIO;
-        }
+        if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA)
+            volver_inicio(nave, elegir_nivel);
         
     }
     

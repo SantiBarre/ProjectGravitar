@@ -121,13 +121,13 @@ void dibujado_de_nivel(lista_t *lista_f,lista_t *lista_combus,lista_t *lista_tor
         dibujar_figura (nivel1ne,escala,0 -centro + VENTANA_ANCHO / 2 / escala + 2000,0,renderer);
         dibujar_figura (nivel1ne,escala,0 -centro + VENTANA_ANCHO / 2 / escala - 2000,0,renderer);
         
-        dibujar_figura (combustible,escala,1064 -centro + VENTANA_ANCHO / 2 / escala,13,renderer);
-        dibujar_figura (combustible,escala,1685 -centro + VENTANA_ANCHO / 2 / escala,113,renderer);
+        dibujar_figura (combustible,escala,1064  - VENTANA_ANCHO / 2 / escala,13,renderer);
+        dibujar_figura (combustible,escala,1685  - VENTANA_ANCHO / 2 / escala,113,renderer);
         
         figura_t *torr_1 = figura_mov(torr_fig,0,0,-0.66);
-        dibujar_figura (torr_1,escala,916 -centro + VENTANA_ANCHO / 2 / escala,75,renderer);
+        dibujar_figura (torr_1,escala,916 - centro + VENTANA_ANCHO / 2 / escala,75,renderer);
         figura_t *torr_2 = figura_mov(torr_fig,0,0,0.66);
-        dibujar_figura (torr_2,escala,1425 -centro + VENTANA_ANCHO / 2 / escala,159,renderer);
+        dibujar_figura (torr_2,escala,1425 - centro + VENTANA_ANCHO / 2 / escala,159,renderer);
         //2 combustibles y 2 torretas
     }
 
@@ -191,27 +191,27 @@ void dibujado_de_nivel(lista_t *lista_f,lista_t *lista_combus,lista_t *lista_tor
         figura_t *nivel1nw = obtener_figura("NIVEL1NW",lista_f);
         dibujar_figura (nivel1nw,escala,0,0,renderer);
         
-        dibujar_figura (combustible,escala,188,429,renderer);
-        dibujar_figura (combustible,escala,667,600,renderer);
-        dibujar_figura (combustible,escala,1054,404,renderer);
-        dibujar_figura (combustible,escala,574,344,renderer);
+        dibujar_figura (combustible,escala,188 * escala,429 * escala,renderer);
+        dibujar_figura (combustible,escala,667 * escala,600 * escala,renderer);
+        dibujar_figura (combustible,escala,1054 * escala,404 * escala,renderer);
+        dibujar_figura (combustible,escala,574 * escala,344 * escala,renderer);
 
         figura_t *torr_13 = figura_mov(torr_fig,0,0,0.66);
-        dibujar_figura (torr_13,escala,257 - centro * escala,440,renderer);
+        dibujar_figura (torr_13,escala,257 * escala,440 * escala,renderer);
         figura_t *torr_14 = figura_mov(torr_fig,0,0,2.23);
-        dibujar_figura (torr_14,escala,719 + centro * escala,674,renderer);
+        dibujar_figura (torr_14,escala,719 * escala,674 * escala,renderer);
         figura_t *torr_15 = figura_mov(torr_fig,0,0,0);
-        dibujar_figura (torr_15,escala,985,565,renderer);
+        dibujar_figura (torr_15,escala,985 * escala,565 * escala,renderer);
         figura_t *torr_16 = figura_mov(torr_fig,0,0,3.8);
-        dibujar_figura (torr_16,escala,1125,417,renderer);
+        dibujar_figura (torr_16,escala,1125 * escala,417 * escala,renderer);
         figura_t *torr_17 = figura_mov(torr_fig,0,0,3.8);
-        dibujar_figura (torr_17,escala,862,163,renderer);
+        dibujar_figura (torr_17,escala,862 * escala,163 * escala,renderer);
         figura_t *torr_18 = figura_mov(torr_fig,0,0,2.23);
-        dibujar_figura (torr_18,escala,626,323,renderer);
+        dibujar_figura (torr_18,escala,626 * escala,323 * escala,renderer);
         figura_t *torr_19 = figura_mov(torr_fig,0,0,3.8);
-        dibujar_figura (torr_19,escala,505,331,renderer);
+        dibujar_figura (torr_19,escala,505 * escala,331 * escala,renderer);
         figura_t *torr_20 = figura_mov(torr_fig,0,0,2.23);
-        dibujar_figura (torr_20,escala,378,296,renderer);
+        dibujar_figura (torr_20,escala,378 * escala,296 * escala,renderer);
         //4 combustibles Y 8 torretas
     }
 
@@ -223,8 +223,8 @@ void dibujado_de_nivel(lista_t *lista_f,lista_t *lista_combus,lista_t *lista_tor
         
         figura_t *nivel1r = obtener_figura("NIVEL1R",lista_f);
         dibujar_figura (nivel1r,escala,0,0,renderer);
-        figura_t *reactor = obtener_figura("NAVE",lista_f);
-        dibujar_figura (reactor,escala,815,309,renderer);
+        figura_t *reactor = obtener_figura("REACTOR",lista_f);
+        dibujar_figura (reactor,escala,815 * escala,309 * escala,renderer);
         
     }
 }

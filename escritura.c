@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <stdlib.h>
 
+#include "escritura.h"
 #include "caracteres.h"
 #include "nave.h"
 #include "config.h"

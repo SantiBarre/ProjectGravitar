@@ -8,26 +8,31 @@
 #include "figuras.h"
 #include "nave.h"
 #include "config.h"
+#include "escritura.h"
 
 
-bool dibujar_figura(figura_t *fig, float escala, float posx,float posy, SDL_Renderer *renderer){
-    for (size_t i=0; i < fig->cantidad_polilineas; i++){
-            if (!dibujar_polilinea(fig->polis[i],escala,posx,posy,renderer)){
-                perror ("ERROR DE DIBUJADO!");
-                return false;
-            }
+bool dibujar_figura(figura_t *fig, float escala, float posx,float posy, SDL_Renderer *renderer)
+{
+    for (size_t i=0; i < fig->cantidad_polilineas; i++)
+    {
+        if (!dibujar_polilinea(fig->polis[i],escala,posx,posy,renderer)){
+            perror ("ERROR DE DIBUJADO!");
+            return false;
         }
+    }
     return true;
 }
 
 
-bool dibujar_polilinea(polilinea_t *polilinea,float escala,float posx,float posy,SDL_Renderer *renderer){
-    uint8_t r;
-    uint8_t g;
-    uint8_t b;
+bool dibujar_polilinea(polilinea_t *polilinea,float escala,float posx,float posy,SDL_Renderer *renderer)
+{
+    //Seteo el color
+    uint8_t r, g, b;
     color_a_rgb(polilinea->color,&r,&g,&b);
     SDL_SetRenderDrawColor(renderer, r, g, b, 0x00);
-    for(int i = 0; i < polilinea->n - 1; i++){ 
+
+    for(int i = 0; i < polilinea->n - 1; i++)
+    { 
         if (SDL_RenderDrawLine(
         renderer,
         polilinea->puntos[i][0] * escala + posx,
@@ -42,6 +47,7 @@ bool dibujar_polilinea(polilinea_t *polilinea,float escala,float posx,float posy
     return true;
 }
 
+/*
 bool dibujar_palabra(int ***palabra,size_t tamanio_palabra,float escala,float posx,float posy,SDL_Renderer *renderer){ 
     SDL_SetRenderDrawColor(renderer, 0, 0xFF, 0xFF, 0x00);
     for (int j = 0; j <= tamanio_palabra; j++){
@@ -61,7 +67,7 @@ bool dibujar_palabra(int ***palabra,size_t tamanio_palabra,float escala,float po
     }
     return true;
 }
-
+*/
 
 void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Renderer *renderer){
 
@@ -78,6 +84,7 @@ void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Re
         //########## DIBUJADO DE INICIO ##########
         /*nave->pos[0] = 388;
         nave->pos[1] = 218; */
+        punto_mundo(renderer);
 
         figura_t *base = obtener_figura("BASE",lista_f);
         dibujar_figura (base,1,388,218,renderer);
@@ -113,7 +120,7 @@ void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Re
         figura_t *nivel1ne = obtener_figura("NIVEL1NE",lista_f);
         //Es infinito
         calculo_escala(&escala,&centro,nave);
-        
+        punto_del_mundo(2000, renderer);
         dibujar_figura (nivel1ne,escala,0 -centro + VENTANA_ANCHO / 2 / escala,0,renderer);
         dibujar_figura (nivel1ne,escala,0 -centro + VENTANA_ANCHO / 2 / escala + 2000,0,renderer);
         dibujar_figura (nivel1ne,escala,0 -centro + VENTANA_ANCHO / 2 / escala - 2000,0,renderer);
@@ -126,6 +133,7 @@ void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Re
         calculo_escala(&escala,&centro,nave);
         figura_t *nivel1se = obtener_figura("NIVEL1SE",lista_f);
         //Es infinito
+        punto_del_mundo(4000, renderer);
         dibujar_figura (nivel1se,escala,0 -centro + VENTANA_ANCHO / 2 / escala,0,renderer);
         dibujar_figura (nivel1se,escala,0 -centro + VENTANA_ANCHO / 2 / escala + 2087,0,renderer);
         dibujar_figura (nivel1se,escala,0 -centro + VENTANA_ANCHO / 2 / escala - 2087,0,renderer);
@@ -137,6 +145,7 @@ void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Re
         calculo_escala(&escala,&centro,nave);
         figura_t *nivel1sw = obtener_figura("NIVEL1SW",lista_f);
         //Es infinito
+        punto_del_mundo(6000, renderer);
         dibujar_figura (nivel1sw,escala,0 -centro + VENTANA_ANCHO / 2 / escala,0,renderer);
         dibujar_figura (nivel1sw,escala,0 -centro + VENTANA_ANCHO / 2 / escala + 1790,0,renderer);
         dibujar_figura (nivel1sw,escala,0 -centro + VENTANA_ANCHO / 2 / escala - 1790,0,renderer);
@@ -148,7 +157,7 @@ void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Re
         if(VENTANA_ANCHO * 1.0 / (1139 + 150) < escala)
             escala = VENTANA_ANCHO * 1.0 / (1139 + 150);
         centro = (1139 + 150) / 2;
-
+        punto_del_mundo(8000, renderer);
         figura_t *nivel1nw = obtener_figura("NIVEL1NW",lista_f);
         dibujar_figura (nivel1nw,escala,0,0,renderer);
         //4 combustibles Y 8 torretas
@@ -160,6 +169,7 @@ void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Re
             escala = VENTANA_ANCHO * 1.0 / (1146 + 0);
         centro = (1146 + 0) / 2;
         
+        punto_del_mundo(9000, renderer);
         figura_t *nivel1r = obtener_figura("NIVEL1R",lista_f);
         dibujar_figura (nivel1r,escala,0,0,renderer);
         figura_t *reactor = obtener_figura("NAVE",lista_f);
@@ -180,14 +190,14 @@ void calculo_escala(float *escala,float *centro,nave_t *nave){
             *centro = nave->pos[0] + VENTANA_ANCHO / 2 * MARGEN_ANCHO / *escala;
 }
 
-void dibujado_de_nave(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Renderer *renderer){
+bool dibujado_de_nave(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Renderer *renderer)
+{
 
-    figura_t *nave_fig;
-    figura_t *nave_escudo;
+    figura_t *nave_fig,  *nave_escudo;
     //float tras = 0;
-    float escala = 1;
-    float centro = VENTANA_ANCHO /2;
-   if(nave->pos[1] > VENTANA_ALTO * MARGEN_ALTURA)
+    float escala = 1, centro = VENTANA_ANCHO /2;
+    
+    if(nave->pos[1] > VENTANA_ALTO * MARGEN_ALTURA)
             escala = VENTANA_ALTO * MARGEN_ALTURA / nave->pos[1];
         if(escala < ESCALA_MINIMA)
             escala = ESCALA_MINIMA;
@@ -196,11 +206,12 @@ void dibujado_de_nave(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Ren
             centro = nave->pos[0] - VENTANA_ANCHO / 2 * MARGEN_ANCHO / escala;
         else if((centro - nave->pos[0]) * escala > VENTANA_ANCHO / 2 * MARGEN_ANCHO)
             centro = nave->pos[0] + VENTANA_ANCHO / 2 * MARGEN_ANCHO / escala;
-
+    /*
     if (elegir_nivel == NIVEL1)
     {
-       // tras = centro + (float) VENTANA_ANCHO / 2 / escala; que es esto?
+        tras = centro + VENTANA_ANCHO / 2 / escala;
     }
+    */
     
 
 
@@ -215,33 +226,44 @@ void dibujado_de_nave(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Ren
 
 
     figura_t *aux = figura_mov(nave_fig,0,0,nave->dir);  
-    if (elegir_nivel == INICIO || elegir_nivel == NIVEL4 || elegir_nivel == NIVEL5){
-        dibujar_figura(aux,1,nave->pos[0],nave->pos[1],renderer); 
-        if (nave->escudo){
-        nave_escudo = obtener_figura("ESCUDO2",lista_f);
-        dibujar_figura(nave_escudo,1,nave->pos[0],nave->pos[1] -10,renderer);
+    if(aux == NULL) return false;
+
+    if (elegir_nivel == INICIO || elegir_nivel == NIVEL4 || elegir_nivel == NIVEL5)
+    {
+        dibujar_figura(aux,1,nave->pos[0],nave->pos[1],renderer);
+
+        if(nave->escudo)
+        {
+            nave_escudo = obtener_figura("ESCUDO2",lista_f);
+            dibujar_figura(nave_escudo,1,nave->pos[0],nave->pos[1] -10,renderer);
+        }
     }
-    } else{
-        dibujar_figura(aux,1,nave->pos[0] -centro + VENTANA_ANCHO / 2,nave->pos[1],renderer); 
-        if (nave->escudo){
-        nave_escudo = obtener_figura("ESCUDO2",lista_f);
-        dibujar_figura(nave_escudo,1,nave->pos[0] -centro + VENTANA_ANCHO / 2,nave->pos[1] -10,renderer);
+    else
+    {
+        dibujar_figura(aux,1,nave->pos[0] -centro + VENTANA_ANCHO / 2,nave->pos[1],renderer);
+
+        if(nave->escudo)
+        {
+            nave_escudo = obtener_figura("ESCUDO2",lista_f);
+            dibujar_figura(nave_escudo,1,nave->pos[0] -centro + VENTANA_ANCHO / 2,nave->pos[1] -10,renderer);
+        }
     }
-    }
-    
+
     figura_destruir(aux);
+    return true;
 }
 
-void dibujar_vidas(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer){
+void dibujar_vidas(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer)
+{
 
-    float posx = 40;
-    float posy = 560;
-    float espacio = 30;
-
-    float tamanio = 3;
+    float posx = 40, posy = 560, espacio = 30, tamanio = 3;
 
     figura_t *nave_fig = obtener_figura("NAVE",lista_f);
     
+    for (size_t i = 0; i < nave->vidas; i++)
+        dibujar_figura(nave_fig,tamanio,posx + (espacio * i),posy,renderer);
+
+/*
     if (nave->vidas >= 1){
         dibujar_figura(nave_fig,tamanio,posx,posy,renderer);
         printf("UNO ");
@@ -260,9 +282,9 @@ void dibujar_vidas(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer){
     }
     if (nave->vidas >= 5){
         dibujar_figura(nave_fig,tamanio,posx + (espacio * 4),posy,renderer);
-        printf("CINCO ");
-    }
 
+    }
+*/
 }
 /*void dibujado_de_nave(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer){
 

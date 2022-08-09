@@ -206,7 +206,6 @@ lista_t *guardar_figuras(char *archivo)
 
         for(size_t i = 0; i < cantidad_polilineas; i++)
         {
-  
             polilinea_t *pol = leer_polilinea(f);
             if(pol == NULL)
             {
@@ -246,16 +245,14 @@ lista_t *guardar_figuras(char *archivo)
 
 figura_t *obtener_figura(char *nom, lista_t *l)
 {
-
     lista_iterador_t *li;
-
+    
     for(
         li = lista_iterador_crear(l);
         !lista_iterador_termino(li);
         lista_iterador_siguiente(li)
     )
     {
-
         figura_t *dato = lista_iterador_actual(li);
 
             if (strcmp(*dato->nombre, nom) == 0)
@@ -272,32 +269,35 @@ figura_t *obtener_figura(char *nom, lista_t *l)
 figura_t *figura_clonar(const figura_t *figura)
 {
     figura_t *clon = crear_figura_vacia(figura->cantidad_polilineas);
+    if (clon == NULL) return NULL;
+    
     strcpy(*(clon->nombre),*(figura->nombre));
     clon->infinito=figura->infinito;
     clon->tipo=figura->tipo;
-    for (size_t i = 0; i < figura->cantidad_polilineas; i++){
-        clon->polis[0] = polilinea_clonar(figura->polis[0]);
-    }
-       
-    clon->cantidad_polilineas=figura->cantidad_polilineas;
-    if(clon == NULL) {
-        perror ("Error en clonar figura!\n");
-        return NULL;
-    }
-    
+
     return clon;
 }
 
-figura_t *figura_mov(const figura_t *figura, float posx, float posy, float ang){
+figura_t *figura_mov(const figura_t *figura, float posx, float posy, float ang)
+{
     figura_t *p = figura_clonar(figura);
-    if(p == NULL) {
+    if(p == NULL)
+    {
         perror("No se pudo clonar la nave!\n");
         return NULL;
     }
    
-    for (size_t i=0; i <= figura->cantidad_polilineas - 1; i++){
+    for (size_t i=0; i <= figura->cantidad_polilineas - 1; i++)
+    {
         p->polis[i] = polilinea_mov(figura->polis[i],posx,posy,ang);
+        if(p->polis[i] == NULL)
+        {
+            for (size_t j = 0; j < i; i++)
+                polilinea_destruir(p->polis[j]);
+
+            figura_destruir((figura_t *)p);
+            return NULL;
+        }
     }
- 
     return p;
 }

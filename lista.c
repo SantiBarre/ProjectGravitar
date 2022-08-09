@@ -1,5 +1,6 @@
 #include "lista.h"
 #include <stdlib.h>
+#include <stddef.h>
 
 struct nodo
 {

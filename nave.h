@@ -1,6 +1,7 @@
 #ifndef NAVE_H
 #define NAVE_H
 
+#include <stddef.h>
 #include <stdbool.h>
 
 

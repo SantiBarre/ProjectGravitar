@@ -74,35 +74,32 @@ void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
     }
     if (*elegir_nivel == NIVEL1) { 
         //Asi se sale del nivel 
-        if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA)
+        if (nave->pos[1] > VENTANA_ALTO)
             volver_inicio(nave, elegir_nivel);
         
     }
     if (*elegir_nivel == NIVEL2) {
         //Asi se sale del nivel 
-        if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA)
+        if (nave->pos[1] > VENTANA_ALTO)
             volver_inicio(nave, elegir_nivel);
     }
 
     if (*elegir_nivel == NIVEL3) {
         //Asi se sale del nivel 
-        if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA)
+        if (nave->pos[1] > VENTANA_ALTO)
             volver_inicio(nave, elegir_nivel);
     }
     
     if (*elegir_nivel == NIVEL4) {
         //Asi se sale del nivel 
-        if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA)
+        if (nave->pos[1] > VENTANA_ALTO)
             volver_inicio(nave, elegir_nivel);
-
-
     }
     
     if (*elegir_nivel == NIVEL5) {
         //Asi se sale del nivel 
-        if (nave->pos[1] > VENTANA_ALTO / ESCALA_MINIMA)
+        if (nave->pos[1] > VENTANA_ALTO)
             volver_inicio(nave, elegir_nivel);
-        
     }
     
 }

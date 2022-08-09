@@ -15,13 +15,13 @@ int main()
 
     for (size_t i = 0; i < 10; i++)
     {
-        printf( " Dato : %d %d \n" , dato[i], lista_agregar(l, &dato[i]));
+       // printf( " Dato : %d %d \n" , dato[i], lista_agregar(l, &dato[i]));
     }
 
     for( lista_iterador_t *li = lista_iterador_crear(l) ; !lista_iterador_termino(li); lista_iterador_siguiente(li) )
     {
         int *dato = lista_iterador_actual(li);
-        printf( " Dato : %d \n" , *dato);
+      //  printf( " Dato : %d \n" , *dato);
     }
 
     return 0;

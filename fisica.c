@@ -114,18 +114,18 @@ void mov_nave(nave_t *n, nivel_t planeta, lista_t *p)
             if(NIVEL2)
             {
                 if (n->pos[0] > 2087)
-                    n->pos[0] = 0;
+                    n->pos[0] = n->pos[0] - 2087;
                 
                 if (n->pos[0] < 0)
-                    n->pos[0] = 2087;    
+                    n->pos[0] = n->pos[0] + 2087;    
             }
             if(NIVEL3)
             {
                 if (n->pos[0] > 1790)
-                    n->pos[0] = 0;
+                    n->pos[0] = n->pos[0] - 1790;
                 
                 if (n->pos[0] < 0)
-                    n->pos[0] = 1790;
+                    n->pos[0] = n->pos[0] + 1790;
             }
         }
 

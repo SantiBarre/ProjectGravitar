@@ -4,6 +4,7 @@
 #include <stddef.h>
 #include <math.h>
 #include <stdlib.h>
+#include "lista.h"
 
 #define MARGEN_DE_COLISION 10
 

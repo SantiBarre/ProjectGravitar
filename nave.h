@@ -1,6 +1,7 @@
 #ifndef NAVE_H
 #define NAVE_H
 
+#include <stddef.h>
 #include <stdbool.h>
 
 
@@ -68,5 +69,15 @@ void torreta_cambiar_dir(torreta_t *torreta,float dir);
 //Esta funcion cambia el booleano de V a F o de F a V
 void torreta_disparar(torreta_t *torreta);
 
+typedef struct {
+    float pos[2];
+    bool uso;
+    float dir;
+}combustible_t;
+
+combustible_t* combustible_crear(float posx,float posy,float dir);
+
+//True significa usado, flase sin usar
+void combustible_usar(combustible_t* combus);
 
 #endif /* NAVE_H */

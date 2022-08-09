@@ -103,6 +103,78 @@ void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
     }
     
 }
+
+void inicializar_objetos(lista_t *combustibles, lista_t *torretas){
+    torretas = lista_crear();
+
+    torreta_t *torreta_1 = torreta_crear(-0.66); 
+    torreta_t *torreta_2 = torreta_crear(0.66); 
+    torreta_t *torreta_3 = torreta_crear(-0.66); 
+    torreta_t *torreta_4 = torreta_crear(-0.33); 
+    torreta_t *torreta_5 = torreta_crear(0.66); 
+    torreta_t *torreta_6 = torreta_crear(2.23); 
+    torreta_t *torreta_7 = torreta_crear(0); 
+    torreta_t *torreta_8 = torreta_crear(0); 
+    torreta_t *torreta_9 = torreta_crear(0); 
+    torreta_t *torreta_10 = torreta_crear(0); 
+    torreta_t *torreta_11 = torreta_crear(3.14); 
+    torreta_t *torreta_12 = torreta_crear (3.14);
+    torreta_t *torreta_13 = torreta_crear(0.66); 
+    torreta_t *torreta_14 = torreta_crear(2.23); 
+    torreta_t *torreta_15 = torreta_crear(0); 
+    torreta_t *torreta_16 = torreta_crear(3.8); 
+    torreta_t *torreta_17 = torreta_crear(3.8); 
+    torreta_t *torreta_18 = torreta_crear(2.23); 
+    torreta_t *torreta_19 = torreta_crear(3.8); 
+    torreta_t *torreta_20 = torreta_crear(2.23); 
+
+    lista_agregar(torretas,torreta_1);
+    lista_agregar(torretas,torreta_2);
+    lista_agregar(torretas,torreta_3);
+    lista_agregar(torretas,torreta_4);
+    lista_agregar(torretas,torreta_5);
+    lista_agregar(torretas,torreta_6);
+    lista_agregar(torretas,torreta_7);
+    lista_agregar(torretas,torreta_8);
+    lista_agregar(torretas,torreta_9);
+    lista_agregar(torretas,torreta_10);
+    lista_agregar(torretas,torreta_11);
+    lista_agregar(torretas,torreta_12);
+    lista_agregar(torretas,torreta_13);
+    lista_agregar(torretas,torreta_14);
+    lista_agregar(torretas,torreta_15);
+    lista_agregar(torretas,torreta_16);
+    lista_agregar(torretas,torreta_17);
+    lista_agregar(torretas,torreta_18);
+    lista_agregar(torretas,torreta_19);
+    lista_agregar(torretas,torreta_20);
+
+    combustibles = lista_crear();
+
+    combustible_t *combustible_1 = combustible_crear(1064,13,0);
+    combustible_t *combustible_2 = combustible_crear(1685,113,0);
+    combustible_t *combustible_3 = combustible_crear(482,94,0);
+    combustible_t *combustible_4 = combustible_crear(1751,247,0);
+    combustible_t *combustible_5 = combustible_crear(820,46,0);
+    combustible_t *combustible_6 = combustible_crear(1196,68,0);
+    combustible_t *combustible_7 = combustible_crear(1602,46,0);
+    combustible_t *combustible_8 = combustible_crear(188,429,0);
+    combustible_t *combustible_9 = combustible_crear(667,600,0);
+    combustible_t *combustible_10 = combustible_crear(1054,404,3.14);
+    combustible_t *combustible_11 = combustible_crear(574,344,3.14);
+
+    lista_agregar(combustibles,combustible_1);
+    lista_agregar(combustibles,combustible_2);
+    lista_agregar(combustibles,combustible_3);
+    lista_agregar(combustibles,combustible_4);
+    lista_agregar(combustibles,combustible_5);
+    lista_agregar(combustibles,combustible_6);
+    lista_agregar(combustibles,combustible_7);
+    lista_agregar(combustibles,combustible_8);
+    lista_agregar(combustibles,combustible_9);
+    lista_agregar(combustibles,combustible_10);
+    lista_agregar(combustibles,combustible_11);
+}
 /*
 void logica_nave(nave_t *nave){
 

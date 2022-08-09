@@ -1,7 +1,10 @@
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <SDL2/SDL.h>
+#include <stddef.h>
+
 
 #include "dibujado.h"
 #include "polilinea.h"
@@ -76,8 +79,8 @@ void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Re
     float escala = 1;
     float centro = VENTANA_ANCHO/2;
     
-        printf("x:%f y:%f \n",nave->pos[0],nave->pos[1]);
-        printf("escala:%f",escala);
+       // printf("x:%f y:%f \n",nave->pos[0],nave->pos[1]);
+       // printf("escala:%f",escala);
         
     if (elegir_nivel == INICIO) { 
         
@@ -286,20 +289,3 @@ void dibujar_vidas(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer)
     }
 */
 }
-/*void dibujado_de_nave(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer){
-
-    figura_t *nave_fig = obtener_figura ("NAVE",lista_f);
-    figura_t *nave_fig2 = obtener_figura("NAVE+CHORRO",lista_f);
-        if (nave->chorro){
-            figura_t *aux = figura_mov(nave_fig,nave->pos[0],nave->pos[1],nave->dir);  
-            dibujar_figura(aux,1,nave->pos[0],nave->pos[1],renderer);  
-            figura_destruir(aux);
-        }
-        else {
-            figura_t *aux = figura_mov(nave_fig2,nave->pos[0],nave->pos[1],nave->dir);  
-            dibujar_figura(aux,1,nave->pos[0],nave->pos[1],renderer);
-            figura_destruir(aux);
-        }
-    free(nave_fig);
-    free(nave_fig2);
-}*/

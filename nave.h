@@ -69,6 +69,8 @@ void torreta_cambiar_dir(torreta_t *torreta,float dir);
 //Esta funcion cambia el booleano de V a F o de F a V
 void torreta_disparar(torreta_t *torreta);
 
+void torreta_destruir(void *torreta);
+
 typedef struct {
     float pos[2];
     bool uso;
@@ -80,4 +82,5 @@ combustible_t* combustible_crear(float posx,float posy,float dir);
 //True significa usado, flase sin usar
 void combustible_usar(combustible_t* combus);
 
+void combustible_destruir (void* combus);
 #endif /* NAVE_H */

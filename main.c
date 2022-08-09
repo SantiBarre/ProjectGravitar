@@ -32,11 +32,10 @@ int main(void)
         perror("No se pudo guardar las figuras!");
         return 1;
     }
-    /*
-    lista_t *torretas;
-    lista_t *combustibles;
-    inicializar_objetos(torretas,combustibles);
-    */
+    
+    lista_t *torretas = inicializar_torretas();
+    lista_t *combustibles = inicializar_combustibles();
+    
     nivel_t elegir_nivel; //ACA PARA EL SWITCH CASE
     elegir_nivel = INICIO;
     // Mi nave:
@@ -143,6 +142,8 @@ int main(void)
     //ESTO COMENTADO ACA ES LA LIBERACION DE LA MEMORIA DE FIGURAS EN EL MAIN QUE POR EL MOMENTO SALE PERO CON FUGAS
     // Aca se ponen las cosas a destruir / memoria a liberar.
     lista_destruir(figuras_lista, figura_destruir);
+    lista_destruir(torretas, torreta_destruir);
+    lista_destruir(combustibles, combustible_destruir);
     nave_destruir(nave);
     // END código del alumno
 

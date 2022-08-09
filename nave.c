@@ -114,6 +114,15 @@ void torreta_disparar(torreta_t *torreta){
     }
 }
 
+static void rp_torreta_destruir (torreta_t * torreta){
+    free(torreta);
+}
+
+void torreta_destruir(void *torreta)
+{
+    rp_torreta_destruir((torreta_t *)torreta);
+}
+
 combustible_t* combustible_crear(float posx,float posy,float dir){
     combustible_t* aux = malloc (sizeof(combustible_t));
     if(aux == NULL) return NULL;
@@ -130,3 +139,11 @@ void combustible_usar(combustible_t* combus){
     combus->uso = true;
 }
 
+static void rp_combustible_destruir(combustible_t* combus){
+    free (combus);
+}
+
+void combustible_destruir(void *combus)
+{
+    rp_combustible_destruir((combustible_t *)combus);
+}

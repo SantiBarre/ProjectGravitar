@@ -215,7 +215,7 @@ void dibujado_de_nave(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Ren
 
 
     figura_t *aux = figura_mov(nave_fig,0,0,nave->dir);  
-    if (elegir_nivel == INICIO){
+    if (elegir_nivel == INICIO || elegir_nivel == NIVEL4 || elegir_nivel == NIVEL5){
         dibujar_figura(aux,1,nave->pos[0],nave->pos[1],renderer); 
         if (nave->escudo){
         nave_escudo = obtener_figura("ESCUDO2",lista_f);

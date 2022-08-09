@@ -11,4 +11,6 @@ void logica_niveles(nave_t *nave, nivel_t *elegir_nivel);
 
 void logica_nave(nave_t *nave);
 
+void inicializar_objetos(lista_t *combustibles, lista_t *torretas);
+
 #endif // LOGICA_H

@@ -63,8 +63,10 @@ bool dibujar_palabra(int ***palabra,size_t tamanio_palabra,float escala,float po
 }
 
 
-void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Renderer *renderer){
+void dibujado_de_nivel(lista_t *lista_f,lista_t *lista_combus,lista_t *lista_torr,nave_t *nave,nivel_t elegir_nivel,SDL_Renderer *renderer){
 
+    figura_t *combustible = obtener_figura("COMBUSTIBLE",lista_f);
+    figura_t *torr_fig = obtener_figura("TORRETA",lista_f);
 
     //########## ESCALA ##########
     float escala = 1;
@@ -117,7 +119,14 @@ void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Re
         dibujar_figura (nivel1ne,escala,0 -centro + VENTANA_ANCHO / 2 / escala,0,renderer);
         dibujar_figura (nivel1ne,escala,0 -centro + VENTANA_ANCHO / 2 / escala + 2000,0,renderer);
         dibujar_figura (nivel1ne,escala,0 -centro + VENTANA_ANCHO / 2 / escala - 2000,0,renderer);
-        //dos objetos no pueden usar la misma polilinea si esa se debe de rotar, asi que hay que cambiarlo
+        
+        dibujar_figura (combustible,escala,1064 -centro + VENTANA_ANCHO / 2 / escala,13,renderer);
+        dibujar_figura (combustible,escala,1685 -centro + VENTANA_ANCHO / 2 / escala,113,renderer);
+        
+        figura_t *torr_1 = figura_mov(torr_fig,0,0,-0.66);
+        dibujar_figura (torr_1,escala,916 -centro + VENTANA_ANCHO / 2 / escala,75,renderer);
+        figura_t *torr_2 = figura_mov(torr_fig,0,0,0.66);
+        dibujar_figura (torr_2,escala,1425 -centro + VENTANA_ANCHO / 2 / escala,159,renderer);
         //2 combustibles y 2 torretas
     }
 
@@ -129,6 +138,18 @@ void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Re
         dibujar_figura (nivel1se,escala,0 -centro + VENTANA_ANCHO / 2 / escala,0,renderer);
         dibujar_figura (nivel1se,escala,0 -centro + VENTANA_ANCHO / 2 / escala + 2087,0,renderer);
         dibujar_figura (nivel1se,escala,0 -centro + VENTANA_ANCHO / 2 / escala - 2087,0,renderer);
+        
+        dibujar_figura (combustible,escala,482 -centro + VENTANA_ANCHO / 2 / escala,94,renderer);
+        dibujar_figura (combustible,escala,1751 -centro + VENTANA_ANCHO / 2 / escala,247,renderer);
+
+        figura_t *torr_3 = figura_mov(torr_fig,0,0,-0.66);
+        dibujar_figura (torr_3,escala,423 -centro + VENTANA_ANCHO / 2 / escala,195,renderer);
+        figura_t *torr_4 = figura_mov(torr_fig,0,0,-0.33);
+        dibujar_figura (torr_4,escala,806 -centro + VENTANA_ANCHO / 2 / escala,215,renderer);
+        figura_t *torr_5 = figura_mov(torr_fig,0,0,0.66);
+        dibujar_figura (torr_5,escala,1254 -centro + VENTANA_ANCHO / 2 / escala,153,renderer);
+        figura_t *torr_6 = figura_mov(torr_fig,0,0,2.23);
+        dibujar_figura (torr_6,escala,1587 -centro + VENTANA_ANCHO / 2 / escala,223,renderer);
         //2 combustibles y 4 torretas
     }
 
@@ -140,6 +161,23 @@ void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Re
         dibujar_figura (nivel1sw,escala,0 -centro + VENTANA_ANCHO / 2 / escala,0,renderer);
         dibujar_figura (nivel1sw,escala,0 -centro + VENTANA_ANCHO / 2 / escala + 1790,0,renderer);
         dibujar_figura (nivel1sw,escala,0 -centro + VENTANA_ANCHO / 2 / escala - 1790,0,renderer);
+        
+        dibujar_figura (combustible,escala,820 -centro + VENTANA_ANCHO / 2 / escala,46,renderer);
+        dibujar_figura (combustible,escala,1196 -centro + VENTANA_ANCHO / 2 / escala,68,renderer);
+        dibujar_figura (combustible,escala,1602 -centro + VENTANA_ANCHO / 2 / escala,46,renderer);
+
+        figura_t *torr_7 = figura_mov(torr_fig,0,0,0);
+        dibujar_figura (torr_7,escala,70 -centro + VENTANA_ANCHO / 2 / escala,46,renderer);
+        figura_t *torr_8 = figura_mov(torr_fig,0,0,0);
+        dibujar_figura (torr_8,escala,506 -centro + VENTANA_ANCHO / 2 / escala,12,renderer);
+        figura_t *torr_9 = figura_mov(torr_fig,0,0,0);
+        dibujar_figura (torr_9,escala,952 -centro + VENTANA_ANCHO / 2 / escala,12,renderer);
+        figura_t *torr_10 = figura_mov(torr_fig,0,0,0);
+        dibujar_figura (torr_10,escala,1385 -centro + VENTANA_ANCHO / 2 / escala,12,renderer);
+        figura_t *torr_11 = figura_mov(torr_fig,0,0,3.14);
+        dibujar_figura (torr_11,escala,757 -centro + VENTANA_ANCHO / 2 / escala,210,renderer);
+        figura_t *torr_12 = figura_mov(torr_fig,0,0,3.14);
+        dibujar_figura (torr_12,escala,1161 -centro + VENTANA_ANCHO / 2 / escala,210,renderer);
         //3 combustibles y 6 torretas
     }
 
@@ -151,6 +189,28 @@ void dibujado_de_nivel(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Re
 
         figura_t *nivel1nw = obtener_figura("NIVEL1NW",lista_f);
         dibujar_figura (nivel1nw,escala,0,0,renderer);
+        
+        dibujar_figura (combustible,escala,188 -centro + VENTANA_ANCHO / 2 / escala,429,renderer);
+        dibujar_figura (combustible,escala,667 -centro + VENTANA_ANCHO / 2 / escala,600,renderer);
+        dibujar_figura (combustible,escala,1054 -centro + VENTANA_ANCHO / 2 / escala,404,renderer);
+        dibujar_figura (combustible,escala,574 -centro + VENTANA_ANCHO / 2 / escala,344,renderer);
+
+        figura_t *torr_13 = figura_mov(torr_fig,0,0,0.66);
+        dibujar_figura (torr_13,escala,257 -centro + VENTANA_ANCHO / 2 / escala,440,renderer);
+        figura_t *torr_14 = figura_mov(torr_fig,0,0,2.23);
+        dibujar_figura (torr_14,escala,719 -centro + VENTANA_ANCHO / 2 / escala,674,renderer);
+        figura_t *torr_15 = figura_mov(torr_fig,0,0,0);
+        dibujar_figura (torr_15,escala,985 -centro + VENTANA_ANCHO / 2 / escala,565,renderer);
+        figura_t *torr_16 = figura_mov(torr_fig,0,0,3.8);
+        dibujar_figura (torr_16,escala,1125 -centro + VENTANA_ANCHO / 2 / escala,417,renderer);
+        figura_t *torr_17 = figura_mov(torr_fig,0,0,3.8);
+        dibujar_figura (torr_17,escala,862 -centro + VENTANA_ANCHO / 2 / escala,163,renderer);
+        figura_t *torr_18 = figura_mov(torr_fig,0,0,2.23);
+        dibujar_figura (torr_18,escala,626 -centro + VENTANA_ANCHO / 2 / escala,323,renderer);
+        figura_t *torr_19 = figura_mov(torr_fig,0,0,3.8);
+        dibujar_figura (torr_19,escala,505 -centro + VENTANA_ANCHO / 2 / escala,331,renderer);
+        figura_t *torr_20 = figura_mov(torr_fig,0,0,2.23);
+        dibujar_figura (torr_20,escala,378 -centro + VENTANA_ANCHO / 2 / escala,296,renderer);
         //4 combustibles Y 8 torretas
     }
 

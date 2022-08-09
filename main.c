@@ -111,7 +111,7 @@ int main(void)
         punto_del_mundo(100,renderer);
         
         dibujado_de_nave(figuras_lista,nave,elegir_nivel,renderer);
-        dibujado_de_nivel(figuras_lista,nave,elegir_nivel,renderer);
+        dibujado_de_nivel(figuras_lista,combustibles,torretas,nave,elegir_nivel,renderer);
         dibujar_vidas(figuras_lista,nave,renderer);
 
         logica_niveles(nave,&elegir_nivel);

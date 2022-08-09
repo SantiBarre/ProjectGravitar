@@ -83,4 +83,16 @@ combustible_t* combustible_crear(float posx,float posy,float dir);
 void combustible_usar(combustible_t* combus);
 
 void combustible_destruir (void* combus);
+
+typedef struct {
+    float pos[2];
+    bool destruido;
+}reactor_t;
+
+reactor_t *reactor_crear(float posx,float posy);
+
+void reactor_d(reactor_t * r);
+
+void reactor_destruir(void *r);
+
 #endif /* NAVE_H */

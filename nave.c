@@ -147,3 +147,28 @@ void combustible_destruir(void *combus)
 {
     rp_combustible_destruir((combustible_t *)combus);
 }
+
+reactor_t *reactor_crear(float posx,float posy){
+    reactor_t* aux = malloc (sizeof(reactor_t));
+    if(aux == NULL) return NULL;
+
+    aux->pos[0] = posx;
+    aux->pos[1] = posy;
+
+    aux->destruido = false;
+
+    return aux;
+
+}
+
+void reactor_d(reactor_t * r){
+    r->destruido = true;
+}
+
+static void rp_reactor_destruir(reactor_t * r){
+    free (r);
+}
+
+void reactor_destruit(void *r){
+    rp_reactor_destruir((reactor_t *)r);
+}

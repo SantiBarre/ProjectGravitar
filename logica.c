@@ -21,9 +21,10 @@ void volver_inicio(nave_t *n, nivel_t *elegir_nivel)
     *elegir_nivel = INICIO;
 }
 
-void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
+void logica_niveles(nave_t *nave, nivel_t *elegir_nivel, float *contador){
 
     //float punto_escudo = (nave->pos[0], nave->pos[1] - 30);
+    reactor_t* reactor = reactor_crear(815,309);
 
     if (*elegir_nivel == INICIO) {
 
@@ -98,10 +99,16 @@ void logica_niveles(nave_t *nave, nivel_t *elegir_nivel){
     
     if (*elegir_nivel == NIVEL5) {
         //Asi se sale del nivel 
+        *contador += 1/100;
+
+        if (*contador >= 25 && !reactor->destruido){
+            nave->vidas = nave->vidas -1;
+        }
+        
         if (nave->pos[1] > VENTANA_ALTO)
             volver_inicio(nave, elegir_nivel);
     }
-    
+    reactor_destruir(reactor);
 }
 
 lista_t *inicializar_combustibles(void){

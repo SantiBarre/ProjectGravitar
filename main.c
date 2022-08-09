@@ -35,7 +35,7 @@ int main(void)
     
     lista_t *torretas = inicializar_torretas();
     lista_t *combustibles = inicializar_combustibles();
-    
+    float contador;
     nivel_t elegir_nivel; //ACA PARA EL SWITCH CASE
     elegir_nivel = INICIO;
     // Mi nave:
@@ -114,7 +114,7 @@ int main(void)
         dibujado_de_nivel(figuras_lista,combustibles,torretas,nave,elegir_nivel,renderer);
         dibujar_vidas(figuras_lista,nave,renderer);
 
-        logica_niveles(nave,&elegir_nivel);
+        logica_niveles(nave,&elegir_nivel,&contador);
 
         mov_nave(nave, elegir_nivel, figuras_lista );
 

@@ -1,4 +1,5 @@
 #include "caracteres.h"
+#include <SDL2/SDL.h>
 
 const int caracter_a[7][2] = {
 	{0, 0},

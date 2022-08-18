@@ -7,6 +7,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "lista.h"
+
 typedef uint8_t color_t; //Lo meti aca en vez de en el .c para poder tenerlo en el header ya que es una definicion
 
 typedef struct{
@@ -103,7 +105,7 @@ polilinea_t *polilinea_clonar(const polilinea_t *polilinea);
  * @param n 
  * @param rad 
  */
-void rotar(double polilinea[][2], size_t n, double rad);
+void rotar(float polilinea[][2], size_t n, double rad);
 
 /**
  * @brief 
@@ -113,7 +115,7 @@ void rotar(double polilinea[][2], size_t n, double rad);
  * @param dx 
  * @param dy 
  */
-void trasladar(double polilinea[][2], size_t n, float dx, float dy);
+void trasladar(float polilinea[][2], size_t n, float dx, float dy);
 
 /**
  * @brief 
@@ -124,7 +126,15 @@ void trasladar(double polilinea[][2], size_t n, float dx, float dy);
  * @param py 
  * @return double 
  */
-double distancia_punto_a_polilinea(double polilinea[][2], size_t n, float px, float py);
+float distancia_punto_a_polilinea(float polilinea[][2], size_t n, float px, float py);
+
+float moduloV(const float vectorA[],const float vectorB[]);
+
+polilinea_t *polilinea_mov(const polilinea_t *poli, float posx, float posy, float ang);
+
+
+//Devuelve TRUE si la distancia entre dos polilineas es menor a MARGEN_DE_COLISION
+//bool colision_polilineas (float polilineaA[][2],size_t nA,float polilineaB[][2],size_t nB );
 
 #endif /* POLILINEA_H */
 

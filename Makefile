@@ -14,14 +14,17 @@ APPNAME = gravitar
 all: $(APPNAME)
 
 # Builds the app
-$(APPNAME): main.o dibujado.o figuras.o lista.o polilinea.o nave.o
-	$(CC) $(CXXFLAGS) main.o dibujado.o figuras.o lista.o polilinea.o nave.o -o $(APPNAME) $(LDFLAGS)
+$(APPNAME): main.o dibujado.o logica.o figuras.o lista.o polilinea.o nave.o escritura.o caracteres.o disparo.o fisica.o
+	$(CC) $(CXXFLAGS) main.o dibujado.o logica.o figuras.o lista.o polilinea.o nave.o escritura.o caracteres.o fisica.o disparo.o -o $(APPNAME) $(LDFLAGS)
 
-main.o: main.c config.h figuras.h lista.h polilinea.h
+main.o: main.c dibujado.h figuras.h config.h lista.h polilinea.h nave.h
 	$(CC) $(CXXFLAGS) -c main.c 
 
-dibujado.o: dibujado.c dibujado.h polilinea.h figuras.h nave.h
+dibujado.o: dibujado.c dibujado.h polilinea.h figuras.h nave.h config.h
 	$(CC) $(CXXFLAGS) -c dibujado.c
+
+logica.o: logica.c logica.h polilinea.h nave.h config.h
+	$(CC) $(CXXFLAGS) -c logica.c -lm
 
 figuras.o: figuras.c figuras.h lista.h polilinea.h
 	$(CC) $(CXXFLAGS) -c figuras.c
@@ -29,11 +32,23 @@ figuras.o: figuras.c figuras.h lista.h polilinea.h
 lista.o: lista.c lista.h 
 	$(CC) $(CXXFLAGS) -c lista.c
 
-polilinea.o: polilinea.c polilinea.h 
+polilinea.o: polilinea.c polilinea.h
 	$(CC) $(CXXFLAGS) -c polilinea.c -lm
 
-nave.o: nave.c nave.h 
-	$(CC) $(CXXFLAGS) -c nave.c
+nave.o: nave.c nave.h config.h polilinea.h
+	$(CC) $(CXXFLAGS) -c nave.c 
+
+escritura.o: escritura.c escritura.h caracteres.h
+	$(CC) $(CXXFLAGS) -c escritura.c
+
+caracteres.o: caracteres.c caracteres.h
+	$(CC) $(CXXFLAGS) -c caracteres.c
+
+disparo.o: disparo.c disparo.h
+	$(CC) $(CXXFLAGS) -c disparo.c -lm
+
+fisica.o: fisica.c fisica.h
+	$(CC) $(CXXFLAGS) -c fisica.c -lm
 
 ################### Cleaning rules ####################################
 

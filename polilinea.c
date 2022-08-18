@@ -1,10 +1,18 @@
 #include "polilinea.h" 
-#include "figuras.h"
+#include <stdio.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <math.h>
 #include <stdlib.h>
+#include "lista.h"
 
+#define MARGEN_DE_COLISION 10
+
+static void color_a_rgb(color_t c, uint8_t *r, uint8_t *g, uint8_t *b)
+{
+    *r = ((c&4)/4)*255;
+    *g = ((c&2)/2)*255;
+}
 
 polilinea_t *polilinea_crear_vacia(size_t n) //Elimine el static por que daba error al compilar
 {
@@ -12,7 +20,6 @@ polilinea_t *polilinea_crear_vacia(size_t n) //Elimine el static por que daba er
     if (nueva == NULL) return NULL;
 
     nueva->n = n; 
-
     nueva->puntos = malloc(2 * n * sizeof(float));
     if(nueva->puntos == NULL)
     {
@@ -51,6 +58,7 @@ polilinea_t *polilinea_clonar(const polilinea_t *polilinea)
 {
     polilinea_t *clon = polilinea_crear((const float (*)[2])polilinea->puntos, polilinea->n);
     if(clon == NULL) return NULL;
+    clon->color = polilinea->color;
     return clon;
 }
 
@@ -105,9 +113,9 @@ bool polilinea_getter_color(const polilinea_t *polilinea, uint8_t *r, uint8_t *g
 
 ////    CALCULOS        ////
 
-void rotar(double polilinea[][2], size_t n, double rad)
+void rotar(float polilinea[][2], size_t n, double rad)
 {
-    double aux[2];
+    float aux[2];
 
     for (size_t i = 0; i < n; i++)
     {
@@ -119,7 +127,7 @@ void rotar(double polilinea[][2], size_t n, double rad)
     }
 }
 
-void trasladar(double polilinea[][2], size_t n, float dx, float dy)
+void trasladar(float polilinea[][2], size_t n, float dx, float dy)
 {
     for (size_t i = 0; i < n; i++)
     {
@@ -127,26 +135,28 @@ void trasladar(double polilinea[][2], size_t n, float dx, float dy)
         polilinea[i][1] += dy;
     }
 }
-static void sumaV(const double vectorA[], const double vectorB[], double BA[]) //NUEVO
+static void sumaV(const float vectorA[], const float vectorB[], float BA[]) //NUEVO
 {
     for (size_t i = 0; i < 2; i++)
         BA[i] = vectorA[i] + vectorB[i];
 }
 
-static void restaV(const double vectorA[], const double vectorB[], double BA[])
+static void restaV(const float vectorA[], const float vectorB[], float BA[])
 {
     for (size_t i = 0; i < 2; i++)
         BA[i] = vectorA[i] - vectorB[i];
 }
 
-static double moduloV(const double vectorA[],const double vectorB[])
+
+
+float moduloV(const float vectorA[],const float vectorB[])
 {
-    double aux = sqrt(pow(vectorB[0] - vectorA[0],2) + pow(vectorB[1] - vectorA[1],2));
-    return aux;
+    return (float)sqrt(pow(vectorB[0] - vectorA[0],2) + pow(vectorB[1] - vectorA[1],2));
 }
-static double producto_escalar(const double vectorA[], const double vectorB[])
+
+static float producto_escalar(const float vectorA[], const float vectorB[])
 {
-    double result = 0;
+    float result = 0;
 
     for (size_t i = 0; i < 2; i++)
         result += vectorA[i] * vectorB[i];
@@ -154,11 +164,11 @@ static double producto_escalar(const double vectorA[], const double vectorB[])
     return result;
 }
 
-static double calc_angulo_fi(const double vectorA[], const double vectorB[], const double vectorP[])
+static float calc_angulo_fi(const float vectorA[], const float vectorB[], const float vectorP[])
 {
 
-    double AP[2], AB[2];
-    double divisor = 0, dividendo;
+    float AP[2], AB[2];
+    float divisor = 0, dividendo;
 
     restaV(vectorP, vectorA, AP);
     restaV(vectorB, vectorA, AB);
@@ -171,11 +181,11 @@ static double calc_angulo_fi(const double vectorA[], const double vectorB[], con
     return (dividendo / divisor);
 }
 
-double distancia_punto_a_polilinea(double polilinea[][2], size_t n, float px, float py)
+float distancia_punto_a_polilinea(float polilinea[][2], size_t n, float px, float py)
 {
-    double distancia[n];
-    double vectorP[2];
-    double angulo_fi;
+    float distancia[n];
+    float vectorP[2];
+    float angulo_fi;
 
     for (size_t i = 0; i < n; i++)
     {
@@ -192,8 +202,8 @@ double distancia_punto_a_polilinea(double polilinea[][2], size_t n, float px, fl
 
         if(angulo_fi > 0 && angulo_fi < 1)
         {
-            double BA[2];
-            double result[2];
+            float BA[2];
+            float result[2];
 
             restaV(polilinea[i + 1], polilinea[i], BA);
 
@@ -206,7 +216,7 @@ double distancia_punto_a_polilinea(double polilinea[][2], size_t n, float px, fl
         }
     }
 
-    double dmin = distancia[0];
+    float dmin = distancia[0];
 
     for (size_t i = 1; i < n; i++)
         if (dmin > distancia[i])
@@ -214,3 +224,31 @@ double distancia_punto_a_polilinea(double polilinea[][2], size_t n, float px, fl
 
     return dmin;
 }
+
+polilinea_t *polilinea_mov(const polilinea_t *poli, float posx, float posy, float ang)
+{
+    polilinea_t *p = polilinea_clonar(poli);
+    if(p == NULL) {
+        perror("No se pudo clonar una polilinea!");
+        return NULL;
+    }
+
+    size_t cant_puntos = polilinea_cantidad_puntos(p);
+
+    rotar(p->puntos, cant_puntos, ang);
+
+    trasladar(p->puntos, cant_puntos, posx, posy);
+
+    return p;
+}
+
+/*bool colision_polilineas (float polilineaA[][2],size_t nA,float polilineaB[][2],size_t nB ){
+    float aux;
+    for (size_t i=0; i < nB; i++){
+        aux = distancia_punto_a_polilinea(polilineaA,nA,polilineaB[i][0],polilineaB[i][1]);
+        if (aux <= MARGEN_DE_COLISION){
+            return true;
+        }
+    }
+    return false;
+}*/

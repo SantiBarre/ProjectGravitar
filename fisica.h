@@ -4,26 +4,16 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include "config.h"
+#include "lista.h"
 #include "nave.h"
+#include "disparo.h"
 
-enum dim{
-    X,
-    Y,
-};
+void mov_nave(nave_t *n, nivel_t planeta, lista_t *p);
 
-double comp_vel(double vi, double a, double dt);
+float pendiente(const float vectorA[], const float vectorB[]);
 
-double comp_pos(double pi, double vi, double dt);
+void mov_disparo(disparo_t *d);
 
-/**
- * @brief 
- * Funcion para trasladar objetos
- * @param obj 
- * @param gravX 
- * @param gravY 
- * @param chorro 
- */
-void mov_nave(nave_t *obj, int gravX, int gravY);
 
 
 #endif /* FISICA_H */

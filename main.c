@@ -6,8 +6,13 @@
 #include "lista.h"
 #include "config.h"
 #include "figuras.h"
+#include "dibujado.h"
+#include "logica.h"
+#include "escritura.h"
+#include "fisica.h"
 
-int main(void) {
+int main(void) 
+{
     SDL_Init(SDL_INIT_VIDEO);
 
     SDL_Window *window;
@@ -23,60 +28,59 @@ int main(void) {
     
     //ESTO COMENTADO ACA ES EL GUARDADO DE FIGURAS EN EL MAIN QUE POR EL MOMENTO NO ME SALE
     lista_t *figuras_lista = guardar_figuras("figuras.bin"); //Esta funcion crea una lista "figuras_lista"
+    if (figuras_lista == NULL){
+        perror("No se pudo guardar las figuras!");
+        return 1;
+    }
+    
+    lista_t *torretas = inicializar_torretas();
+    lista_t *combustibles = inicializar_combustibles();
+    float contador;
+    nivel_t elegir_nivel; //ACA PARA EL SWITCH CASE
+    elegir_nivel = INICIO;
     // Mi nave:
-    double nave[][2] = {{8, 0}, {-1, 6}, {-4, 4}, {-4, 2}, {-2, 0}, {-4, -2}, {-4, -4}, {-1, -6}, {8, 0}};
-    size_t nave_tam = 9;
 
-    // El chorro de la nave:
-    double chorro[][2] = {{-4, 2}, {-8, 0}, {-4, -2}};
-    size_t chorro_tam = 3;
+    nave_t *nave = nave_crear();
+    if(nave == NULL)
+    {
+                perror("No se pudo guardar las figuras!");
+        return 1;
+    }
 
-    bool chorro_prendido = false;
+    // Logica Niveles:
+    
+    
+
 
     // Queremos que todo se dibuje escalado por f:
-    float f = 10;
-    float prueba_switch = 10;
-    float dd=1;
     // END código del alumno
 
     unsigned int ticks = SDL_GetTicks();
     while(1) {
         if(SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT)
+            if (event.type == SDL_QUIT) 
                 break;
             // BEGIN código del alumno
             if (event.type == SDL_KEYDOWN) {
                 // Se apretó una tecla
-                switch(event.key.keysym.sym) {
+                switch(event.key.keysym.sym)
+                {
                     case SDLK_UP:
                         // Prendemos el chorro:
-                        chorro_prendido = true;
-                        printf("%f \n",prueba_switch);
-                        prueba_switch = 2;
-                        SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0x00);
-                        for(int i = 0; i < nave_tam - 1; i++)
-                            SDL_RenderDrawLine(
-                                renderer,
-                                nave[i][0] * f,
-                                -nave[i][1] * f ,
-                                nave[i+1][0] * f,
-                                -nave[i+1][1] * f
-                            );
+                        nave_chorro(nave, true);
 
-                        trasladar(nave,nave_tam,0,dd);
-                        trasladar(chorro,chorro_tam,0,dd);
                         break;
                     case SDLK_DOWN:
-                        trasladar(nave,nave_tam,0,-dd);
-                        trasladar(chorro,chorro_tam,0,-dd);
+                        // Prendemos el escudo
+                        nave_escudo(nave, true);
                         break;
                     case SDLK_RIGHT:
-                        rotar(nave,nave_tam, -PI/4);
-                        rotar(chorro,chorro_tam, -PI/4);
+
+                        nave_derecha(nave);
                         break;
+
                     case SDLK_LEFT:
-                        rotar(nave,nave_tam, PI/4);
-                        rotar(chorro,chorro_tam, PI/4);
+                        nave_izquieda(nave);
                         break;
                 }
             }
@@ -85,7 +89,12 @@ int main(void) {
                 switch(event.key.keysym.sym) {
                     case SDLK_UP:
                         // Apagamos el chorro:
-                        chorro_prendido = false;
+                        nave_chorro(nave, false);
+                        break;
+                    
+                        case SDLK_DOWN:
+                        // Escudo el chorro:
+                        nave_escudo(nave, false);
                         break;
                 }
             }
@@ -99,38 +108,21 @@ int main(void) {
 
         // BEGIN código del alumno
         // Dibujamos la nave escalada por f en el centro de la pantalla:
-        SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0x00);
-        for(int i = 0; i < nave_tam - 1; i++)
-            SDL_RenderDrawLine(
-                renderer,
-                nave[i][0] * f + VENTANA_ANCHO/2,
-                -nave[i][1] * f + VENTANA_ALTO/2 ,
-                nave[i+1][0] * f +VENTANA_ANCHO/2,
-                -nave[i+1][1] * f + VENTANA_ALTO/2
-            );
+        textos(nave, renderer);
+        
+        dibujado_de_nave(figuras_lista,nave,elegir_nivel,renderer);
+        dibujado_de_nivel(figuras_lista,combustibles,torretas,nave,elegir_nivel,renderer);
+        dibujar_vidas(figuras_lista,nave,renderer);
 
-        SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0x00);
-        for(int i = 0; i < nave_tam - 1; i++)
-            SDL_RenderDrawLine(
-                renderer,
-                nave[i][0] * f ,
-                -nave[i][1] * f ,
-                nave[i+1][0] * f ,
-                -nave[i+1][1] * f
-            );
+        logica_niveles(nave,&elegir_nivel,&contador);
 
-        if(chorro_prendido) {
-            // Dibujamos el chorro escalado por f en el centro de la pantalla:
-            SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0x00);
-            for(int i = 0; i < chorro_tam - 1; i++)
-                SDL_RenderDrawLine(
-                    renderer,
-                    chorro[i][0] * f + VENTANA_ANCHO/2,
-                    -chorro[i][1] * f + VENTANA_ALTO/2,
-                    chorro[i+1][0] * f + VENTANA_ANCHO/2,
-                    -chorro[i+1][1] * f + VENTANA_ALTO/2
-                );
-        }
+        mov_nave(nave, elegir_nivel, figuras_lista );
+
+        if(nave_muerta(nave))
+            break;
+
+
+        //dibujar_palabra(devolver_palabra("puntaje"),strlen("puntaje"),5,VENTANA_ANCHO/2,VENTANA_ALTO/2,renderer);
         
 
         // END código del alumno
@@ -147,11 +139,12 @@ int main(void) {
     }
 
     // BEGIN código del alumno
-    
     //ESTO COMENTADO ACA ES LA LIBERACION DE LA MEMORIA DE FIGURAS EN EL MAIN QUE POR EL MOMENTO SALE PERO CON FUGAS
     // Aca se ponen las cosas a destruir / memoria a liberar.
     lista_destruir(figuras_lista, figura_destruir);
-    
+    lista_destruir(torretas, torreta_destruir);
+    lista_destruir(combustibles, combustible_destruir);
+    nave_destruir(nave);
     // END código del alumno
 
     SDL_DestroyRenderer(renderer);

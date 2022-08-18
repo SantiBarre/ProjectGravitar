@@ -65,7 +65,17 @@ lista_t *guardar_figuras(char *archivo);
  */
 void figura_destruir(void *fig);
 
+/**
+ * @brief 
+ * Devuelve la figura que se le paso por nombre
+ * @param nom 
+ * @param l 
+ * @return figura_t* 
+ */
 figura_t *obtener_figura(char nom[], lista_t *l);
 
+figura_t *figura_clonar(const figura_t *figura);
+
+figura_t *figura_mov(const figura_t *figura, float posx, float posy, float ang);
 
 #endif /* FIGURAS_H */

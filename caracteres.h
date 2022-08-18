@@ -4,6 +4,7 @@
 #define CARACTER_ANCHO 6
 #define CARACTER_ALTO 6
 
+
 extern const int caracter_a[7][2];
 extern const int caracter_b[12][2];
 extern const int caracter_c[4][2];
@@ -48,5 +49,6 @@ extern const int caracter_arriba[5][2];
 extern const int caracter_abajo[5][2];
 
 extern const int caracter_espacio[1][2];
+
 
 #endif // _LETRAS_H_

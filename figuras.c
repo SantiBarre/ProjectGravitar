@@ -36,9 +36,9 @@ static color_t color_crear(bool r, bool g, bool b)
 
 void color_a_rgb(color_t c, uint8_t *r, uint8_t *g, uint8_t *b)
 {
-    *r = ((c & MASK_R) == MASK_R) ? ON_COLOR : OFF_COLOR;
-    *g = ((c & MASK_G) == MASK_G) ? ON_COLOR : OFF_COLOR;
-    *b = ((c & MASK_B) == MASK_B) ? ON_COLOR : OFF_COLOR;
+    *r = ((c&4)/4)*255;
+    *g = ((c&2)/2)*255;
+    *b = (c&1)*255;
 }
 
 
@@ -167,11 +167,15 @@ lista_t *guardar_figuras(char *archivo)
 {
 
     FILE *f = fopen(archivo, "rb");
-    if(f == NULL) return NULL;
-
+    if(f == NULL) {
+        perror("No se pudo abrir el archivo!");
+        return NULL;
+    }
+    
     lista_t *figuras_lista = lista_crear();
     if(figuras_lista == NULL)
     {
+        perror("No se pudo crear una lista!");
         fclose(f);
         return NULL;
     }
@@ -190,7 +194,9 @@ lista_t *guardar_figuras(char *archivo)
         figura_t *fig = crear_figura_vacia(cantidad_polilineas);
         if (fig == NULL)
         {
+            perror("No se pudo crear una figura!");
             lista_destruir(figuras_lista, figura_destruir);
+            fclose(f);
             return NULL;
         }
     
@@ -200,10 +206,10 @@ lista_t *guardar_figuras(char *archivo)
 
         for(size_t i = 0; i < cantidad_polilineas; i++)
         {
-  
             polilinea_t *pol = leer_polilinea(f);
             if(pol == NULL)
             {
+                perror("No se pudo crear una polilinea!");
                 for (size_t j = 0; j < i; j++)
                     polilinea_destruir(fig->polis[j]);
                 
@@ -216,6 +222,7 @@ lista_t *guardar_figuras(char *archivo)
 
         if(!lista_agregar(figuras_lista, fig))
         {                                        
+            perror("No se pudo agregar algo a una lista!");
             lista_destruir(figuras_lista, figura_destruir);
             fclose(f);
             return NULL;
@@ -226,21 +233,71 @@ lista_t *guardar_figuras(char *archivo)
     fclose(f);
     return figuras_lista;
 }
-figura_t *obtener_figura(char nom[], lista_t *l){
-    lista_iterador_t *li = lista_iterador_crear(l);
-    figura_t valor_nulo;
-    figura_t *aux = &valor_nulo;
-        while (!lista_iterador_termino(li))
-        {
-            figura_t *f_aux = li->act->dato;
-            if (f_aux->nombre == nom){
-                aux = li->act;
+
+/*figura_t *figura_rotar(figura_t *fig,double radianes){
+    for (size_t i = 0; i <= fig->cantidad_polilineas; i++){
+        rotar(fig->polis[i]->puntos,fig->polis[i]->n,radianes);
+    }
+    return fig;
+
+}*/
+
+
+figura_t *obtener_figura(char *nom, lista_t *l)
+{
+    lista_iterador_t *li;
+    
+    for(
+        li = lista_iterador_crear(l);
+        !lista_iterador_termino(li);
+        lista_iterador_siguiente(li)
+    )
+    {
+        figura_t *dato = lista_iterador_actual(li);
+
+            if (strcmp(*dato->nombre, nom) == 0)
+            {
+                lista_iterador_destruir(li);
+                return dato;
             }
-            lista_iterador_siguiente(li);
-        }
+    }
+
     lista_iterador_destruir(li);
-    if(aux == &valor_nulo){
+    return NULL;
+}
+
+figura_t *figura_clonar(const figura_t *figura)
+{
+    figura_t *clon = crear_figura_vacia(figura->cantidad_polilineas);
+    if (clon == NULL) return NULL;
+    
+    strcpy(*(clon->nombre),*(figura->nombre));
+    clon->infinito=figura->infinito;
+    clon->tipo=figura->tipo;
+
+    return clon;
+}
+
+figura_t *figura_mov(const figura_t *figura, float posx, float posy, float ang)
+{
+    figura_t *p = figura_clonar(figura);
+    if(p == NULL)
+    {
+        perror("No se pudo clonar la nave!\n");
         return NULL;
     }
-    return aux;
+   
+    for (size_t i=0; i <= figura->cantidad_polilineas - 1; i++)
+    {
+        p->polis[i] = polilinea_mov(figura->polis[i],posx,posy,ang);
+        if(p->polis[i] == NULL)
+        {
+            for (size_t j = 0; j < i; i++)
+                polilinea_destruir(p->polis[j]);
+
+            figura_destruir((figura_t *)p);
+            return NULL;
+        }
+    }
+    return p;
 }

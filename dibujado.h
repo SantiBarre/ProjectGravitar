@@ -1,5 +1,6 @@
-#ifndef POLILINEA_H
-#define POLILINEA_H
+#ifndef DIBUJADO_H
+#define DIBUJADO_H
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -8,20 +9,24 @@
 #include "polilinea.h"
 #include "figuras.h"
 #include "nave.h"
-
-typedef enum{
-    INICIO,
-    NIVEL1,
-    NIVEL2,
-    NIVEL3,
-    NIVEL4,
-    NIVEL5,
-}nivel_t;
+#include "config.h"
 
 //Dibuja una polilinea en la esquina arriba a la izquierda de la pantalla,
 //donde dice renderer poner "renderer" sin comillas al usarla en el main.
 //Para poder trasladarla a una posicion 
+
 bool dibujar_polilinea(polilinea_t *polilinea,float escala,float posx,float posy,SDL_Renderer *renderer);
 
+bool dibujar_figura(figura_t *fig, float escala, float posx, float posy, SDL_Renderer *renderer );
+
+bool dibujar_palabra(int ***palabra,size_t tamanio_palabra,float escala,float posx,float posy,SDL_Renderer *renderer);
+
+void dibujado_de_nivel(lista_t *lista_f,lista_t *lista_combus,lista_t *lista_torr,nave_t *nave,nivel_t elegir_nivel,SDL_Renderer *renderer);
+
+void dibujado_de_nave(lista_t *lista_f,nave_t *nave,nivel_t elegir_nivel,SDL_Renderer *renderer);
+
+void calculo_escala(float *escala,float *centro,nave_t *nave);
+
+void dibujar_vidas(lista_t *lista_f,nave_t *nave,SDL_Renderer *renderer);
 
 #endif
